@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1314&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+<link rel="icon" href=/fav.png type="image/gif">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+</noscript>
+
+
+<link rel="stylesheet" href="/css/font.css" media="all">
+
+
+<script data-goatcounter="https://0xkernel.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+
+
+<meta property="og:url" content="http://localhost:1314/blogs/linux-server-security-basics/">
+	<meta property="og:site_name" content="Mahmoud - Full Stack Developer">
+	<meta property="og:title" content="Linux Server Security: Essential Hardening Steps">
+	<meta property="og:description" content="A practical guide to securing your Linux server - from SSH hardening to firewall configuration">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="blogs">
+		<meta property="article:published_time" content="2024-12-20T10:00:00+00:00">
+		<meta property="article:modified_time" content="2024-12-20T10:00:00+00:00">
+		<meta property="article:tag" content="DevOps">
+		<meta property="article:tag" content="Linux">
+		<meta property="article:tag" content="Security">
+		<meta property="article:tag" content="InfoSec">
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Linux Server Security: Essential Hardening Steps">
+	<meta name="twitter:description" content="A practical guide to securing your Linux server - from SSH hardening to firewall configuration">
+
+
+<link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
+<link rel="stylesheet" href="/css/footer.css" media="all">
+
+
+<link rel="stylesheet" href="/css/theme.css" media="all">
+
+<style>
+    :root {
+        --text-color: #343a40;
+        --text-secondary-color: #6c757d;
+        --text-link-color: #007bff;
+        --background-color: #eaedf0;
+        --secondary-background-color: #64ffda1a;
+        --primary-color: #007bff;
+        --secondary-color: #f8f9fa;
+
+         
+        --text-color-dark: #e4e6eb;
+        --text-secondary-color-dark: #b0b3b8;
+        --text-link-color-dark: #ffffff;
+        --background-color-dark: #18191a;
+        --secondary-background-color-dark: #212529;
+        --primary-color-dark: #ffffff;
+        --secondary-color-dark: #212529;
+    }
+    body {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    html {
+        background-color: var(--background-color) !important;
+    }
+
+    body::-webkit-scrollbar {
+        height: 0px;
+        width: 8px;
+        background-color: var(--background-color);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background: #b0b0b0;
+        outline: 1px solid var(--background-color);
+    }
+
+    #search-content::-webkit-scrollbar {
+        width: .5em;
+        height: .1em;
+        background-color: var(--background-color);
+    }
+</style>
+
+
+
+
+
+<meta name="description" content="A practical guide to securing your Linux server - from SSH hardening to firewall configuration">
+
+<link rel="stylesheet" href="/css/single.css?v=1787799755">
+<link rel="stylesheet" href="/css/design.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/recruiter.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/terminal.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/code.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/blog.css?v=1787799755" media="all">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+
+<script defer src="/fontawesome-6/all-6.4.2.js"></script>
+
+
+  
+  
+
+  <title>
+Linux Server Security: Essential Hardening Steps | Mahmoud - Full Stack Developer
+
+  </title>
+</head>
+
+<body class="light">
+  
+  
+<script>
+    let localStorageValue = localStorage.getItem("pref-theme");
+    let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    switch (localStorageValue) {
+        case "dark":
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+            break;
+        case "light":
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            break;
+        default:
+            if (mediaQuery) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+            }
+            break;
+    }
+</script>
+
+
+
+
+<script>
+    var prevScrollPos = window.pageYOffset;
+    window.addEventListener("scroll", function showHeaderOnScroll() {
+        let profileHeaderElem = document.getElementById("profileHeader");
+        let currentScrollPos = window.pageYOffset;
+        let resetHeaderStyle = false;
+        let showNavBarOnScrollUp =  true ;
+        let showNavBar = showNavBarOnScrollUp ? prevScrollPos > currentScrollPos : currentScrollPos > 0;
+        if (showNavBar) {
+            profileHeaderElem.classList.add("showHeaderOnTop");
+        } else {
+            resetHeaderStyle = true;
+        }
+        if(currentScrollPos === 0) {
+            resetHeaderStyle = true;
+        }
+        if(resetHeaderStyle) {
+            profileHeaderElem.classList.remove("showHeaderOnTop");
+        }
+        prevScrollPos = currentScrollPos;
+    });
+</script>
+
+
+
+<header id="profileHeader">
+    <nav class="navbar navbar-expand-lg animate">
+        <div class="container-fluid mx-xs-2 mx-sm-4 mx-md-5 mx-lg-5 px-lg-4">
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24">
+                    <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"></path>
+                </svg>
+            </button>
+
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto text-center nav-center-links">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#about">
+                            About Me
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#experience">
+                            Experience
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#education">
+                            Education
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#projects">
+                            Projects
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#awards">
+                            Competitions &amp; Recognition
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#contact">
+                            Let&#39;s build something
+                        </a>
+                    </li>
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#writing">Blog</a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+
+            
+            <ul class="navbar-nav nav-social-links align-items-center">
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+                         <i class="fab fa-github"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://www.linkedin.com/in/mahmoudadelOx01/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">
+                         <i class="fab fa-linkedin"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://instagram.com/0xkernel" target="_blank" rel="noopener noreferrer" aria-label="Open Instagram profile">
+                         <i class="fab fa-instagram"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://t.me/rdmsr" target="_blank" rel="noopener noreferrer" aria-label="Open Telegram profile">
+                         <i class="fab fa-telegram"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                
+                 
+
+                 
+                 <li class="nav-item">
+                     <a class="nav-resume-link" href="/MahmoudAdel_Cybersecurity_Resume.pdf" download aria-label="Download Mahmoud Adel's résumé">Résumé</a>
+                 </li>
+
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="mailto:contact@mahmoudouf.com" aria-label="Email me">
+                         <i class="fa fa-envelope"></i>
+                     </a>
+                </li>
+
+
+                
+                 
+                 <li class="nav-item">
+                     <button id="theme-toggle" class="nav-theme-btn" type="button" aria-label="Toggle color theme">
+                         <svg id="moon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                         </svg>
+                         <svg id="sun" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+</header>
+<div id="content">
+    <main id="main-content">
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+    
+  
+
+
+
+
+  
+    
+  
+
+
+
+
+  
+    
+  
+
+<section id="single" class="blog-page blog-article" aria-labelledby="article-title">
+  <div class="blog-shell">
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <a class="blog-back-link" href="/blogs/">
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+        <span>Back to writing</span>
+      </a>
+      <span class="blog-breadcrumb-separator" aria-hidden="true">/</span>
+      <span class="blog-breadcrumb-current" aria-current="page">Linux Server Security: Essential Hardening Steps</span>
+    </nav>
+
+    <div class="blog-layout">
+      <div class="blog-main-column">
+        <header class="blog-article-header title">
+          <p class="blog-eyebrow"><span class="blog-eyebrow-mark" aria-hidden="true"></span> Field note</p>
+          <h1 id="article-title">Linux Server Security: Essential Hardening Steps</h1>
+          <div class="blog-meta text-center">
+            
+            <span class="blog-meta-item"><span class="blog-sr-only">Author: </span>Mahmoud</span>
+            <span class="blog-meta-separator" aria-hidden="true">·</span>
+            
+            <time class="blog-meta-item" datetime="2024-12-20">Dec 20, 2024</time>
+            
+            <span class="blog-meta-separator" aria-hidden="true">·</span>
+            <span id="readingTime" class="blog-meta-item">min read</span>
+            
+          </div>
+          
+          <ul class="blog-tags blog-article-tags" aria-label="Topics">
+            
+            <li><a class="blog-tag" href="http://localhost:1314/tags/devops">DevOps</a></li>
+            
+            <li><a class="blog-tag" href="http://localhost:1314/tags/linux">Linux</a></li>
+            
+            <li><a class="blog-tag" href="http://localhost:1314/tags/security">Security</a></li>
+            
+            <li><a class="blog-tag" href="http://localhost:1314/tags/infosec">InfoSec</a></li>
+            
+          </ul>
+          
+        </header>
+
+        
+        <figure class="featured-image blog-featured-image">
+          <img src="/images/post.jpg" alt="Linux Server Security: Essential Hardening Steps" loading="eager" decoding="async">
+        </figure>
+        
+
+        <article class="page-content blog-prose" aria-label="Article content">
+          <h2 id="introduction">Introduction</h2>
+<p>Securing a Linux server is not optional — it&rsquo;s essential. Whether you&rsquo;re deploying a web application or managing infrastructure, these hardening steps will significantly reduce your attack surface.</p>
+<p>This guide is based on my experience in application security and Linux server administration.</p>
+<h2 id="1-ssh-hardening">1. SSH Hardening</h2>
+<p>SSH is your primary access point — secure it first.</p>
+<h3 id="disable-root-login">Disable Root Login</h3>
+<p>Edit <code>/etc/ssh/sshd_config</code>:</p>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">PermitRootLogin no</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="use-key-based-authentication">Use Key-Based Authentication</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Generate key pair on your local machine</span>
+</span></span><span class="line"><span class="cl">ssh-keygen -t ed25519 -C <span class="s2">&#34;your_email@example.com&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Copy public key to server</span>
+</span></span><span class="line"><span class="cl">ssh-copy-id -i ~/.ssh/id_ed25519.pub user@server
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Disable password authentication</span>
+</span></span><span class="line"><span class="cl">PasswordAuthentication no
+</span></span><span class="line"><span class="cl">PubkeyAuthentication yes</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="change-default-port">Change Default Port</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">Port <span class="m">2222</span>  <span class="c1"># Use any port above 1024</span></span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="limit-login-attempts">Limit Login Attempts</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">MaxAuthTries <span class="m">3</span>
+</span></span><span class="line"><span class="cl">LoginGraceTime <span class="m">60</span></span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><p>Restart SSH after changes:</p>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl restart sshd</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="2-firewall-configuration">2. Firewall Configuration</h2>
+<h3 id="ufw-uncomplicated-firewall">UFW (Uncomplicated Firewall)</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install UFW</span>
+</span></span><span class="line"><span class="cl">sudo apt install ufw
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Default policies</span>
+</span></span><span class="line"><span class="cl">sudo ufw default deny incoming
+</span></span><span class="line"><span class="cl">sudo ufw default allow outgoing
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow SSH (your custom port)</span>
+</span></span><span class="line"><span class="cl">sudo ufw allow 2222/tcp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow web traffic</span>
+</span></span><span class="line"><span class="cl">sudo ufw allow 80/tcp
+</span></span><span class="line"><span class="cl">sudo ufw allow 443/tcp
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Enable firewall</span>
+</span></span><span class="line"><span class="cl">sudo ufw <span class="nb">enable</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check status</span>
+</span></span><span class="line"><span class="cl">sudo ufw status verbose</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="iptables-advanced">iptables (Advanced)</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Flush existing rules</span>
+</span></span><span class="line"><span class="cl">iptables -F
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Default policies</span>
+</span></span><span class="line"><span class="cl">iptables -P INPUT DROP
+</span></span><span class="line"><span class="cl">iptables -P FORWARD DROP
+</span></span><span class="line"><span class="cl">iptables -P OUTPUT ACCEPT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow loopback</span>
+</span></span><span class="line"><span class="cl">iptables -A INPUT -i lo -j ACCEPT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow established connections</span>
+</span></span><span class="line"><span class="cl">iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow SSH</span>
+</span></span><span class="line"><span class="cl">iptables -A INPUT -p tcp --dport <span class="m">2222</span> -j ACCEPT
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Save rules</span>
+</span></span><span class="line"><span class="cl">iptables-save &gt; /etc/iptables.rules</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="3-fail2ban-setup">3. Fail2Ban Setup</h2>
+<p>Automatically ban IPs with too many failed login attempts:</p>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install</span>
+</span></span><span class="line"><span class="cl">sudo apt install fail2ban
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Create local config</span>
+</span></span><span class="line"><span class="cl">sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><p>Edit <code>/etc/fail2ban/jail.local</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-ini" data-lang="ini"><span class="line"><span class="cl"><span class="k">[sshd]</span>
+</span></span><span class="line"><span class="cl"><span class="na">enabled</span> <span class="o">=</span> <span class="s">true</span>
+</span></span><span class="line"><span class="cl"><span class="na">port</span> <span class="o">=</span> <span class="s">2222</span>
+</span></span><span class="line"><span class="cl"><span class="na">filter</span> <span class="o">=</span> <span class="s">sshd</span>
+</span></span><span class="line"><span class="cl"><span class="na">logpath</span> <span class="o">=</span> <span class="s">/var/log/auth.log</span>
+</span></span><span class="line"><span class="cl"><span class="na">maxretry</span> <span class="o">=</span> <span class="s">3</span>
+</span></span><span class="line"><span class="cl"><span class="na">bantime</span> <span class="o">=</span> <span class="s">3600</span>
+</span></span><span class="line"><span class="cl"><span class="na">findtime</span> <span class="o">=</span> <span class="s">600</span></span></span></code></pre></div><div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start service</span>
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> fail2ban
+</span></span><span class="line"><span class="cl">sudo systemctl start fail2ban
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check banned IPs</span>
+</span></span><span class="line"><span class="cl">sudo fail2ban-client status sshd</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="4-system-updates">4. System Updates</h2>
+<p>Keep your system patched:</p>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Update package list and upgrade</span>
+</span></span><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt upgrade -y
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Enable automatic security updates</span>
+</span></span><span class="line"><span class="cl">sudo apt install unattended-upgrades
+</span></span><span class="line"><span class="cl">sudo dpkg-reconfigure -plow unattended-upgrades</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="5-user-management">5. User Management</h2>
+<h3 id="create-non-root-user">Create Non-Root User</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create user</span>
+</span></span><span class="line"><span class="cl">sudo adduser deploy
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add to sudo group</span>
+</span></span><span class="line"><span class="cl">sudo usermod -aG sudo deploy
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Switch to new user</span>
+</span></span><span class="line"><span class="cl">su - deploy</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="limit-sudo-access">Limit sudo Access</h3>
+<p>Edit <code>/etc/sudoers</code> with <code>visudo</code>:</p>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">deploy <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: /usr/bin/systemctl restart myapp</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="6-file-permissions">6. File Permissions</h2>
+<h3 id="secure-important-files">Secure Important Files</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># SSH config</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># System files</span>
+</span></span><span class="line"><span class="cl">chmod <span class="m">644</span> /etc/passwd
+</span></span><span class="line"><span class="cl">chmod <span class="m">640</span> /etc/shadow</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="find-world-writable-files">Find World-Writable Files</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">find / -type f -perm -002 -exec ls -l <span class="o">{}</span> <span class="se">\;</span> 2&gt;/dev/null</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="7-monitoring-and-logging">7. Monitoring and Logging</h2>
+<h3 id="check-auth-logs">Check Auth Logs</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Failed login attempts</span>
+</span></span><span class="line"><span class="cl">grep <span class="s2">&#34;Failed password&#34;</span> /var/log/auth.log <span class="p">|</span> tail -20
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Successful logins</span>
+</span></span><span class="line"><span class="cl">grep <span class="s2">&#34;Accepted&#34;</span> /var/log/auth.log <span class="p">|</span> tail -20</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h3 id="system-monitoring">System Monitoring</h3>
+<div class="term-block" data-lang="bash">
+  <div class="term-bar">
+    <span class="term-dot term-dot--red" aria-hidden="true"></span>
+    <span class="term-dot term-dot--amber" aria-hidden="true"></span>
+    <span class="term-dot term-dot--green" aria-hidden="true"></span>
+    <span class="term-title">bash — mahmoud@portfolio</span>
+    <button type="button" class="term-copy" aria-label="Copy code to clipboard">Copy</button>
+  </div>
+  <div class="term-body"><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install monitoring tools</span>
+</span></span><span class="line"><span class="cl">sudo apt install htop iotop
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check active connections</span>
+</span></span><span class="line"><span class="cl">ss -tuln
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check listening ports</span>
+</span></span><span class="line"><span class="cl">netstat -tlnp</span></span></code></pre></div></div>
+  <div class="term-console">
+    <div class="term-output" aria-live="polite"></div>
+    <div class="term-input-line">
+      <span class="term-prompt">mahmoud@portfolio ~ $</span>
+      <input type="text" class="term-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="type something…" aria-label="Type something into the terminal" />
+    </div>
+  </div>
+</div><h2 id="quick-checklist">Quick Checklist</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Disable root SSH login</li>
+<li><input disabled="" type="checkbox"> Enable key-based authentication</li>
+<li><input disabled="" type="checkbox"> Disable password authentication</li>
+<li><input disabled="" type="checkbox"> Change SSH port</li>
+<li><input disabled="" type="checkbox"> Configure firewall (UFW/iptables)</li>
+<li><input disabled="" type="checkbox"> Install and configure Fail2Ban</li>
+<li><input disabled="" type="checkbox"> Enable automatic security updates</li>
+<li><input disabled="" type="checkbox"> Create non-root user for deployment</li>
+<li><input disabled="" type="checkbox"> Set proper file permissions</li>
+<li><input disabled="" type="checkbox"> Enable logging and monitoring</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>Server security is an ongoing process, not a one-time setup. Start with these essentials, monitor your logs regularly, and stay updated on new vulnerabilities and patches.</p>
+<hr>
+<p><em>This guide reflects practices I&rsquo;ve applied during my Application Security internship and personal server administration.</em></p>
+
+        </article>
+      </div>
+
+      <div class="blog-sidebar" aria-label="Article tools">
+        <div id="stickySideBar" class="sticky-sidebar">
+          
+          <aside class="toc blog-sidebar-card">
+            <details class="blog-disclosure" open>
+              <summary>
+                <span class="blog-sidebar-heading">Table Of Contents</span>
+                <span class="blog-disclosure-icon" aria-hidden="true">⌄</span>
+              </summary>
+              <div class="toc-content">
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#1-ssh-hardening">1. SSH Hardening</a>
+      <ul>
+        <li><a href="#disable-root-login">Disable Root Login</a></li>
+        <li><a href="#use-key-based-authentication">Use Key-Based Authentication</a></li>
+        <li><a href="#change-default-port">Change Default Port</a></li>
+        <li><a href="#limit-login-attempts">Limit Login Attempts</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-firewall-configuration">2. Firewall Configuration</a>
+      <ul>
+        <li><a href="#ufw-uncomplicated-firewall">UFW (Uncomplicated Firewall)</a></li>
+        <li><a href="#iptables-advanced">iptables (Advanced)</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-fail2ban-setup">3. Fail2Ban Setup</a></li>
+    <li><a href="#4-system-updates">4. System Updates</a></li>
+    <li><a href="#5-user-management">5. User Management</a>
+      <ul>
+        <li><a href="#create-non-root-user">Create Non-Root User</a></li>
+        <li><a href="#limit-sudo-access">Limit sudo Access</a></li>
+      </ul>
+    </li>
+    <li><a href="#6-file-permissions">6. File Permissions</a>
+      <ul>
+        <li><a href="#secure-important-files">Secure Important Files</a></li>
+        <li><a href="#find-world-writable-files">Find World-Writable Files</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-monitoring-and-logging">7. Monitoring and Logging</a>
+      <ul>
+        <li><a href="#check-auth-logs">Check Auth Logs</a></li>
+        <li><a href="#system-monitoring">System Monitoring</a></li>
+      </ul>
+    </li>
+    <li><a href="#quick-checklist">Quick Checklist</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+              </div>
+            </details>
+          </aside>
+          
+
+          
+          <aside class="tags blog-sidebar-card">
+            <h2 class="blog-sidebar-heading">Tags</h2>
+            <ul class="tags-ul list-unstyled list-inline">
+              
+              <li class="list-inline-item"><a class="blog-tag" href="http://localhost:1314/tags/devops" target="_blank" rel="noopener noreferrer">DevOps</a></li>
+              
+              <li class="list-inline-item"><a class="blog-tag" href="http://localhost:1314/tags/linux" target="_blank" rel="noopener noreferrer">Linux</a></li>
+              
+              <li class="list-inline-item"><a class="blog-tag" href="http://localhost:1314/tags/security" target="_blank" rel="noopener noreferrer">Security</a></li>
+              
+              <li class="list-inline-item"><a class="blog-tag" href="http://localhost:1314/tags/infosec" target="_blank" rel="noopener noreferrer">InfoSec</a></li>
+              
+            </ul>
+          </aside>
+          
+
+          
+          <aside class="social blog-sidebar-card">
+            <h2 class="blog-sidebar-heading">Share</h2>
+            <div class="social-content">
+              <ul class="list-inline blog-share-list">
+                <li class="list-inline-item">
+                  <a class="blog-share-link" target="_blank" rel="noopener noreferrer" aria-label="Share on LinkedIn"
+                    href="https://www.linkedin.com/feed/?shareActive=true&amp;text=A&#43;practical&#43;guide&#43;to&#43;securing&#43;your&#43;Linux&#43;server&#43;-&#43;from&#43;SSH&#43;hardening&#43;to&#43;firewall&#43;configuration&amp;url=http%3A%2F%2Flocalhost%3A1314%2Fblogs%2Flinux-server-security-basics%2F">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i><span class="blog-share-name">LinkedIn</span>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="blog-share-link" target="_blank" rel="noopener noreferrer" aria-label="Share on Twitter"
+                    href="https://twitter.com/share?text=Linux&#43;Server&#43;Security%3A&#43;Essential&#43;Hardening&#43;Steps&amp;url=http%3A%2F%2Flocalhost%3A1314%2Fblogs%2Flinux-server-security-basics%2F&amp;hashtags=DevOps%2CLinux%2CSecurity%2CInfoSec">
+                    <i class="fab fa-twitter" aria-hidden="true"></i><span class="blog-share-name">Twitter</span>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="blog-share-link" target="_blank" rel="noopener noreferrer" aria-label="Share on WhatsApp"
+                    href="https://api.whatsapp.com/send?text=Linux&#43;Server&#43;Security%3A&#43;Essential&#43;Hardening&#43;Steps%3A&#43;http%3A%2F%2Flocalhost%3A1314%2Fblogs%2Flinux-server-security-basics%2F">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i><span class="blog-share-name">WhatsApp</span>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a class="blog-share-link" aria-label="Share by email"
+                    href="mailto:?subject=Linux&#43;Server&#43;Security%3A&#43;Essential&#43;Hardening&#43;Steps&amp;body=Check&#43;out&#43;this&#43;site&#43;http%3A%2F%2Flocalhost%3A1314%2Fblogs%2Flinux-server-security-basics%2F">
+                    <i class="fa fa-envelope" aria-hidden="true"></i><span class="blog-share-name">Email</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+          
+        </div>
+      </div>
+    </div>
+
+    <div class="blog-comments">
+      
+    </div>
+  </div>
+
+  <button class="blog-top-scroll p-2 px-3" type="button" onclick="topFunction()" id="topScroll" aria-label="Back to top" title="Back to top">
+    <i class="fas fa-angle-up" aria-hidden="true"></i>
+  </button>
+</section>
+
+
+<div class="progress blog-progress" aria-label="Reading progress">
+  <div id="scroll-progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+    aria-valuemax="100"></div>
+</div>
+<script src="/js/scrollProgressBar.js"></script>
+
+
+<script>
+  var topScroll = document.getElementById("topScroll");
+  window.onscroll = function () { scrollFunction() };
+
+  function scrollFunction() {
+    if (!topScroll) return;
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      topScroll.style.display = "inline-flex";
+    } else {
+      topScroll.style.display = "none";
+    }
+  }
+
+  function topFunction() {
+    var prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+  }
+
+  
+  let stickySideBarElem = document.getElementById("stickySideBar");
+  let stickyNavBar = true;
+  if (stickySideBarElem) {
+    if (stickyNavBar) {
+      let headerElem = document.getElementById("profileHeader");
+      let headerHeight = headerElem ? headerElem.offsetHeight + 15 : 80;
+      stickySideBarElem.style.top = headerHeight + "px";
+    } else {
+      stickySideBarElem.style.top = "50px";
+    }
+  }
+</script>
+
+
+<script src="/js/readingTime.js"></script>
+
+
+
+    </main>
+  </div><footer>
+    
+    <div class="container">
+        <div class="footer-inner">
+            
+            <div class="footer-col">
+                <p class="footer-col-title">links</p>
+                
+                <a href="/#about">About</a>
+                
+                
+                <a href="/#experience">Experience</a>
+                
+                
+                <a href="/#education">Education</a>
+                
+                
+                <a href="/#projects">Projects</a>
+                
+                
+                <a href="/#achievements">Achievements</a>
+                
+                
+                <a href="/#awards">Awards</a>
+                
+            </div>
+
+            
+            <div class="footer-col">
+                <p class="footer-col-title">networks</p>
+                
+                <a href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer">GitHub</a>
+                
+                
+                <a href="https://www.linkedin.com/in/mahmoudadelOx01/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <a href="https://instagram.com/0xkernel" target="_blank" rel="noopener noreferrer">Instagram</a>
+                
+                
+                
+                <a href="https://t.me/rdmsr" target="_blank" rel="noopener noreferrer">Telegram</a>
+                
+                
+                
+                
+                
+                
+                <a href="mailto:contact@mahmoudouf.com">Email</a>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            &copy; 2026 Mahmoud — All rights reserved
+        </div>
+    </div>
+</footer>
+<script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark');
+        document.documentElement.classList.remove('dark');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    }
+</script>
+<script>
+    var themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+        themeToggle.addEventListener("click", function () {
+            var isDark = document.body.className.includes("dark");
+            document.body.classList.toggle('dark', !isDark);
+            document.documentElement.classList.toggle('dark', !isDark);
+            localStorage.setItem("pref-theme", isDark ? 'light' : 'dark');
+            themeToggle.setAttribute('aria-pressed', String(!isDark));
+        });
+        themeToggle.setAttribute('aria-pressed', String(document.body.className.includes("dark")));
+    }
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/portfolio-graph-data.js?v=7"></script>
+<script src="/js/graph-background.js?v=1"></script>
+<script src="/js/portfolio-panel.js?v=4"></script>
+<script src="/js/portfolio-graph.js?v=9"></script>
+<script src="/js/terminal.js?v=1"></script>
+<script src="/js/scroll-animations.js?v=1"></script>
+<script src="/js/single-animations.js?v=1"></script>
+
+
+  <section id="search-content" class="py-2">
+    <div class="container" id="search-results"></div>
+  </section>
+</body>
+
+</html>

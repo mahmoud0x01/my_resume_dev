@@ -1,0 +1,93 @@
+name: Deploy Hugo site to Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Clean build artifacts
+        run: |
+          rm -rf public
+          rm -rf resources/_gen
+          rm -rf .hugo_build.lock
+
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v4
+
+      - name: Build with Hugo
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          # Clean any existing public directory and resources
+          rm -rf public
+          rm -rf resources/_gen
+          # Use custom domain if CNAME exists, otherwise use GitHub Pages URL
+          if [ -f static/CNAME ]; then
+            DOMAIN=$(cat static/CNAME)
+            BASE_URL="https://${DOMAIN}/"
+          else
+            BASE_URL="${{ steps.pages.outputs.base_url }}/"
+          fi
+          # Build with clean cache
+          hugo \
+            --gc \
+            --minify \
+            --cleanDestinationDir \
+            --baseURL "$BASE_URL"
+
+      - name: Verify build content
+        run: |
+          echo "Checking built content..."
+          ls -la public/ || echo "Public directory not found!"
+          echo "Blog posts in public:"
+          ls public/blogs/ || echo "No blogs directory"
+          
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

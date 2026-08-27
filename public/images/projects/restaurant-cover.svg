@@ -1,0 +1,205 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16213e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0f3460;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c73652;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="card2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#533483;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3d2468;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#533483;stop-opacity:1" />
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="rgba(0,0,0,0.4)"/>
+    </filter>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="420" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.04" stroke="#ffffff" stroke-width="1">
+    <line x1="0" y1="60" x2="800" y2="60"/>
+    <line x1="0" y1="120" x2="800" y2="120"/>
+    <line x1="0" y1="180" x2="800" y2="180"/>
+    <line x1="0" y1="240" x2="800" y2="240"/>
+    <line x1="0" y1="300" x2="800" y2="300"/>
+    <line x1="0" y1="360" x2="800" y2="360"/>
+    <line x1="100" y1="0" x2="100" y2="420"/>
+    <line x1="200" y1="0" x2="200" y2="420"/>
+    <line x1="300" y1="0" x2="300" y2="420"/>
+    <line x1="400" y1="0" x2="400" y2="420"/>
+    <line x1="500" y1="0" x2="500" y2="420"/>
+    <line x1="600" y1="0" x2="600" y2="420"/>
+    <line x1="700" y1="0" x2="700" y2="420"/>
+  </g>
+
+  <!-- Decorative circles -->
+  <circle cx="680" cy="80" r="120" fill="none" stroke="#e94560" stroke-width="1" opacity="0.15"/>
+  <circle cx="680" cy="80" r="80" fill="none" stroke="#e94560" stroke-width="1" opacity="0.1"/>
+  <circle cx="100" cy="360" r="100" fill="none" stroke="#533483" stroke-width="1" opacity="0.12"/>
+
+  <!-- Main UI mockup: browser window -->
+  <rect x="60" y="55" width="480" height="310" rx="12" fill="#0d1117" filter="url(#shadow)" opacity="0.95"/>
+  <!-- Browser top bar -->
+  <rect x="60" y="55" width="480" height="36" rx="12" fill="#1c2128"/>
+  <rect x="60" y="79" width="480" height="12" fill="#1c2128"/>
+  <!-- Browser dots -->
+  <circle cx="84" cy="73" r="5" fill="#e94560" opacity="0.8"/>
+  <circle cx="100" cy="73" r="5" fill="#e9a020" opacity="0.8"/>
+  <circle cx="116" cy="73" r="5" fill="#2ea043" opacity="0.8"/>
+  <!-- URL bar -->
+  <rect x="140" y="63" width="260" height="20" rx="4" fill="#0d1117" opacity="0.6"/>
+  <text x="270" y="77" text-anchor="middle" font-family="monospace" font-size="9" fill="#8b949e">localhost:8080/api/menu</text>
+
+  <!-- Navbar inside app -->
+  <rect x="60" y="91" width="480" height="42" fill="#161b22"/>
+  <rect x="72" y="101" width="28" height="22" rx="4" fill="url(#card1)"/>
+  <text x="86" y="116" text-anchor="middle" font-family="sans-serif" font-size="10" font-weight="bold" fill="white">R</text>
+  <text x="112" y="116" font-family="sans-serif" font-size="10" font-weight="600" fill="#c9d1d9">RestaurantAPI</text>
+  <!-- Nav links -->
+  <text x="260" y="116" font-family="sans-serif" font-size="9" fill="#8b949e">Menu</text>
+  <text x="300" y="116" font-family="sans-serif" font-size="9" fill="#8b949e">Orders</text>
+  <text x="345" y="116" font-family="sans-serif" font-size="9" fill="#8b949e">Cart</text>
+  <text x="385" y="116" font-family="sans-serif" font-size="9" fill="#8b949e">Profile</text>
+  <rect x="448" y="105" width="80" height="18" rx="9" fill="url(#card1)"/>
+  <text x="488" y="118" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="600" fill="white">Sign In</text>
+
+  <!-- Content area -->
+  <rect x="60" y="133" width="480" height="232" fill="#0d1117"/>
+
+  <!-- Hero banner inside app -->
+  <rect x="72" y="143" width="456" height="70" rx="8" fill="url(#card2)" opacity="0.6"/>
+  <text x="100" y="168" font-family="sans-serif" font-size="14" font-weight="bold" fill="white">🍕 Fresh &amp; Fast Delivery</text>
+  <text x="100" y="188" font-family="sans-serif" font-size="9" fill="#c9d1d9" opacity="0.85">Order your favourite meals · Track in real-time · Rate your experience</text>
+  <rect x="380" y="158" width="90" height="20" rx="10" fill="url(#card1)"/>
+  <text x="425" y="172" text-anchor="middle" font-family="sans-serif" font-size="9" font-weight="600" fill="white">Order Now</text>
+
+  <!-- Dish cards row -->
+  <!-- Card 1 -->
+  <rect x="72" y="225" width="100" height="120" rx="8" fill="#161b22" filter="url(#shadow)"/>
+  <rect x="72" y="225" width="100" height="55" rx="8" fill="#21262d"/>
+  <rect x="72" y="258" width="100" height="22" fill="#21262d"/>
+  <text x="122" y="252" text-anchor="middle" font-size="22">🍕</text>
+  <text x="122" y="296" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="600" fill="#c9d1d9">Margherita</text>
+  <text x="122" y="308" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#e94560">$12.99</text>
+  <rect x="80" y="316" width="84" height="16" rx="8" fill="url(#card1)" opacity="0.9"/>
+  <text x="122" y="328" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">Add to Cart</text>
+
+  <!-- Card 2 -->
+  <rect x="183" y="225" width="100" height="120" rx="8" fill="#161b22" filter="url(#shadow)"/>
+  <rect x="183" y="225" width="100" height="55" rx="8" fill="#21262d"/>
+  <rect x="183" y="258" width="100" height="22" fill="#21262d"/>
+  <text x="233" y="252" text-anchor="middle" font-size="22">🍔</text>
+  <text x="233" y="296" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="600" fill="#c9d1d9">Burger Deluxe</text>
+  <text x="233" y="308" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#e94560">$9.99</text>
+  <rect x="191" y="316" width="84" height="16" rx="8" fill="url(#card1)" opacity="0.9"/>
+  <text x="233" y="328" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">Add to Cart</text>
+
+  <!-- Card 3 -->
+  <rect x="294" y="225" width="100" height="120" rx="8" fill="#161b22" filter="url(#shadow)"/>
+  <rect x="294" y="225" width="100" height="55" rx="8" fill="#21262d"/>
+  <rect x="294" y="258" width="100" height="22" fill="#21262d"/>
+  <text x="344" y="252" text-anchor="middle" font-size="22">🍜</text>
+  <text x="344" y="296" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="600" fill="#c9d1d9">Ramen Bowl</text>
+  <text x="344" y="308" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#e94560">$14.50</text>
+  <rect x="302" y="316" width="84" height="16" rx="8" fill="url(#card1)" opacity="0.9"/>
+  <text x="344" y="328" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">Add to Cart</text>
+
+  <!-- Card 4 -->
+  <rect x="405" y="225" width="100" height="120" rx="8" fill="#161b22" filter="url(#shadow)"/>
+  <rect x="405" y="225" width="100" height="55" rx="8" fill="#21262d"/>
+  <rect x="405" y="258" width="100" height="22" fill="#21262d"/>
+  <text x="455" y="252" text-anchor="middle" font-size="22">🥗</text>
+  <text x="455" y="296" text-anchor="middle" font-family="sans-serif" font-size="8" font-weight="600" fill="#c9d1d9">Greek Salad</text>
+  <text x="455" y="308" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#e94560">$8.75</text>
+  <rect x="413" y="316" width="84" height="16" rx="8" fill="url(#card1)" opacity="0.9"/>
+  <text x="455" y="328" text-anchor="middle" font-family="sans-serif" font-size="8" fill="white">Add to Cart</text>
+
+  <!-- Right panel: API / Swagger card -->
+  <rect x="565" y="55" width="180" height="310" rx="12" fill="#0d1117" filter="url(#shadow)" opacity="0.95"/>
+  <rect x="565" y="55" width="180" height="36" rx="12" fill="#1c2128"/>
+  <rect x="565" y="79" width="180" height="12" fill="#1c2128"/>
+  <text x="655" y="78" text-anchor="middle" font-family="monospace" font-size="9" fill="#8b949e">Swagger UI</text>
+
+  <!-- Swagger content -->
+  <rect x="565" y="91" width="180" height="30" fill="#161b22"/>
+  <text x="578" y="110" font-family="monospace" font-size="9" font-weight="bold" fill="#58a6ff">Restaurant API</text>
+  <text x="578" y="122" font-family="monospace" font-size="7" fill="#8b949e">v1.0 · OAS 3.0</text>
+
+  <!-- API routes -->
+  <g font-family="monospace" font-size="8">
+    <!-- GET /menu -->
+    <rect x="573" y="132" width="164" height="18" rx="4" fill="#0a3622" opacity="0.8"/>
+    <rect x="573" y="132" width="28" height="18" rx="4" fill="#2ea043"/>
+    <text x="587" y="144" text-anchor="middle" fill="white" font-weight="bold">GET</text>
+    <text x="607" y="144" fill="#c9d1d9">/api/menu</text>
+
+    <!-- POST /orders -->
+    <rect x="573" y="155" width="164" height="18" rx="4" fill="#1a2a3a" opacity="0.8"/>
+    <rect x="573" y="155" width="34" height="18" rx="4" fill="#1f6feb"/>
+    <text x="590" y="167" text-anchor="middle" fill="white" font-weight="bold">POST</text>
+    <text x="613" y="167" fill="#c9d1d9">/api/orders</text>
+
+    <!-- GET /cart -->
+    <rect x="573" y="178" width="164" height="18" rx="4" fill="#0a3622" opacity="0.8"/>
+    <rect x="573" y="178" width="28" height="18" rx="4" fill="#2ea043"/>
+    <text x="587" y="190" text-anchor="middle" fill="white" font-weight="bold">GET</text>
+    <text x="607" y="190" fill="#c9d1d9">/api/cart</text>
+
+    <!-- POST /auth/login -->
+    <rect x="573" y="201" width="164" height="18" rx="4" fill="#1a2a3a" opacity="0.8"/>
+    <rect x="573" y="201" width="34" height="18" rx="4" fill="#1f6feb"/>
+    <text x="590" y="213" text-anchor="middle" fill="white" font-weight="bold">POST</text>
+    <text x="613" y="213" fill="#c9d1d9">/auth/login</text>
+
+    <!-- PUT /dishes/{id} -->
+    <rect x="573" y="224" width="164" height="18" rx="4" fill="#2d2106" opacity="0.8"/>
+    <rect x="573" y="224" width="24" height="18" rx="4" fill="#9e6a03"/>
+    <text x="585" y="236" text-anchor="middle" fill="white" font-weight="bold">PUT</text>
+    <text x="603" y="236" fill="#c9d1d9">/api/dishes/&#123;id&#125;</text>
+
+    <!-- DELETE /cart/{id} -->
+    <rect x="573" y="247" width="164" height="18" rx="4" fill="#2d0d0d" opacity="0.8"/>
+    <rect x="573" y="247" width="42" height="18" rx="4" fill="#da3633"/>
+    <text x="594" y="259" text-anchor="middle" fill="white" font-weight="bold">DEL</text>
+    <text x="621" y="259" fill="#c9d1d9">/api/cart/&#123;id&#125;</text>
+
+    <!-- GET /ratings -->
+    <rect x="573" y="270" width="164" height="18" rx="4" fill="#0a3622" opacity="0.8"/>
+    <rect x="573" y="270" width="28" height="18" rx="4" fill="#2ea043"/>
+    <text x="587" y="282" text-anchor="middle" fill="white" font-weight="bold">GET</text>
+    <text x="607" y="282" fill="#c9d1d9">/api/ratings</text>
+  </g>
+
+  <!-- Tech stack badges bottom -->
+  <g transform="translate(565, 300)">
+    <rect x="8" y="0" width="32" height="16" rx="8" fill="#21262d"/>
+    <text x="24" y="11" text-anchor="middle" font-family="monospace" font-size="7" fill="#58a6ff">C#</text>
+    <rect x="46" y="0" width="36" height="16" rx="8" fill="#21262d"/>
+    <text x="64" y="11" text-anchor="middle" font-family="monospace" font-size="7" fill="#58a6ff">.NET</text>
+    <rect x="88" y="0" width="46" height="16" rx="8" fill="#21262d"/>
+    <text x="111" y="11" text-anchor="middle" font-family="monospace" font-size="7" fill="#58a6ff">Postgres</text>
+    <rect x="8" y="22" width="44" height="16" rx="8" fill="#21262d"/>
+    <text x="30" y="33" text-anchor="middle" font-family="monospace" font-size="7" fill="#f0c040">JS</text>
+    <rect x="58" y="22" width="54" height="16" rx="8" fill="#21262d"/>
+    <text x="85" y="33" text-anchor="middle" font-family="monospace" font-size="7" fill="#e34c26">HTML/CSS</text>
+  </g>
+
+  <!-- Bottom label -->
+  <rect x="0" y="385" width="800" height="35" fill="#000000" opacity="0.35"/>
+  <rect x="0" y="385" width="800" height="2" fill="url(#accent)"/>
+  <text x="400" y="407" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="13" font-weight="600" fill="white" opacity="0.9">Full Stack Restaurant Delivery Web Application</text>
+</svg>

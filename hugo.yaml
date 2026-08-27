@@ -1,0 +1,470 @@
+baseURL: https://zrun.dev/
+languageCode: en-us
+title: Mahmoud - Full Stack Developer
+theme: hugo-profile
+outputs:
+  home:
+  - HTML
+  - RSS
+  - JSON
+  page:
+  - HTML
+  - RSS
+enableRobotsTXT: true
+pagination:
+  pagerSize: 3
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  highlight:
+    noClasses: false
+    style: github
+    lineNos: false
+    tabWidth: 4
+Menus:
+  main:
+  - identifier: blog
+    name: Blog
+    title: Blog posts
+    url: "#writing"
+    weight: 1
+params:
+  title: Mahmoud - Full Stack Developer
+  description: Full Stack Developer & DevOps Engineer building end-to-end web applications. I create scalable solutions from frontend to infrastructure, with Python, Django, modern frontend, and DevOps practices.
+  location: Alexandria, Egypt
+  favicon: /fav.png
+  useBootstrapCDN: false
+  mathjax: false
+  animate: true
+  theme: null
+  font:
+    fontSize: 1rem
+    fontWeight: 400
+    lineHeight: 1.5
+    textAlign: left
+  navbar:
+    align: ms-auto
+    showBrandLogo: false
+    brandName: mahmoud
+    disableSearch: false
+    stickyNavBar:
+      enable: true
+      showOnScrollUp: true
+    enableSeparator: false
+    menus:
+      disableAbout: false
+      disableExperience: false
+      disableEducation: false
+      disableProjects: false
+      disableAchievements: false
+      disableContact: false
+  hero:
+    enable: true
+    intro: OPEN TO WORK · FULL STACK DEVELOPER
+    title: Mahmoud Adel
+    subtitle: Full Stack Developer & DevOps Engineer
+    content: Full Stack Developer building end-to-end web applications and scalable infrastructure. I transform ideas into production-ready solutions using Python, Django, modern frontend technologies, and DevOps practices.
+    image: /images/me-avatar.png
+    bottomImage:
+      enable: true
+    button:
+      enable: true
+      name: Resume
+      url: /MahmoudAdel_Cybersecurity_Resume.pdf
+      download: true
+      newPage: false
+    socialLinks:
+      fontAwesomeIcons:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01
+      - icon: fab fa-linkedin
+        url: https://www.linkedin.com/in/mahmoudadelOx01/
+      - icon: fab fa-instagram
+        url: https://instagram.com/0xkernel
+      - icon: fab fa-telegram
+        url: https://t.me/rdmsr
+      - icon: fa fa-envelope
+        url: mailto:contact@mahmoudouf.com
+  about:
+    enable: true
+    title: About Me
+    image: /images/me-avatar.png
+    content: 'I''m a Full Stack Developer and DevOps Engineer passionate about building production-ready applications that solve real problems. My expertise spans the entire development stack—from crafting intuitive user interfaces to designing robust backend APIs and deploying scalable infrastructure.
+
+
+      I specialize in Python-based full-stack development, creating end-to-end solutions with Django, FastAPI, and modern frontend technologies. I''ve built complete web applications with real-time features, comprehensive REST APIs, automated business systems, and financial management platforms.
+
+
+      On the DevOps side, I design and implement CI/CD pipelines, containerize applications with Docker, manage cloud infrastructure, and ensure reliable deployments. My approach centers on writing clean, maintainable code while following industry best practices across the entire development lifecycle.
+
+
+      I''m currently seeking opportunities to contribute to impactful products and continue growing as a full-stack engineer.'
+    proofPoints:
+    - value: 10+
+      label: Projects Shipped
+    - value: '2'
+      label: Internships
+    - value: BSc
+      label: Software Engineering
+    focusAreas:
+    - name: Frontend
+      icon: fas fa-palette
+      items:
+      - React
+      - Vue
+      - Next.js
+      - Tailwind CSS
+    - name: Backend
+      icon: fas fa-server
+      items:
+      - Django
+      - FastAPI
+      - REST API
+      - GraphQL
+    - name: DevOps & Cloud
+      icon: fas fa-cloud
+      items:
+      - Docker
+      - Kubernetes
+      - CI/CD
+      - AWS
+    skills:
+      enable: true
+      title: 'Technical Skills:'
+      items:
+      - Python
+      - Django
+      - FastAPI
+      - C#
+      - ASP.NET Core
+      - PostgreSQL
+      - SQLAlchemy
+      - REST API
+      - WebSockets
+      - Docker
+      - GitHub Actions
+      - CI/CD
+      - Linux
+      - Linux Server Administration
+      - Git
+      - HTML5
+      - CSS3
+      - OOP
+      - SQL
+      - Unit Testing
+      - Information Security
+      - JavaScript
+      - Telegram Bots
+      - PyQt6
+      - AI / ML
+      - Tailwind CSS
+      - Nginx
+      - Cloud
+    languages:
+      enable: true
+      title: 'Language Proficiency:'
+      items:
+      - language: Arabic
+        level: Native
+      - language: English
+        level: C2 — Proficient
+      - language: Russian
+        level: C1 — Advanced
+  experience:
+    enable: true
+    items:
+    - company: Tomsk State University
+      companyUrl: https://www.tsu.ru
+      jobs:
+      - name: Software Engineer Intern
+        date: Feb 2025 - Present
+        content: 'Designing and developing software solutions for university research projects.
+
+
+          Responsibilities:
+
+          - Designing and developing software solutions within university research projects
+
+          - Creating technical documentation according to academic standards
+
+          - Developing architectural diagrams and visualizing software system structures (UML, component diagrams, activity diagrams)
+
+          - Participating in the full software development lifecycle
+
+
+          Achievements:
+
+          - Independently developed and implemented innovative software projects with complete technical documentation
+
+          - Created detailed architectural diagrams for visualizing system structure and component interactions
+
+          - Prepared academic documentation meeting scientific publication standards'
+    - company: Bastion Cybersec Solutions
+      jobs:
+      - name: Application Security Intern
+        date: May 2024 - Sep 2024
+        content: 'Worked on application security testing and vulnerability assessment for web applications and network infrastructure.
+
+
+          - Conducted security assessments on web applications, identifying and documenting vulnerabilities in authentication, authorization, and data handling systems.
+
+          - Performed code reviews and security analysis of backend APIs and database configurations.
+
+          - Collaborated with development teams to implement secure coding practices and fix identified security issues.
+
+          - Ranked Top 5 among 100 participants in internal security competitions, demonstrating strong problem-solving and technical skills.
+
+          - Gained hands-on experience with security testing tools and methodologies applicable to secure software development.'
+  education:
+    enable: true
+    index: false
+    items:
+    - title: Bachelor's in Software Engineering
+      school:
+        name: Tomsk State University
+        url: https://www.tsu.ru
+      date: Sep 2022 - Jul 2026
+  courses:
+    enable: true
+    title: Professional Development, Courses
+    index: false
+    items:
+    - title: 'Docker & Kubernetes: The Complete Guide'
+      school:
+        name: Udemy
+        url: https://www.udemy.com
+      date: '2024'
+    - title: Python for DevOps
+      school:
+        name: LinkedIn Learning
+        url: https://www.linkedin.com/learning
+      date: '2024'
+    - title: DevOps 101
+      school:
+        name: Udemy
+        url: https://www.udemy.com
+      date: '2024'
+    - title: 'PostgreSQL: Advanced Queries'
+      school:
+        name: Coursera
+        url: https://www.coursera.org
+      date: '2024'
+    - title: Linux Administration & Shell Scripting
+      school:
+        name: Udemy
+        url: https://www.udemy.com
+      date: '2024'
+    - title: REST APIs with Django & Python
+      school:
+        name: Udemy
+        url: https://www.udemy.com
+      date: '2023'
+    - title: Git & GitHub Complete Masterclass
+      school:
+        name: Udemy
+        url: https://www.udemy.com
+      date: '2023'
+    - title: CCNA
+      school:
+        name: Cisco
+        url: https://www.cisco.com
+      date: '2020'
+  achievements:
+    enable: true
+    title: Digital Certificates
+    items:
+    - title: Introduction to DevOps Certificate
+      content: Certificate in Introduction to DevOps, covering fundamental DevOps principles and practices.
+      date: '2023'
+      url: https://www.ibm.com
+    - title: 'Google Cloud Fundamentals: Core Infrastructure'
+      content: Certificate in Google Cloud Fundamentals covering core infrastructure concepts and services.
+      date: '2023'
+      url: https://www.google.com
+  awards:
+    enable: true
+    title: Competitions & Recognition
+    items:
+    - title: Top 5 / 100 — Internal Engineering Competition
+      subtitle: Bastion Cybersec Solutions
+      date: August 2024
+      content: Ranked Top 5 among 100 participants in Bastion's internal engineering competition, demonstrating strong problem-solving and technical skills.
+      icon: fas fa-flag-checkered
+  projects:
+    enable: true
+    title: Projects
+    items:
+    - title: ALBrowser - Modern Desktop Web Browser
+      description: A modern, privacy-focused desktop web browser built from scratch with Python and PyQt6, featuring a Chromium-based engine, dark UI, tab groups, and .deb packaging.
+      tech:
+      - Python
+      - PyQt6
+      - QtWebEngine
+      - Chromium
+      - Desktop App
+      - Linux
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/albrowser
+      featured: true
+    - title: CashFlow - Financial Management System
+      description: Django web application for managing cash flow records with support for statuses, types, categories, and subcategories.
+      tech:
+      - Python
+      - Django
+      - SQLite3
+      - Bootstrap
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/finance_management_system
+      featured: true
+    - title: Team Work Platform
+      description: A full-stack team collaboration platform built with FastAPI, SQLAlchemy, Jinja2, and Vanilla JavaScript with dashboards, kanban workflows, analytics, notifications, and export tools.
+      tech:
+      - Python
+      - FastAPI
+      - SQLAlchemy
+      - Jinja2
+      - JWT
+      - Full Stack
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/Team-Work-platform
+      featured: true
+    - title: TicketPro - Support Ticket Management System
+      description: Full Stack Support Ticket Management System with real-time features, ticket tracking, and role-based access control.
+      tech:
+      - Python
+      - Django
+      - Django REST Framework
+      - WebSockets
+      - PostgreSQL
+      - Tailwind CSS
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
+      featured: true
+    - title: CI/CD Pipeline for Python Applications
+      description: Complete CI/CD pipeline setup using GitHub Actions for automated testing, Docker builds, and deployment.
+      tech:
+      - DevOps
+      - GitHub Actions
+      - Docker
+      - CI/CD
+      - Python
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
+      featured: true
+    - title: Full Stack Restaurant Delivery Web Application
+      description: Full Stack API project for an online restaurant delivery service with complete authentication, dish management, shopping cart, and ratings.
+      tech:
+      - C#
+      - .NET
+      - PostgreSQL
+      - JavaScript
+      - HTML/CSS
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/restaurant_website
+      featured: true
+    - title: Automated Cryptocurrency Trading Bot
+      description: Cryptocurrency trading bot supporting automatic and manual trading of multiple assets via Telegram commands.
+      tech:
+      - Python
+      - Bybit API
+      - Mailgun API
+      - Telegram Bot API
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/Crypto_bot_telegram
+      featured: false
+    - title: Social Network Backend API
+      description: RESTful API for a social network website using Python with FastAPI and SQLAlchemy.
+      tech:
+      - Python
+      - FastAPI
+      - SQLAlchemy
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/myrestful
+      featured: false
+    - title: Telegram News Aggregation Bot
+      description: Telegram bot that aggregates news from various sources and provides users with subscription-based updates.
+      tech:
+      - Python
+      - aiogram
+      - SQLAlchemy
+      - PostgreSQL
+      - Docker
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/news_bot_telegram
+      featured: false
+    - title: Whisper Dictation - Offline Voice-to-Text for Linux
+      description: Fully offline, GPU-accelerated, system-wide voice dictation for Linux powered by OpenAI Whisper and WebRTC VAD.
+      tech:
+      - Python
+      - OpenAI Whisper
+      - faster-whisper
+      - CUDA / GPU
+      - WebRTC VAD
+      - Linux
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/live_speech_to_input_linux
+      featured: false
+  contact:
+    enable: true
+    title: Let's build something
+    content: My inbox is always open. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!
+    btnName: Mail me
+    btnLink: mailto:contact@mahmoudouf.com
+  footer:
+    recentPosts:
+      path: blogs
+      count: 3
+      title: Recent Posts
+      enable: true
+      disableFeaturedImage: false
+    socialNetworks:
+      github: https://github.com/mahmoud0x01
+      linkedin: https://www.linkedin.com/in/mahmoudadelOx01/
+  listPages:
+    disableFeaturedImage: false
+  singlePages:
+    socialShare: true
+    readTime:
+      enable: true
+      content: min read
+    scrollprogress:
+      enable: true
+    tags:
+      openInNewTab: true
+  terms:
+    read: Read
+    toc: Table Of Contents
+    copyright: All rights reserved
+    pageNotFound: Page not found
+    emailText: Check out this site
+  datesFormat:
+    article: Jan 2, 2006
+    articleList: Jan 2, 2006
+    articleRecent: Jan 2, 2006
+  customScripts: '<script src="/js/portfolio-graph-data.js?v=7"></script>
+
+    <script src="/js/graph-background.js?v=1"></script>
+
+    <script src="/js/portfolio-panel.js?v=4"></script>
+
+    <script src="/js/portfolio-graph.js?v=9"></script>
+
+    <script src="/js/terminal.js?v=1"></script>
+
+    <script src="/js/scroll-animations.js?v=1"></script>
+
+    <script src="/js/single-animations.js?v=1"></script>
+
+    '
+  hostName: https://developer.mahmoudouf.com

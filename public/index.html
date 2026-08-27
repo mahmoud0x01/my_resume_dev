@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta name="generator" content="Hugo 0.162.1"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1314&amp;path=livereload" data-no-instant defer></script><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+<link rel="icon" href=/fav.png type="image/gif">
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+>
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      media="print" onload="this.media='all'" />
+<noscript>
+  <link
+          href="https://fonts.googleapis.com/css2?family=Alata&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+          rel="stylesheet">
+</noscript>
+
+
+<link rel="stylesheet" href="/css/font.css" media="all">
+
+
+<script data-goatcounter="https://0xkernel.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+
+
+<meta property="og:url" content="http://localhost:1314/">
+	<meta property="og:site_name" content="Mahmoud - Full Stack Developer">
+	<meta property="og:title" content="Mahmoud - Full Stack Developer">
+	<meta property="og:description" content="Full Stack Developer &amp; DevOps Engineer building end-to-end web applications. I create scalable solutions from frontend to infrastructure, with Python, Django, modern frontend, and DevOps practices.">
+	<meta property="og:locale" content="en_us">
+	<meta property="og:type" content="website">
+
+
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="Mahmoud - Full Stack Developer">
+	<meta name="twitter:description" content="Full Stack Developer &amp; DevOps Engineer building end-to-end web applications. I create scalable solutions from frontend to infrastructure, with Python, Django, modern frontend, and DevOps practices.">
+
+
+<link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
+<link rel="stylesheet" href="/css/footer.css" media="all">
+
+
+<link rel="stylesheet" href="/css/theme.css" media="all">
+
+<style>
+    :root {
+        --text-color: #343a40;
+        --text-secondary-color: #6c757d;
+        --text-link-color: #007bff;
+        --background-color: #eaedf0;
+        --secondary-background-color: #64ffda1a;
+        --primary-color: #007bff;
+        --secondary-color: #f8f9fa;
+
+         
+        --text-color-dark: #e4e6eb;
+        --text-secondary-color-dark: #b0b3b8;
+        --text-link-color-dark: #ffffff;
+        --background-color-dark: #18191a;
+        --secondary-background-color-dark: #212529;
+        --primary-color-dark: #ffffff;
+        --secondary-color-dark: #212529;
+    }
+    body {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    html {
+        background-color: var(--background-color) !important;
+    }
+
+    body::-webkit-scrollbar {
+        height: 0px;
+        width: 8px;
+        background-color: var(--background-color);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 1rem;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 1rem;
+        background: #b0b0b0;
+        outline: 1px solid var(--background-color);
+    }
+
+    #search-content::-webkit-scrollbar {
+        width: .5em;
+        height: .1em;
+        background-color: var(--background-color);
+    }
+</style>
+
+
+
+<meta name="description" content="Full Stack Developer &amp; DevOps Engineer building end-to-end web applications. I create scalable solutions from frontend to infrastructure, with Python, Django, modern frontend, and DevOps practices.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/index.css" media="all">
+<link rel="stylesheet" href="/css/projects.css" media="all">
+<link rel="stylesheet" href="/css/courses.css" media="all">
+<link rel="stylesheet" href="/css/custom.css" media="all">
+<link rel="stylesheet" href="/css/design.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/threejs-effects.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/portfolio-graph.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/portfolio-panel.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/single-animations.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/terminal.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/code.css?v=1787799755" media="all">
+<link rel="stylesheet" href="/css/recruiter.css?v=1787799755" media="all">
+
+
+<script defer src="/fontawesome-6/all-6.4.2.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+
+  
+  
+
+  <title>
+Mahmoud - Full Stack Developer
+
+  </title>
+</head>
+
+<body class="light">
+  
+  
+<script>
+    let localStorageValue = localStorage.getItem("pref-theme");
+    let mediaQuery = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    switch (localStorageValue) {
+        case "dark":
+            document.documentElement.classList.add('dark');
+            document.body.classList.add('dark');
+            break;
+        case "light":
+            document.body.classList.remove('dark');
+            document.documentElement.classList.remove('dark');
+            break;
+        default:
+            if (mediaQuery) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+            }
+            break;
+    }
+</script>
+
+
+
+
+<script>
+    var prevScrollPos = window.pageYOffset;
+    window.addEventListener("scroll", function showHeaderOnScroll() {
+        let profileHeaderElem = document.getElementById("profileHeader");
+        let currentScrollPos = window.pageYOffset;
+        let resetHeaderStyle = false;
+        let showNavBarOnScrollUp =  true ;
+        let showNavBar = showNavBarOnScrollUp ? prevScrollPos > currentScrollPos : currentScrollPos > 0;
+        if (showNavBar) {
+            profileHeaderElem.classList.add("showHeaderOnTop");
+        } else {
+            resetHeaderStyle = true;
+        }
+        if(currentScrollPos === 0) {
+            resetHeaderStyle = true;
+        }
+        if(resetHeaderStyle) {
+            profileHeaderElem.classList.remove("showHeaderOnTop");
+        }
+        prevScrollPos = currentScrollPos;
+    });
+</script>
+
+
+
+<header id="profileHeader">
+    <nav class="navbar navbar-expand-lg animate">
+        <div class="container-fluid mx-xs-2 mx-sm-4 mx-md-5 mx-lg-5 px-lg-4">
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg aria-hidden="true" height="24" viewBox="0 0 16 16" version="1.1" width="24">
+                    <path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 110 1.5H1.75A.75.75 0 011 7.75zM1.75 12a.75.75 0 100 1.5h12.5a.75.75 0 100-1.5H1.75z"></path>
+                </svg>
+            </button>
+
+            
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto text-center nav-center-links">
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#about">
+                            About Me
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#experience">
+                            Experience
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#education">
+                            Education
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#projects">
+                            Projects
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#awards">
+                            Competitions &amp; Recognition
+                        </a>
+                    </li>
+                    
+
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#contact">
+                            Let&#39;s build something
+                        </a>
+                    </li>
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    <li class="nav-item">
+                        <a class="nav-link nav-page-link" href="/#writing">Blog</a>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+
+            
+            <ul class="navbar-nav nav-social-links align-items-center">
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">
+                         <i class="fab fa-github"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://www.linkedin.com/in/mahmoudadelOx01/" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn profile">
+                         <i class="fab fa-linkedin"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://instagram.com/0xkernel" target="_blank" rel="noopener noreferrer" aria-label="Open Instagram profile">
+                         <i class="fab fa-instagram"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                 
+                 
+                 
+                 
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="https://t.me/rdmsr" target="_blank" rel="noopener noreferrer" aria-label="Open Telegram profile">
+                         <i class="fab fa-telegram"></i>
+                     </a>
+                 </li>
+                
+                
+                 
+                
+                 
+
+                 
+                 <li class="nav-item">
+                     <a class="nav-resume-link" href="/MahmoudAdel_Cybersecurity_Resume.pdf" download aria-label="Download Mahmoud Adel's résumé">Résumé</a>
+                 </li>
+
+                 
+                 <li class="nav-item">
+                     <a class="nav-link nav-social-icon" href="mailto:contact@mahmoudouf.com" aria-label="Email me">
+                         <i class="fa fa-envelope"></i>
+                     </a>
+                </li>
+
+
+                
+                 
+                 <li class="nav-item">
+                     <button id="theme-toggle" class="nav-theme-btn" type="button" aria-label="Toggle color theme">
+                         <svg id="moon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                         </svg>
+                         <svg id="sun" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="5"></circle>
+                            <line x1="12" y1="1" x2="12" y2="3"></line>
+                            <line x1="12" y1="21" x2="12" y2="23"></line>
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                            <line x1="1" y1="12" x2="3" y2="12"></line>
+                            <line x1="21" y1="12" x2="23" y2="12"></line>
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                        </svg>
+                    </button>
+                </li>
+                
+            </ul>
+        </div>
+    </nav>
+</header>
+<div id="content">
+    <main id="main-content">
+<section id="hero" class="recruiter-hero" aria-labelledby="hero-title">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    <div class="hero-recruiter-shell">
+        <div class="hero-recruiter-content">
+            <p class="hero-eyebrow">OPEN TO WORK · FULL STACK DEVELOPER</p>
+            <p class="hero-status-chip" role="status">
+                <span class="hero-status-dot" aria-hidden="true"></span>
+                Open to full-stack &amp; DevOps opportunities
+            </p>
+            <h1 id="hero-title">Mahmoud Adel</h1>
+            <p class="hero-role-line">Full Stack Developer &amp; DevOps Engineer</p>
+            <p class="hero-value-proposition">
+                Full Stack Developer building end-to-end web applications and scalable infrastructure. I transform ideas into production-ready solutions using Python, Django, modern frontend technologies, and DevOps practices.
+            </p>
+
+            <div class="hero-proof-grid" aria-label="Selected proof points">
+                <article class="hero-proof-card">
+                    <strong>10+ Projects</strong>
+                    <span>Shipped to production</span>
+                </article>
+                <article class="hero-proof-card">
+                    <strong>Top 5 / 100</strong>
+                    <span>Engineering competition</span>
+                </article>
+                <article class="hero-proof-card">
+                    <strong>Full-stack</strong>
+                    <span>Frontend to infrastructure</span>
+                </article>
+            </div>
+
+            <div class="hero-actions">
+                <a class="hero-action hero-action-primary" href="/MahmoudAdel_Cybersecurity_Resume.pdf" download>
+                    <i class="fas fa-file-arrow-down" aria-hidden="true"></i>
+                    Download résumé
+                </a>
+                <a class="hero-action hero-action-secondary" href="#experience">View experience</a>
+                <a class="hero-action hero-action-text" href="mailto:contact@mahmoudouf.com">Email me</a>
+            </div>
+
+            <nav class="hero-micro-links" aria-label="Mahmoud Adel profile links">
+                <span class="hero-location"><i class="fas fa-location-dot" aria-hidden="true"></i>Alexandria, Egypt</span>
+                <a href="https://www.linkedin.com/in/mahmoudadelOx01/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+        </div>
+
+        <aside class="hero-identity-card" aria-label="Mahmoud Adel identity card">
+            <div class="identity-card-meta">
+                <span>Profile / 01</span>
+                <span>Code + infrastructure</span>
+            </div>
+            <img class="hero-portrait" src="/images/me-avatar.png" alt="Portrait of Mahmoud Adel, full-stack developer" width="320" height="320">
+            <div class="identity-card-info">
+                <p class="identity-card-name">Mahmoud Adel</p>
+                <p class="identity-card-role">Full Stack Developer &amp; DevOps Engineer</p>
+                <dl>
+                    <div>
+                        <dt>Based in</dt>
+                        <dd>Alexandria, Egypt</dd>
+                    </div>
+                    <div>
+                        <dt>Focus</dt>
+                        <dd>Frontend, backend &amp; DevOps</dd>
+                    </div>
+                </dl>
+            </div>
+        </aside>
+    </div>
+
+    <div class="hero-graph-intro" aria-labelledby="capability-map-title">
+        <div>
+            <p class="hero-section-kicker">Proof layer</p>
+            <h2 id="capability-map-title">Interactive capability map</h2>
+        </div>
+        <p id="capability-map-description">Click a node for evidence · switch to list view for a recruiter scan</p>
+    </div>
+
+    <div class="graph-view-controls" role="group" aria-label="Capability map view mode">
+        <span class="graph-view-controls-label">View</span>
+        <button id="graph-list-toggle" class="graph-view-btn" type="button" aria-controls="portfolio-constellation portfolio-list-view" aria-pressed="false" aria-label="Toggle capability map view">Switch to List View</button>
+    </div>
+
+    <div class="constellation-wrap" role="region" aria-labelledby="capability-map-title" aria-describedby="capability-map-description">
+        <div id="portfolio-constellation"></div>
+        
+        <div class="constellation-legend" role="list" aria-label="Capability map legend">
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-scripting)" aria-hidden="true"></span> Development</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-sysadmin)" aria-hidden="true"></span> DevOps &amp; Cloud</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-experience)" aria-hidden="true"></span> Experience</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-awards)" aria-hidden="true"></span> Recognition</span>
+        </div>
+    </div>
+
+    
+    <div id="portfolio-list-view" class="portfolio-list-view" aria-label="Capability map list view"></div>
+
+    <noscript>
+        <div class="hero-noscript">
+            <strong>Mahmoud Adel</strong>
+            <span>Full Stack Developer &amp; DevOps Engineer</span>
+            <div class="hero-noscript-links">
+                <a href="/MahmoudAdel_Cybersecurity_Resume.pdf" download>Download résumé</a>
+                <a href="#experience">View experience</a>
+                <a href="mailto:contact@mahmoudouf.com">Email me</a>
+                <a href="https://www.linkedin.com/in/mahmoudadelOx01/" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/mahmoud0x01" rel="noopener noreferrer">GitHub</a>
+            </div>
+        </div>
+    </noscript>
+</section>
+
+
+
+
+<section id="about" class="recruiter-section recruiter-about" aria-labelledby="about-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Context</p>
+            <h2 id="about-title">About Me</h2>
+            <p class="section-dek">A practical engineering perspective spanning product, infrastructure, and operations.</p>
+        </div>
+
+        <div class="about-layout">
+            <figure class="about-portrait-card image">
+                <img src="/images/me-avatar.png" alt="Mahmoud Adel working across software and systems engineering" loading="lazy">
+                <figcaption>Building products end to end.</figcaption>
+            </figure>
+
+            <div class="about-copy content">
+                <div class="about-content">
+                    <p>I&rsquo;m a Full Stack Developer and DevOps Engineer passionate about building production-ready applications that solve real problems. My expertise spans the entire development stack—from crafting intuitive user interfaces to designing robust backend APIs and deploying scalable infrastructure.</p>
+<p>I specialize in Python-based full-stack development, creating end-to-end solutions with Django, FastAPI, and modern frontend technologies. I&rsquo;ve built complete web applications with real-time features, comprehensive REST APIs, automated business systems, and financial management platforms.</p>
+<p>On the DevOps side, I design and implement CI/CD pipelines, containerize applications with Docker, manage cloud infrastructure, and ensure reliable deployments. My approach centers on writing clean, maintainable code while following industry best practices across the entire development lifecycle.</p>
+<p>I&rsquo;m currently seeking opportunities to contribute to impactful products and continue growing as a full-stack engineer.</p>
+
+                </div>
+
+                <div class="about-proof-grid" aria-label="Career proof points">
+                    
+                    
+                    
+                    
+                    
+                    <article class="about-proof-card">
+                        <strong>10&#43;</strong>
+                        <span>Projects Shipped</span>
+                        
+                    </article>
+                    
+                    
+                    
+                    
+                    <article class="about-proof-card">
+                        <strong>2</strong>
+                        <span>Internships</span>
+                        
+                    </article>
+                    
+                    
+                    
+                    
+                    <article class="about-proof-card">
+                        <strong>BSc</strong>
+                        <span>Software Engineering</span>
+                        
+                    </article>
+                    
+                    
+                </div>
+
+                
+                <div class="about-focus-area">
+                    <div class="subsection-heading">
+                        <p class="section-kicker">Focus areas</p>
+                        <h3>Where I contribute</h3>
+                    </div>
+                    <div class="focus-area-grid">
+                        
+                        
+                        
+                        <article class="focus-area-card">
+                            <i class="fas fa-palette" aria-hidden="true"></i>
+                            <h4>Frontend</h4>
+                            
+                            
+                            <ul class="focus-area-items">
+                                <li>React</li><li>Vue</li><li>Next.js</li><li>Tailwind CSS</li>
+                            </ul>
+                            
+                        </article>
+                        
+                        
+                        
+                        <article class="focus-area-card">
+                            <i class="fas fa-server" aria-hidden="true"></i>
+                            <h4>Backend</h4>
+                            
+                            
+                            <ul class="focus-area-items">
+                                <li>Django</li><li>FastAPI</li><li>REST API</li><li>GraphQL</li>
+                            </ul>
+                            
+                        </article>
+                        
+                        
+                        
+                        <article class="focus-area-card">
+                            <i class="fas fa-cloud" aria-hidden="true"></i>
+                            <h4>DevOps &amp; Cloud</h4>
+                            
+                            
+                            <ul class="focus-area-items">
+                                <li>Docker</li><li>Kubernetes</li><li>CI/CD</li><li>AWS</li>
+                            </ul>
+                            
+                        </article>
+                        
+                    </div>
+                </div>
+                
+
+                
+                <div class="about-languages">
+                    <div class="subsection-heading">
+                        <p class="section-kicker">Communication</p>
+                        <h3>Language Proficiency:</h3>
+                    </div>
+                    <dl class="language-list">
+                        
+                        <div>
+                            <dt class="fw-bold">Arabic</dt>
+                            <dd class="text-secondary">Native</dd>
+                        </div>
+                        
+                        <div>
+                            <dt class="fw-bold">English</dt>
+                            <dd class="text-secondary">C2 — Proficient</dd>
+                        </div>
+                        
+                        <div>
+                            <dt class="fw-bold">Russian</dt>
+                            <dd class="text-secondary">C1 — Advanced</dd>
+                        </div>
+                        
+                    </dl>
+                </div>
+                
+
+                
+                <div class="about-skills">
+                    <div class="subsection-heading">
+                        <p class="section-kicker">Toolkit</p>
+                        <h3>Technical Skills:</h3>
+                    </div>
+                    <ul class="skills-list" aria-label="Technologies and skills">
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Python</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Django</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>FastAPI</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>C#</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>ASP.NET Core</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>PostgreSQL</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>SQLAlchemy</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>REST API</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>WebSockets</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Docker</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>GitHub Actions</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>CI/CD</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Linux</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Linux Server Administration</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Git</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>HTML5</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>CSS3</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>OOP</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>SQL</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Unit Testing</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Information Security</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>JavaScript</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Telegram Bots</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>PyQt6</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>AI / ML</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Tailwind CSS</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Nginx</li>
+                        
+                        <li class="badge skill-item"><span class="skill-marker" aria-hidden="true"></span>Cloud</li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section id="experience" class="py-5">
+    <div class="container">
+        <h3 class="text-center">Experience</h3>
+        <div class="experience-timeline">
+            
+            
+            <div class="timeline-item timeline-item--first">
+                
+                <div class="timeline-left">
+                    <span class="timeline-date">Feb 2025 - Present</span>
+                    
+                     <a href="https://www.tsu.ru" target="_blank" rel="noopener noreferrer" class="timeline-company">Tomsk State University</a>
+                    
+                </div>
+                
+                <div class="timeline-center">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-line"></div>
+                </div>
+                
+                <div class="timeline-right">
+                    <div class="timeline-card">
+                        <h4 class="timeline-role">Software Engineer Intern</h4>
+                        <div class="timeline-body">
+                            <p>Designing and developing software solutions for university research projects.</p>
+<p>Responsibilities:</p>
+<ul>
+<li>Designing and developing software solutions within university research projects</li>
+<li>Creating technical documentation according to academic standards</li>
+<li>Developing architectural diagrams and visualizing software system structures (UML, component diagrams, activity diagrams)</li>
+<li>Participating in the full software development lifecycle</li>
+</ul>
+<p>Achievements:</p>
+<ul>
+<li>Independently developed and implemented innovative software projects with complete technical documentation</li>
+<li>Created detailed architectural diagrams for visualizing system structure and component interactions</li>
+<li>Prepared academic documentation meeting scientific publication standards</li>
+</ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+            
+            <div class="timeline-item ">
+                
+                <div class="timeline-left">
+                    <span class="timeline-date">May 2024 - Sep 2024</span>
+                    
+                    <span class="timeline-company">Bastion Cybersec Solutions</span>
+                    
+                </div>
+                
+                <div class="timeline-center">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-line"></div>
+                </div>
+                
+                <div class="timeline-right">
+                    <div class="timeline-card">
+                        <h4 class="timeline-role">Application Security Intern</h4>
+                        <div class="timeline-body">
+                            <p>Worked on application security testing and vulnerability assessment for web applications and network infrastructure.</p>
+<ul>
+<li>Conducted security assessments on web applications, identifying and documenting vulnerabilities in authentication, authorization, and data handling systems.</li>
+<li>Performed code reviews and security analysis of backend APIs and database configurations.</li>
+<li>Collaborated with development teams to implement secure coding practices and fix identified security issues.</li>
+<li>Ranked Top 5 among 100 participants in internal security competitions, demonstrating strong problem-solving and technical skills.</li>
+<li>Gained hands-on experience with security testing tools and methodologies applicable to secure software development.</li>
+</ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+</section>
+
+
+
+<section id="writing" class="recruiter-section recruiter-writing" aria-labelledby="writing-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Notes & research</p>
+            <h2 id="writing-title">Selected writing</h2>
+            <p class="section-dek">Short, practical write-ups on software engineering, DevOps, and infrastructure.</p>
+        </div>
+
+
+
+        <div class="writing-grid">
+            
+            
+            
+            <article class="writing-card">
+                <time datetime="2025-01-10">Jan 10, 2025</time>
+                <h3><a href="/blogs/github-actions-python-cicd/">Setting Up CI/CD with GitHub Actions for Python Projects</a></h3>
+                <p>A practical guide to automating your Python project workflow with GitHub Actions - from testing to deployment</p>
+                
+                <ul class="writing-tags" aria-label="Topics">
+                    <li>DevOps</li><li>CI/CD</li>
+                </ul>
+                
+                <a class="writing-read-link" href="/blogs/github-actions-python-cicd/" aria-label="Read Setting Up CI/CD with GitHub Actions for Python Projects">
+                    Read article <span aria-hidden="true">→</span>
+                </a>
+            </article>
+            
+            
+            
+            <article class="writing-card">
+                <time datetime="2025-01-05">Jan 5, 2025</time>
+                <h3><a href="/blogs/docker-compose-development/">Using Docker Compose for Local Development</a></h3>
+                <p>How to use Docker Compose to create reproducible development environments for your web applications</p>
+                
+                <ul class="writing-tags" aria-label="Topics">
+                    <li>DevOps</li><li>Docker</li>
+                </ul>
+                
+                <a class="writing-read-link" href="/blogs/docker-compose-development/" aria-label="Read Using Docker Compose for Local Development">
+                    Read article <span aria-hidden="true">→</span>
+                </a>
+            </article>
+            
+            
+            
+            <article class="writing-card">
+                <time datetime="2024-12-20">Dec 20, 2024</time>
+                <h3><a href="/blogs/linux-server-security-basics/">Linux Server Security: Essential Hardening Steps</a></h3>
+                <p>A practical guide to securing your Linux server - from SSH hardening to firewall configuration</p>
+                
+                <ul class="writing-tags" aria-label="Topics">
+                    <li>DevOps</li><li>Linux</li>
+                </ul>
+                
+                <a class="writing-read-link" href="/blogs/linux-server-security-basics/" aria-label="Read Linux Server Security: Essential Hardening Steps">
+                    Read article <span aria-hidden="true">→</span>
+                </a>
+            </article>
+            
+        </div>
+
+        <p class="writing-archive-link">
+            <a class="writing-read-link" href="/blogs/">Browse all writing <span aria-hidden="true">→</span></a>
+        </p>
+    </div>
+</section>
+
+<section id="education" class="py-5">
+    <div class="container">
+        <h3 class="text-center">Education</h3>
+        <div class="row justify-content-center py-5">
+            
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>Sep 2022 - Jul 2026</small>
+                                </div>
+                                <h5 class="card-title">Bachelor&#39;s in Software Engineering</h5>
+                                
+                                
+                                <a href="https://www.tsu.ru" target="_blank">
+                                    <h6>
+                                    Tomsk State University
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+<section id="courses" class="py-5">
+    <div class="container">
+        <h3 class="text-center">Professional Development, Courses</h3>
+        <div class="row justify-content-center py-5">
+            
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2024</small>
+                                </div>
+                                <h5 class="card-title">Docker &amp; Kubernetes: The Complete Guide</h5>
+                                
+                                
+                                 <a href="https://www.udemy.com" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Udemy
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2024</small>
+                                </div>
+                                <h5 class="card-title">Python for DevOps</h5>
+                                
+                                
+                                 <a href="https://www.linkedin.com/learning" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    LinkedIn Learning
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2024</small>
+                                </div>
+                                <h5 class="card-title">DevOps 101</h5>
+                                
+                                
+                                 <a href="https://www.udemy.com" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Udemy
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2024</small>
+                                </div>
+                                <h5 class="card-title">PostgreSQL: Advanced Queries</h5>
+                                
+                                
+                                 <a href="https://www.coursera.org" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Coursera
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2024</small>
+                                </div>
+                                <h5 class="card-title">Linux Administration &amp; Shell Scripting</h5>
+                                
+                                
+                                 <a href="https://www.udemy.com" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Udemy
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2023</small>
+                                </div>
+                                <h5 class="card-title">REST APIs with Django &amp; Python</h5>
+                                
+                                
+                                 <a href="https://www.udemy.com" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Udemy
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2023</small>
+                                </div>
+                                <h5 class="card-title">Git &amp; GitHub Complete Masterclass</h5>
+                                
+                                
+                                 <a href="https://www.udemy.com" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Udemy
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 p-0">
+                <div class="row row align-items-center justify-content-center m-1 mb-4">
+                    
+
+                    <div class="col-md-9">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="float-end">
+                                    <small>2020</small>
+                                </div>
+                                <h5 class="card-title">CCNA</h5>
+                                
+                                
+                                 <a href="https://www.cisco.com" target="_blank" rel="noopener noreferrer">
+                                    <h6>
+                                    Cisco
+                                    </h6>
+                                </a>
+                                
+
+                                
+                                <div class="py-1 education-content">
+                                    
+                                </div>
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section id="projects" class="recruiter-section recruiter-projects" aria-labelledby="projects-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Selected work</p>
+            <h2 id="projects-title">Projects</h2>
+            <p class="section-dek">A selection of builds that show how I turn ideas into working products — from desktop apps to full-stack platforms.</p>
+        </div>
+
+        <div class="projects-grid">
+            
+            
+            
+            
+            <article class="project-card">
+                <div class="project-card-topline">
+                    <span class="project-index">01</span>
+                    <span class="project-type">Featured build</span>
+                </div>
+                <h3>ALBrowser - Modern Desktop Web Browser</h3>
+                <div class="project-description">A modern, privacy-focused desktop web browser built from scratch with Python and PyQt6, featuring a Chromium-based engine, dark UI, tab groups, and .deb packaging.</div>
+                
+                <ul class="project-tech" aria-label="Technologies used in ALBrowser - Modern Desktop Web Browser">
+                    <li>Python</li><li>PyQt6</li><li>QtWebEngine</li><li>Chromium</li><li>Desktop App</li><li>Linux</li>
+                </ul>
+                
+
+                <div class="project-actions">
+                    
+                    
+                    
+                    <a href="https://github.com/mahmoud0x01/albrowser" target="_blank" rel="noopener noreferrer" aria-label="View ALBrowser - Modern Desktop Web Browser source on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
+                    </a>
+                    
+                    
+                    
+                </div>
+            </article>
+            
+            
+            
+            
+            <article class="project-card">
+                <div class="project-card-topline">
+                    <span class="project-index">02</span>
+                    <span class="project-type">Featured build</span>
+                </div>
+                <h3>CashFlow - Financial Management System</h3>
+                <div class="project-description">Django web application for managing cash flow records with support for statuses, types, categories, and subcategories.</div>
+                
+                <ul class="project-tech" aria-label="Technologies used in CashFlow - Financial Management System">
+                    <li>Python</li><li>Django</li><li>SQLite3</li><li>Bootstrap</li>
+                </ul>
+                
+
+                <div class="project-actions">
+                    
+                    
+                    
+                    <a href="https://github.com/mahmoud0x01/finance_management_system" target="_blank" rel="noopener noreferrer" aria-label="View CashFlow - Financial Management System source on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
+                    </a>
+                    
+                    
+                    
+                </div>
+            </article>
+            
+            
+            
+            
+            <article class="project-card">
+                <div class="project-card-topline">
+                    <span class="project-index">03</span>
+                    <span class="project-type">Featured build</span>
+                </div>
+                <h3>Team Work Platform</h3>
+                <div class="project-description">A full-stack team collaboration platform built with FastAPI, SQLAlchemy, Jinja2, and Vanilla JavaScript with dashboards, kanban workflows, analytics, notifications, and export tools.</div>
+                
+                <ul class="project-tech" aria-label="Technologies used in Team Work Platform">
+                    <li>Python</li><li>FastAPI</li><li>SQLAlchemy</li><li>Jinja2</li><li>JWT</li><li>Full Stack</li>
+                </ul>
+                
+
+                <div class="project-actions">
+                    
+                    
+                    
+                    <a href="https://github.com/mahmoud0x01/Team-Work-platform" target="_blank" rel="noopener noreferrer" aria-label="View Team Work Platform source on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
+                    </a>
+                    
+                    
+                    
+                </div>
+            </article>
+            
+            
+            
+            
+            <article class="project-card">
+                <div class="project-card-topline">
+                    <span class="project-index">04</span>
+                    <span class="project-type">Featured build</span>
+                </div>
+                <h3>TicketPro - Support Ticket Management System</h3>
+                <div class="project-description">Full Stack Support Ticket Management System with real-time features, ticket tracking, and role-based access control.</div>
+                
+                <ul class="project-tech" aria-label="Technologies used in TicketPro - Support Ticket Management System">
+                    <li>Python</li><li>Django</li><li>Django REST Framework</li><li>WebSockets</li><li>PostgreSQL</li><li>Tailwind CSS</li>
+                </ul>
+                
+
+                <div class="project-actions">
+                    
+                    
+                    
+                    <a href="https://github.com/mahmoud0x01/Ticket_Support_full_stack" target="_blank" rel="noopener noreferrer" aria-label="View TicketPro - Support Ticket Management System source on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
+                    </a>
+                    
+                    
+                    
+                </div>
+            </article>
+            
+            
+            
+            
+            <article class="project-card">
+                <div class="project-card-topline">
+                    <span class="project-index">05</span>
+                    <span class="project-type">Featured build</span>
+                </div>
+                <h3>CI/CD Pipeline for Python Applications</h3>
+                <div class="project-description">Complete CI/CD pipeline setup using GitHub Actions for automated testing, Docker builds, and deployment.</div>
+                
+                <ul class="project-tech" aria-label="Technologies used in CI/CD Pipeline for Python Applications">
+                    <li>DevOps</li><li>GitHub Actions</li><li>Docker</li><li>CI/CD</li><li>Python</li>
+                </ul>
+                
+
+                <div class="project-actions">
+                    
+                    
+                    
+                    <a href="https://github.com/mahmoud0x01/Ticket_Support_full_stack" target="_blank" rel="noopener noreferrer" aria-label="View CI/CD Pipeline for Python Applications source on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
+                    </a>
+                    
+                    
+                    
+                </div>
+            </article>
+            
+            
+            
+            
+            <article class="project-card">
+                <div class="project-card-topline">
+                    <span class="project-index">06</span>
+                    <span class="project-type">Featured build</span>
+                </div>
+                <h3>Full Stack Restaurant Delivery Web Application</h3>
+                <div class="project-description">Full Stack API project for an online restaurant delivery service with complete authentication, dish management, shopping cart, and ratings.</div>
+                
+                <ul class="project-tech" aria-label="Technologies used in Full Stack Restaurant Delivery Web Application">
+                    <li>C#</li><li>.NET</li><li>PostgreSQL</li><li>JavaScript</li><li>HTML/CSS</li>
+                </ul>
+                
+
+                <div class="project-actions">
+                    
+                    
+                    
+                    <a href="https://github.com/mahmoud0x01/restaurant_website" target="_blank" rel="noopener noreferrer" aria-label="View Full Stack Restaurant Delivery Web Application source on GitHub">
+                        <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
+                    </a>
+                    
+                    
+                    
+                </div>
+            </article>
+            
+        </div>
+
+        <a class="projects-all-link" href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer">
+            Browse all work on GitHub <span aria-hidden="true">→</span>
+        </a>
+    </div>
+</section>
+
+
+<section id="achievements" class="recruiter-section recruiter-achievements" aria-labelledby="achievements-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Verified learning</p>
+            <h2 id="achievements-title">Digital Certificates</h2>
+            <p class="section-dek">Structured training that complements hands-on engineering and platform work.</p>
+        </div>
+        <div class="credentials-grid">
+            
+            
+            <article class="credential-card">
+                
+                <div class="credential-card-copy">
+                    <h3>Introduction to DevOps Certificate</h3>
+                    <p>Certificate in Introduction to DevOps, covering fundamental DevOps principles and practices.</p>
+                    
+                    <a href="https://www.ibm.com" target="_blank" rel="noopener noreferrer">View credential <span aria-hidden="true">↗</span></a>
+                    
+                </div>
+            </article>
+            
+            
+            <article class="credential-card">
+                
+                <div class="credential-card-copy">
+                    <h3>Google Cloud Fundamentals: Core Infrastructure</h3>
+                    <p>Certificate in Google Cloud Fundamentals covering core infrastructure concepts and services.</p>
+                    
+                    <a href="https://www.google.com" target="_blank" rel="noopener noreferrer">View credential <span aria-hidden="true">↗</span></a>
+                    
+                </div>
+            </article>
+            
+        </div>
+    </div>
+</section>
+
+
+<section id="awards" class="py-5">
+    <div class="container">
+        <h3 class="text-center">Competitions &amp; Recognition</h3>
+        <div class="experience-timeline pt-4">
+            
+            <div class="timeline-item timeline-item--first">
+                
+                <div class="timeline-left">
+                    <span class="timeline-date">August 2024</span>
+                    <span class="award-badge">
+                        <i class="fas fa-flag-checkered"></i>
+                        
+                    </span>
+                </div>
+                
+                <div class="timeline-center">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-line"></div>
+                </div>
+                
+                <div class="timeline-right">
+                    <div class="timeline-card">
+                        <h4 class="timeline-role">Top 5 / 100 — Internal Engineering Competition</h4>
+                        <div class="timeline-body">
+                            Ranked Top 5 among 100 participants in Bastion&#39;s internal engineering competition, demonstrating strong problem-solving and technical skills.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+
+
+
+<section id="contact" class="recruiter-section recruiter-contact" aria-labelledby="contact-title">
+    <div class="recruiter-container">
+        <div class="contact-card">
+            <div>
+                <p class="section-kicker">Next conversation</p>
+                <h2 id="contact-title">Let&#39;s build something</h2>
+                
+                <div class="contact-copy">My inbox is always open. Whether you have a question, a project idea, or just want to say hi, I&rsquo;ll try my best to get back to you!</div>
+                
+            </div>
+            <div class="contact-links" aria-label="Contact links">
+                <a class="contact-link contact-link-primary" href="mailto:contact@mahmoudouf.com">
+                    <i class="fas fa-envelope" aria-hidden="true"></i> Email me
+                </a>
+                <a class="contact-link" href="https://www.linkedin.com/in/mahmoudadelOx01/" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn
+                </a>
+                <a class="contact-link" href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-github" aria-hidden="true"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+  </div><footer>
+    
+    <div class="container">
+        <div class="footer-inner">
+            
+            <div class="footer-col">
+                <p class="footer-col-title">links</p>
+                
+                <a href="/#about">About</a>
+                
+                
+                <a href="/#experience">Experience</a>
+                
+                
+                <a href="/#education">Education</a>
+                
+                
+                <a href="/#projects">Projects</a>
+                
+                
+                <a href="/#achievements">Achievements</a>
+                
+                
+                <a href="/#awards">Awards</a>
+                
+            </div>
+
+            
+            <div class="footer-col">
+                <p class="footer-col-title">networks</p>
+                
+                <a href="https://github.com/mahmoud0x01" target="_blank" rel="noopener noreferrer">GitHub</a>
+                
+                
+                <a href="https://www.linkedin.com/in/mahmoudadelOx01/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                <a href="https://instagram.com/0xkernel" target="_blank" rel="noopener noreferrer">Instagram</a>
+                
+                
+                
+                <a href="https://t.me/rdmsr" target="_blank" rel="noopener noreferrer">Telegram</a>
+                
+                
+                
+                
+                
+                
+                <a href="mailto:contact@mahmoudouf.com">Email</a>
+            </div>
+        </div>
+
+        <div class="footer-copyright">
+            &copy; 2026 Mahmoud — All rights reserved
+        </div>
+    </div>
+</footer>
+<script src="/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark');
+        document.documentElement.classList.remove('dark');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        document.body.classList.add('dark');
+    }
+</script>
+<script>
+    var themeToggle = document.getElementById("theme-toggle");
+    if (themeToggle) {
+        themeToggle.addEventListener("click", function () {
+            var isDark = document.body.className.includes("dark");
+            document.body.classList.toggle('dark', !isDark);
+            document.documentElement.classList.toggle('dark', !isDark);
+            localStorage.setItem("pref-theme", isDark ? 'light' : 'dark');
+            themeToggle.setAttribute('aria-pressed', String(!isDark));
+        });
+        themeToggle.setAttribute('aria-pressed', String(document.body.className.includes("dark")));
+    }
+
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+        tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    }
+</script>
+<script src="/js/search.js"></script>
+<script src="/js/portfolio-graph-data.js?v=7"></script>
+<script src="/js/graph-background.js?v=1"></script>
+<script src="/js/portfolio-panel.js?v=4"></script>
+<script src="/js/portfolio-graph.js?v=9"></script>
+<script src="/js/terminal.js?v=1"></script>
+<script src="/js/scroll-animations.js?v=1"></script>
+<script src="/js/single-animations.js?v=1"></script>
+
+
+  <section id="search-content" class="py-2">
+    <div class="container" id="search-results"></div>
+  </section>
+</body>
+
+</html>
