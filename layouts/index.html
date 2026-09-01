@@ -1,5 +1,8 @@
 {{ define "head" }}
 <meta name="description" content="{{ .Site.Params.description }}">
+{{ with .Site.Params.keywords }}<meta name="keywords" content="{{ . }}">{{ end }}
+<link rel="canonical" href="{{ .Permalink }}">
+{{/* twitter:card + og:image handled by _internal/twitter_cards + opengraph via site params.images (hugo.yaml) — manual tags removed to avoid duplicate twitter:card (was summary vs summary_large_image) */}}
 {{ $staticPath := .Site.Params.staticPath | default "" }}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +29,7 @@
 {{ end }}
 
 {{ define "title" }}
-{{ .Site.Title }}
+{{ .Site.Params.title | default .Site.Title }}
 {{ end }}
 
 {{ define "main" }}
@@ -37,6 +40,10 @@
 {{- partial "sections/education.html" . -}}
 {{- partial "sections/courses.html" . -}}
 {{- partial "sections/projects.html" . -}}
+{{- if .Site.Params.infrastructure.enable | default true }}{{ partial "sections/infrastructure.html" . }}{{ end }}
+{{- if .Site.Params.lifecycle.enable | default true }}{{ partial "sections/lifecycle.html" . }}{{ end }}
+{{- if .Site.Params.securityBackground.enable | default true }}{{ partial "sections/security-background.html" . }}{{ end }}
+{{- if .Site.Params.engineeringPath.enable | default true }}{{ partial "sections/engineering-path.html" . }}{{ end }}
 {{- partial "sections/achievements.html" . -}}
 {{- partial "sections/awards.html" . -}}
 {{- partial "sections/contact.html" . -}}

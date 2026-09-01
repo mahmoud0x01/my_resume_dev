@@ -1,6 +1,6 @@
 baseURL: https://zrun.dev/
 languageCode: en-us
-title: Mahmoud - Full Stack Developer
+title: Mahmoud Adel — Security-minded Software Engineer
 theme: hugo-profile
 outputs:
   home:
@@ -30,8 +30,11 @@ Menus:
     url: "#writing"
     weight: 1
 params:
-  title: Mahmoud - Full Stack Developer
-  description: Full Stack Developer & DevOps Engineer building end-to-end web applications. I create scalable solutions from frontend to infrastructure, with Python, Django, modern frontend, and DevOps practices.
+  title: Mahmoud Adel — Security-minded Software Engineer
+  description: "Mahmoud Adel is a security-minded software engineer: Python, Linux, Docker, CI/CD and app security. 10+ projects, 2 internships, BSc Software Engineering."
+  images:
+  - /images/me-avatar.png
+  keywords: "security-minded software engineer, Python, Django, FastAPI, Linux, Docker, Nginx, CI/CD, GitHub Actions, application security, DevOps, infrastructure"
   location: Alexandria, Egypt
   favicon: /fav.png
   useBootstrapCDN: false
@@ -61,10 +64,10 @@ params:
       disableContact: false
   hero:
     enable: true
-    intro: OPEN TO WORK · FULL STACK DEVELOPER
+    intro: OPEN TO WORK · SECURITY-MINDED SOFTWARE ENGINEER
     title: Mahmoud Adel
-    subtitle: Full Stack Developer & DevOps Engineer
-    content: Full Stack Developer building end-to-end web applications and scalable infrastructure. I transform ideas into production-ready solutions using Python, Django, modern frontend technologies, and DevOps practices.
+    subtitle: Security-minded Software Engineer
+    content: "DevOps · Infrastructure · Application Security — I build software, automate how it ships, operate the systems around it, and understand how those systems fail. My background spans software engineering, Linux infrastructure, and hands-on application security."
     image: /images/me-avatar.png
     bottomImage:
       enable: true
@@ -88,79 +91,83 @@ params:
         url: mailto:contact@mahmoudouf.com
   about:
     enable: true
-    title: About Me
+    title: Security-minded builder, systems-aware engineer
     image: /images/me-avatar.png
-    content: 'I''m a Full Stack Developer and DevOps Engineer passionate about building production-ready applications that solve real problems. My expertise spans the entire development stack—from crafting intuitive user interfaces to designing robust backend APIs and deploying scalable infrastructure.
+    content: 'I started by understanding systems from the outside — Linux, networks, infrastructure and hands-on security testing. That evolved into building software myself, where I became interested in the entire lifecycle from architecture and code to deployment and operations. Today I work across Python-based software development, Linux infrastructure, automation and application security. I''m looking for opportunities where I can contribute as a software engineer while continuing to grow toward DevOps and DevSecOps ownership.
 
-
-      I specialize in Python-based full-stack development, creating end-to-end solutions with Django, FastAPI, and modern frontend technologies. I''ve built complete web applications with real-time features, comprehensive REST APIs, automated business systems, and financial management platforms.
-
-
-      On the DevOps side, I design and implement CI/CD pipelines, containerize applications with Docker, manage cloud infrastructure, and ensure reliable deployments. My approach centers on writing clean, maintainable code while following industry best practices across the entire development lifecycle.
-
-
-      I''m currently seeking opportunities to contribute to impactful products and continue growing as a full-stack engineer.'
+      My security background informs how I build: with an awareness of how systems fail and how to make them more resilient.'
     proofPoints:
     - value: 10+
-      label: Projects Shipped
+      label: engineering projects
     - value: '2'
-      label: Internships
+      label: technical internships
+    - value: Top 5 / 100
+      label: engineering competition
     - value: BSc
       label: Software Engineering
+      detail: Tomsk State University Sep 2022–Jul 2026
     focusAreas:
-    - name: Frontend
-      icon: fas fa-palette
-      items:
-      - React
-      - Vue
-      - Next.js
-      - Tailwind CSS
-    - name: Backend
-      icon: fas fa-server
-      items:
-      - Django
-      - FastAPI
-      - REST API
-      - GraphQL
-    - name: DevOps & Cloud
-      icon: fas fa-cloud
-      items:
-      - Docker
-      - Kubernetes
-      - CI/CD
-      - AWS
-    skills:
-      enable: true
-      title: 'Technical Skills:'
+    - name: BUILD
+      icon: fas fa-code
       items:
       - Python
       - Django
       - FastAPI
-      - C#
-      - ASP.NET Core
-      - PostgreSQL
-      - SQLAlchemy
-      - REST API
+      - REST APIs
       - WebSockets
-      - Docker
-      - GitHub Actions
-      - CI/CD
+      - PostgreSQL
+      - JavaScript
+      - C#/.NET
+    - name: OPERATE
+      icon: fas fa-server
+      items:
       - Linux
       - Linux Server Administration
-      - Git
-      - HTML5
-      - CSS3
-      - OOP
-      - SQL
-      - Unit Testing
-      - Information Security
-      - JavaScript
-      - Telegram Bots
-      - PyQt6
-      - AI / ML
-      - Tailwind CSS
       - Nginx
-      - Cloud
+      - networking
+      - Docker
+      - self-hosted services
+    - name: SECURE
+      icon: fas fa-shield-halved
+      items:
+      - Application Security
+      - security testing
+      - Linux hardening
+      - secure development
+      - vulnerability assessment
+    toolkitTiers:
+    - name: Core
+      description: Daily use — verified in shipped projects and internships
+      items:
+      - Python
+      - Django
+      - FastAPI
+      - PostgreSQL
+      - Linux
+      - Docker
+      - Git
+      - GitHub Actions
+    - name: Applied
+      description: Used in production projects with documented practice
+      items:
+      - Nginx
+      - WebSockets
+      - JavaScript
+      - C#/.NET
+      - SQLAlchemy
+      - REST APIs
+    - name: Exposure
+      description: Hands-on exposure, not primary expertise — no proficiency percentages
+      items:
+      - Kubernetes
+      - AWS
+      - Redis
+      - MongoDB
+      - GraphQL
+    skills:
+      enable: false
+      title: 'Technical Skills:'
+      items: []
     languages:
       enable: true
       title: 'Language Proficiency:'
@@ -171,51 +178,22 @@ params:
         level: C2 — Proficient
       - language: Russian
         level: C1 — Advanced
+
   experience:
     enable: true
+    title: Experience
     items:
+    - company: Bastion Cybersec Solutions
+      jobs:
+      - name: Application Security Intern
+        date: May 2024 - Sep 2024
+        content: 'Conducted authorized web application and API security assessments, identifying and documenting vulnerabilities in authentication, authorization, and data handling systems. Performed code reviews and security analysis of backend APIs and database configurations. Collaborated with development teams to implement secure coding practices and fix identified security issues. Ranked Top 5 among 100 participants in internal competition, demonstrating strong problem-solving and technical skills. Gained hands-on experience with security testing tools and methodologies applicable to secure software development.'
     - company: Tomsk State University
       companyUrl: https://www.tsu.ru
       jobs:
       - name: Software Engineer Intern
         date: Feb 2025 - Present
-        content: 'Designing and developing software solutions for university research projects.
-
-
-          Responsibilities:
-
-          - Designing and developing software solutions within university research projects
-
-          - Creating technical documentation according to academic standards
-
-          - Developing architectural diagrams and visualizing software system structures (UML, component diagrams, activity diagrams)
-
-          - Participating in the full software development lifecycle
-
-
-          Achievements:
-
-          - Independently developed and implemented innovative software projects with complete technical documentation
-
-          - Created detailed architectural diagrams for visualizing system structure and component interactions
-
-          - Prepared academic documentation meeting scientific publication standards'
-    - company: Bastion Cybersec Solutions
-      jobs:
-      - name: Application Security Intern
-        date: May 2024 - Sep 2024
-        content: 'Worked on application security testing and vulnerability assessment for web applications and network infrastructure.
-
-
-          - Conducted security assessments on web applications, identifying and documenting vulnerabilities in authentication, authorization, and data handling systems.
-
-          - Performed code reviews and security analysis of backend APIs and database configurations.
-
-          - Collaborated with development teams to implement secure coding practices and fix identified security issues.
-
-          - Ranked Top 5 among 100 participants in internal security competitions, demonstrating strong problem-solving and technical skills.
-
-          - Gained hands-on experience with security testing tools and methodologies applicable to secure software development.'
+        content: 'Designing and developing software solutions for university research projects. Creating technical documentation according to academic standards, developing architectural diagrams and visualizing software system structures (UML, component diagrams, activity diagrams), and participating in the full software development lifecycle. {{FILL: exact Software Engineering internship deliverable — project name and scope if publishable}}'
   education:
     enable: true
     index: false
@@ -304,6 +282,14 @@ params:
       - Chromium
       - Desktop App
       - Linux
+      category: Systems
+      problem: Linux users need a lightweight, privacy-focused desktop browser with clear tab organization without relying on large commercial browsers.
+      built: Built with Python and PyQt6 using QtWebEngine (Chromium) for rendering. Implements a dark UI, tab groups and native navigation controls as a standalone desktop application. Distributed as a Linux .deb package for straightforward installation.
+      architecture: ["User", "PyQt6 UI", "QtWebEngine (Chromium)", "Web"]
+      engineering: Custom tab-group management, native desktop integration and .deb packaging for Linux distribution
+      security: Local-only browsing state; leverages Chromium content handling through QtWebEngine without remote data collection
+      ops: Linux .deb packaging for distribution; verified on Linux desktop environments
+      evidenceNote: '{{FILL: live demo URL — desktop app, no web demo}}'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/albrowser
@@ -315,6 +301,14 @@ params:
       - Django
       - SQLite3
       - Bootstrap
+      category: Software Engineering
+      problem: Small teams need structured tracking of cash flow records across statuses, types, categories and subcategories.
+      built: Built with Django, SQLite3 and Bootstrap. Models cash flow entries with status/type/category/subcategory hierarchy and server-rendered views for filtered browsing and CRUD operations. Lightweight schema designed for clear financial record-keeping.
+      architecture: ["Browser", "Django Views", "SQLite3"]
+      engineering: Relational modeling of categories/subcategories, status workflows and filtered CRUD views
+      security: Django CSRF protection, ORM parameterization and form validation for data integrity
+      ops: SQLite3 for simple local deployment; Docker-ready structure for future containerization
+      evidenceNote: '{{FILL: live demo URL}}'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/finance_management_system
@@ -328,6 +322,14 @@ params:
       - Jinja2
       - JWT
       - Full Stack
+      category: Software Engineering
+      problem: Teams need a shared workspace for tasks, kanban boards and progress visibility without fragmented tooling.
+      built: Built with FastAPI, SQLAlchemy, Jinja2 and Vanilla JavaScript. Provides dashboards, kanban workflows, analytics, real-time notifications and export tools in a single full-stack platform. JWT-secured endpoints with server-rendered UI.
+      architecture: ["Client (JS + Jinja2)", "FastAPI", "SQLAlchemy", "Database"]
+      engineering: Kanban state management, dashboard analytics, role-aware task flows, notification subsystem and export utilities
+      security: JWT-based authentication protecting API routes and session handling
+      ops: Modular backend/frontend layout; structured for Docker deployment and Git-based workflow
+      evidenceNote: '{{FILL: live demo URL}}'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Team-Work-platform
@@ -341,6 +343,14 @@ params:
       - WebSockets
       - PostgreSQL
       - Tailwind CSS
+      category: Software Engineering
+      problem: Support teams need ticket tracking with real-time updates and access control.
+      built: Built with Django, Django REST Framework, PostgreSQL and WebSockets with a Tailwind CSS frontend. Covers ticket lifecycle, status tracking and real-time channel updates. Role-aware views separate support and requester workflows.
+      architecture: ["Client", "REST API / WebSockets", "Django", "PostgreSQL"]
+      engineering: Ticket model with role-based access, WebSocket channels for live updates and REST API for ticket operations
+      security: Role-based access control (RBAC) with authenticated API endpoints
+      ops: Docker-ready configuration with PostgreSQL persistence; prepared for CI deployment
+      evidenceNote: '{{FILL: live demo URL}}'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
@@ -353,6 +363,14 @@ params:
       - Docker
       - CI/CD
       - Python
+      category: DevOps
+      problem: Manual testing and deployment slows Python releases and introduces inconsistency.
+      built: GitHub Actions workflows for automated testing, Docker image builds and deployment steps triggered on push. Defines a repeatable pipeline from commit to container delivery for Python applications.
+      architecture: ["Git push", "GitHub Actions", "Tests", "Docker Build", "Deploy"]
+      engineering: Workflow YAML for test, build and deploy stages; Dockerized Python app; reusable pipeline across projects
+      security: Branch-protected workflows with secrets handling via GitHub Actions — no hardcoded credentials
+      ops: GitHub Actions + Docker for repeatable builds and deployments
+      evidenceNote: '{{FILL: pipeline config reference — see GitHub}}'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
@@ -365,6 +383,14 @@ params:
       - PostgreSQL
       - JavaScript
       - HTML/CSS
+      category: Software Engineering
+      problem: Restaurants need online ordering with menus, cart and ratings in a unified delivery flow.
+      built: Built with C#/.NET, PostgreSQL and JavaScript/HTML/CSS. Implements authentication, dish/catalog management, shopping cart state and rating aggregation. Full API plus frontend for end-to-end ordering.
+      architecture: ["Client (JS/HTML/CSS)", ".NET API", "PostgreSQL"]
+      engineering: Auth flow, dish/catalog CRUD, cart state and order handling, rating aggregation
+      security: Authentication for user sessions and protected cart/order endpoints with input validation
+      ops: PostgreSQL persistence; structured for containerized deployment
+      evidenceNote: '{{FILL: live demo URL}}'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/restaurant_website
@@ -415,6 +441,18 @@ params:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/live_speech_to_input_linux
       featured: false
+  infrastructure:
+    enable: true
+    title: Infrastructure & Operations
+  lifecycle:
+    enable: true
+    title: From Code to Running System
+  securityBackground:
+    enable: true
+    title: Security Background
+  engineeringPath:
+    enable: true
+    title: The Engineering Path
   contact:
     enable: true
     title: Let's build something
@@ -452,13 +490,13 @@ params:
     article: Jan 2, 2006
     articleList: Jan 2, 2006
     articleRecent: Jan 2, 2006
-  customScripts: '<script src="/js/portfolio-graph-data.js?v=7"></script>
+  customScripts: '<script src="/js/portfolio-graph-data.js?v=9"></script>
 
     <script src="/js/graph-background.js?v=1"></script>
 
     <script src="/js/portfolio-panel.js?v=4"></script>
 
-    <script src="/js/portfolio-graph.js?v=9"></script>
+    <script src="/js/portfolio-graph.js?v=11"></script>
 
     <script src="/js/terminal.js?v=1"></script>
 

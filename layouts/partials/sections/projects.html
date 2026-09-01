@@ -10,7 +10,7 @@
         <div class="recruiter-section-heading">
             <p class="section-kicker">Selected work</p>
             <h2 id="projects-title">{{ .Site.Params.projects.title | default "Featured projects" }}</h2>
-            <p class="section-dek">A selection of builds that show how I turn ideas into working products — from desktop apps to full-stack platforms.</p>
+            <p class="section-dek">A selection of builds that show how I turn ideas into working products — from desktop apps to full-stack platforms. Each case shows the problem, what was built, and how it runs.</p>
         </div>
 
         <div class="projects-grid">
@@ -18,20 +18,88 @@
             {{ $projectTitle := $project.title | default $project.name | default "Featured project" }}
             {{ $description := $project.description | default $project.content | default $project.summary | default "Project details available on GitHub." }}
             {{ $tech := $project.tech | default $project.technologies | default $project.badges }}
-            <article class="project-card">
+            {{ $category := $project.category | default "Software Engineering" }}
+            {{ $problem := $project.problem }}
+            {{ $built := $project.built }}
+            {{ $architecture := $project.architecture }}
+            {{ $engineering := $project.engineering }}
+            {{ $security := $project.security }}
+            {{ $ops := $project.ops }}
+            {{ $evidenceNote := $project.evidenceNote }}
+            {{ $hasDemo := false }}
+            {{ with $project.demo }}{{ $hasDemo = true }}{{ end }}
+            {{ with $project.demoUrl }}{{ $hasDemo = true }}{{ end }}
+            {{ range $project.links }}{{ if eq .icon "fas fa-external-link-alt" }}{{ $hasDemo = true }}{{ end }}{{ if eq .icon "fa fa-external-link" }}{{ $hasDemo = true }}{{ end }}{{ end }}
+            <article class="project-card project-case-study">
                 <div class="project-card-topline">
                     <span class="project-index">0{{ add $index 1 }}</span>
-                    <span class="project-type">Featured build</span>
+                    <span class="project-type">Flagship · {{ $category }}</span>
                 </div>
                 <h3>{{ $projectTitle }}</h3>
+
+                {{ with $problem }}
+                <div class="project-case-section">
+                    <span class="project-case-label">Problem</span>
+                    <p class="project-case-text">{{ . }}</p>
+                </div>
+                {{ else }}
                 <div class="project-description">{{ $description | markdownify }}</div>
+                {{ end }}
+
+                {{ with $built }}
+                <div class="project-case-section">
+                    <span class="project-case-label">Built</span>
+                    <p class="project-case-text">{{ . }}</p>
+                </div>
+                {{ else }}
+                {{ if not $problem }}
+                {{ else }}
+                <div class="project-description">{{ $description | markdownify }}</div>
+                {{ end }}
+                {{ end }}
+
+                {{ with $architecture }}
+                <div class="project-case-section">
+                    <span class="project-case-label">Architecture</span>
+                    <div class="project-architecture" aria-label="Architecture flow for {{ $projectTitle }}">
+                        {{ $archType := printf "%T" . }}
+                        {{ if eq $archType "string" }}
+                            <span>{{ . }}</span>
+                        {{ else }}
+                            {{ range $i, $step := . }}{{ if $i }}<span class="project-arch-arrow" aria-hidden="true">→</span>{{ end }}<span>{{ $step }}</span>{{ end }}
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+
+                {{ with $engineering }}
+                <div class="project-case-section">
+                    <span class="project-case-label">Engineering</span>
+                    <p class="project-case-text project-case-bullet">{{ . }}</p>
+                </div>
+                {{ end }}
+
+                {{ with $security }}
+                <div class="project-case-section project-case-security">
+                    <span class="project-case-label">Security</span>
+                    <p class="project-case-text">{{ . }}</p>
+                </div>
+                {{ end }}
+
+                {{ with $ops }}
+                <div class="project-case-section project-case-ops">
+                    <span class="project-case-label">Ops</span>
+                    <p class="project-case-text">{{ . }}</p>
+                </div>
+                {{ end }}
+
                 {{ with $tech }}
                 <ul class="project-tech" aria-label="Technologies used in {{ $projectTitle }}">
                     {{ range . }}<li>{{ . }}</li>{{ end }}
                 </ul>
                 {{ end }}
 
-                <div class="project-actions">
+                <div class="project-actions project-evidence">
                     {{ if $project.github }}
                     <a href="{{ $project.github }}" target="_blank" rel="noopener noreferrer" aria-label="View {{ $projectTitle }} source on GitHub">
                         <i class="fab fa-github" aria-hidden="true"></i> View on GitHub
@@ -48,6 +116,11 @@
                     </a>
                     {{ end }}
                     {{ end }}
+                    {{ end }}
+                    {{ if $evidenceNote }}
+                    <span class="project-evidence-note">{{ $evidenceNote }}</span>
+                    {{ else if not $hasDemo }}
+                    <span class="project-evidence-note">{{ "{{FILL: live demo URL}}" }}</span>
                     {{ end }}
                 </div>
             </article>

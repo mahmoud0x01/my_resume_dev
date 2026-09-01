@@ -1,35 +1,26 @@
 {{ if .Site.Params.awards.enable | default false }}
-<section id="awards" class="py-5">
-    <div class="container">
-        <h3 class="text-center">{{ .Site.Params.awards.title | default "Awards" }}</h3>
-        <div class="experience-timeline pt-4">
+<section id="awards" class="recruiter-section recruiter-awards" aria-labelledby="awards-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Recognition</p>
+            <h2 id="awards-title">{{ .Site.Params.awards.title | default "Competitions & Recognition" }}</h2>
+            <p class="section-dek">Primary signal only — compact, not a badge wall. Supplementary certificates live under <a href="#achievements">Credentials</a>.</p>
+        </div>
+        <div class="awards-compact-grid">
             {{ range $index, $item := .Site.Params.awards.items }}
-            <div class="timeline-item {{ if eq $index 0 }}timeline-item--first{{ end }}">
-                <!-- Left: date + company badge -->
-                <div class="timeline-left">
-                    <span class="timeline-date">{{ $item.date }}</span>
-                    <span class="award-badge">
-                        {{ if $item.icon }}<i class="{{ $item.icon }}"></i>{{ end }}
-                        {{ $item.company }}
-                    </span>
+            <article class="award-compact-card">
+                <div class="award-compact-icon" aria-hidden="true">
+                    {{ if $item.icon }}<i class="{{ $item.icon }}"></i>{{ else }}<i class="fas fa-award"></i>{{ end }}
                 </div>
-                <!-- Center: dot + line -->
-                <div class="timeline-center">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-line"></div>
+                <div class="award-compact-body">
+                    <h3>{{ $item.title }}</h3>
+                    <p class="award-compact-meta"><i class="far fa-calendar" aria-hidden="true"></i> {{ $item.date }} {{ with $item.subtitle }}· {{ . }}{{ else }}{{ with $item.company }}· {{ . }}{{ end }}{{ end }}</p>
+                    <p class="award-compact-content">{{ $item.content }}</p>
                 </div>
-                <!-- Right: content card -->
-                <div class="timeline-right">
-                    <div class="timeline-card">
-                        <h4 class="timeline-role">{{ $item.title }}</h4>
-                        <div class="timeline-body">
-                            {{ $item.content }}
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </article>
             {{ end }}
         </div>
+        <p class="awards-footnote">Top 5 / 100 appears once as the primary award. Certificates (IBM, Google Cloud) are kept as supplementary credentials, not duplicated here.</p>
     </div>
 </section>
 {{ end }}

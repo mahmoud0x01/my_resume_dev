@@ -1,0 +1,92 @@
+{{ if .Site.Params.engineeringPath.enable | default true }}
+<section id="engineering-path" class="recruiter-section recruiter-engineering-path" aria-labelledby="engineering-path-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Career timeline</p>
+            <h2 id="engineering-path-title">{{ .Site.Params.engineeringPath.title | default "The Engineering Path" }}</h2>
+            <p class="section-dek">From systems curiosity to software + infrastructure + DevOps — only verified dates and roles are listed. Early research is noted as independent history, not employment.</p>
+        </div>
+
+        <div class="engineering-path-timeline">
+            <!-- 1: Security research / systems curiosity — independent, not employment -->
+            <article class="engineering-path-item engineering-path-item--muted">
+                <div class="engineering-path-meta">
+                    <span class="engineering-path-date"><i class="fas fa-flask" aria-hidden="true"></i> Early research · Independent</span>
+                    <span class="engineering-path-label">History · Not employment</span>
+                </div>
+                <div class="engineering-path-center" aria-hidden="true">
+                    <div class="engineering-path-dot"></div>
+                    <div class="engineering-path-line"></div>
+                </div>
+                <div class="engineering-path-card">
+                    <h3>Security research & systems curiosity</h3>
+                    <p>Hands-on exploration of Linux, networks, and application security testing as independent research. This systems-first perspective — how things fail — now informs how I build and operate software. No employment claim; foundational curiosity that led to formal engineering education.</p>
+                </div>
+            </article>
+
+            <!-- 2: TSU Education -->
+            <article class="engineering-path-item">
+                <div class="engineering-path-meta">
+                    <span class="engineering-path-date"><i class="far fa-calendar" aria-hidden="true"></i> Sep 2022 – Jul 2026</span>
+                    <span class="engineering-path-org"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Tomsk State University</span>
+                </div>
+                <div class="engineering-path-center" aria-hidden="true">
+                    <div class="engineering-path-dot"></div>
+                    <div class="engineering-path-line"></div>
+                </div>
+                <div class="engineering-path-card">
+                    <h3>Software Engineering — BSc</h3>
+                    <p>Bachelor's in Software Engineering, Tomsk State University. Design, architecture, and full SDLC with academic-standard documentation, UML / component / activity diagrams, and research-project software delivery.</p>
+                </div>
+            </article>
+
+            <!-- 3: Bastion AppSec Intern -->
+            <article class="engineering-path-item">
+                <div class="engineering-path-meta">
+                    <span class="engineering-path-date"><i class="far fa-calendar" aria-hidden="true"></i> May 2024 – Sep 2024</span>
+                    <span class="engineering-path-org"><i class="fas fa-shield-halved" aria-hidden="true"></i> Bastion Cybersec Solutions</span>
+                </div>
+                <div class="engineering-path-center" aria-hidden="true">
+                    <div class="engineering-path-dot"></div>
+                    <div class="engineering-path-line"></div>
+                </div>
+                <div class="engineering-path-card">
+                    <h3>Application Security Intern</h3>
+                    <p>Authorized web application and API security assessments — authentication, authorization, data handling — plus code reviews of backend APIs & database configs, fixing issues with dev teams. <strong>Top 5 / 100</strong> in internal engineering competition.</p>
+                </div>
+            </article>
+
+            <!-- 4: TSU SE Intern -->
+            <article class="engineering-path-item">
+                <div class="engineering-path-meta">
+                    <span class="engineering-path-date"><i class="far fa-calendar" aria-hidden="true"></i> Feb 2025 – Present</span>
+                    <span class="engineering-path-org"><i class="fas fa-code" aria-hidden="true"></i> Tomsk State University</span>
+                </div>
+                <div class="engineering-path-center" aria-hidden="true">
+                    <div class="engineering-path-dot"></div>
+                    <div class="engineering-path-line"></div>
+                </div>
+                <div class="engineering-path-card">
+                    <h3>Software Engineer Intern</h3>
+                    <p>Designing and developing software solutions for university research projects, technical documentation per academic standards, UML / component / activity diagrams, full SDLC. <span class="engineering-path-fill">{{ "{{FILL: exact Software Engineering internship deliverable — project name and scope if publishable}}" }}</span></p>
+                </div>
+            </article>
+
+            <!-- 5: Present — Software + infrastructure + DevOps -->
+            <article class="engineering-path-item engineering-path-item--present">
+                <div class="engineering-path-meta">
+                    <span class="engineering-path-date"><i class="fas fa-circle-dot" aria-hidden="true"></i> Present</span>
+                    <span class="engineering-path-label">Software + Infrastructure + DevOps</span>
+                </div>
+                <div class="engineering-path-center" aria-hidden="true">
+                    <div class="engineering-path-dot engineering-path-dot--present"></div>
+                </div>
+                <div class="engineering-path-card engineering-path-card--present">
+                    <h3>Software, infrastructure & DevOps career</h3>
+                    <p>Building and shipping Python-based systems, automating delivery with CI/CD & Docker, and operating Linux / Nginx services — with security as a design lens, not an afterthought. Open to Software Engineer / DevOps-adjacent roles where I can own BUILD → AUTOMATE → OPERATE → SECURE.</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+{{ end }}

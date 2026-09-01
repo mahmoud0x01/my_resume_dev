@@ -1,5 +1,5 @@
 ---
-title: "Linux Server Security: Essential Hardening Steps"
+title: "Hardening a Linux Server — SSH, Firewall, and Beyond"
 date: 2024-12-20T10:00:00+00:00
 draft: false
 author: "Mahmoud"
@@ -9,7 +9,7 @@ tags:
   - Security
   - InfoSec
 image: /images/post.jpg
-description: "A practical guide to securing your Linux server - from SSH hardening to firewall configuration"
+description: "Hardening a Linux server for production — SSH key-only auth, UFW/Fail2Ban, user management, and monitoring drawn from app-sec practice"
 toc: true
 ---
 

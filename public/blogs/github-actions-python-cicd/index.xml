@@ -1,17 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Setting Up CI/CD with GitHub Actions for Python Projects on Mahmoud - Full Stack Developer</title>
-		<link>http://localhost:1314/blogs/github-actions-python-cicd/</link>
-		<description>Recent content in Setting Up CI/CD with GitHub Actions for Python Projects on Mahmoud - Full Stack Developer</description>
-		<generator>Hugo</generator>
-		<language>en-us</language>
-		
-		
-		
-		
-			<lastBuildDate></lastBuildDate>
-		
-			<atom:link href="http://localhost:1314/blogs/github-actions-python-cicd/index.xml" rel="self" type="application/rss+xml" />
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python CI/CD with GitHub Actions — Test, Build, Deploy on Mahmoud Adel — Security-minded Software Engineer</title><link>https://zrun.dev/blogs/github-actions-python-cicd/</link><description>Recent content in Python CI/CD with GitHub Actions — Test, Build, Deploy on Mahmoud Adel — Security-minded Software Engineer</description><generator>Hugo</generator><language>en-us</language><lastBuildDate/><atom:link href="https://zrun.dev/blogs/github-actions-python-cicd/index.xml" rel="self" type="application/rss+xml"/></channel></rss>

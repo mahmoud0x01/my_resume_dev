@@ -21,7 +21,7 @@
         return document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
     }
     function getCatColor(cat) {
-        var c = GROUP_COLORS[cat] || GROUP_COLORS.security;
+        var c = GROUP_COLORS[cat] || GROUP_COLORS.build || GROUP_COLORS.secure;
         return isDark() ? c.dark : c.light;
     }
     function escapeHtml(s) {
@@ -170,17 +170,16 @@
         if (!listEl) return;
 
         var groups = [
-            { key: 'security',       label: 'Security' },
-            { key: 'development',    label: 'Development' },
-            { key: 'infrastructure', label: 'Infrastructure' },
-            { key: 'experience',     label: 'Experience' },
-            { key: 'recognition',    label: 'Recognition' },
+            { key: 'build',    label: 'BUILD' },
+            { key: 'automate', label: 'AUTOMATE' },
+            { key: 'operate',  label: 'OPERATE' },
+            { key: 'secure',   label: 'SECURE' },
         ];
 
         var byGroup = {};
         PORTFOLIO_DATA.nodes.forEach(function (n) {
             if (n.type === 'me' || n.type === 'blog-more' || n.type === 'category' || n.type === 'subgroup') return;
-            var g = n.group || 'security';
+            var g = n.group || 'build';
             if (!byGroup[g]) byGroup[g] = [];
             byGroup[g].push(n);
         });
@@ -345,7 +344,7 @@
         } else {
             // Spread each node around its cluster center; categories sit on the
             // center, subgroups a little out, leaves fan around their subgroup.
-            var spread = n.type === 'category' ? 0 : (n.type === 'subgroup' ? 70 : 120);
+            var spread = n.type === 'category' ? 0 : (n.type === 'subgroup' ? 70 : 135);
             var ang = srand() * Math.PI * 2;
             var rad = srand() * spread;
             n.x = cl.x * LW + Math.cos(ang) * rad;
@@ -358,8 +357,8 @@
 
     // ---- Force relaxation ----
     var minDists = isMobile
-        ? { me: 160, category: 120, subgroup: 80, skill: 90, award: 100, experience: 100, education: 100, course: 60, certificate: 60, blog: 70, 'blog-more': 90 }
-        : { me: 320, category: 240, subgroup: 150, skill: 150, award: 200, experience: 180, education: 180, course: 110, certificate: 110, blog: 120, 'blog-more': 150 };
+        ? { me: 160, category: 120, subgroup: 80, skill: 105, award: 100, experience: 100, education: 100, course: 60, certificate: 60, blog: 70, 'blog-more': 90 }
+        : { me: 320, category: 240, subgroup: 150, skill: 175, award: 200, experience: 180, education: 180, course: 110, certificate: 110, blog: 120, 'blog-more': 150 };
 
     // The central node is a tall column (photo + name + console + CTA), so a
     // circular exclusion leaves its corners — where the CTA sits — exposed.
@@ -820,8 +819,8 @@
     var floatCard = null;
     var floatCardId = null;
     var GROUP_LABELS = {
-        security: 'Security', development: 'Development', infrastructure: 'Infrastructure',
-        experience: 'Experience', recognition: 'Recognition'
+        build: 'BUILD', automate: 'AUTOMATE', operate: 'OPERATE', secure: 'SECURE',
+        me: 'Profile'
     };
 
     function ensureFloatCard() {

@@ -1,24 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>CI/CD on Mahmoud - Full Stack Developer</title>
-		<link>http://localhost:1314/tags/ci/cd/</link>
-		<description>Recent content in CI/CD on Mahmoud - Full Stack Developer</description>
-		<generator>Hugo</generator>
-		<language>en-us</language>
-		
-		
-		
-		
-			<lastBuildDate>Fri, 10 Jan 2025 10:00:00 +0000</lastBuildDate>
-		
-			<atom:link href="http://localhost:1314/tags/ci/cd/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>Setting Up CI/CD with GitHub Actions for Python Projects</title>
-				<link>http://localhost:1314/blogs/github-actions-python-cicd/</link>
-				<pubDate>Fri, 10 Jan 2025 10:00:00 +0000</pubDate>
-				<guid>http://localhost:1314/blogs/github-actions-python-cicd/</guid>
-				<description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;&#xA;&lt;p&gt;Continuous Integration and Continuous Deployment (CI/CD) are essential practices in modern software development. In this guide, I&amp;rsquo;ll walk you through setting up a complete CI/CD pipeline for a Python project using GitHub Actions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;why-github-actions&#34;&gt;Why GitHub Actions?&lt;/h2&gt;&#xA;&lt;p&gt;GitHub Actions is a powerful, free (for public repositories) automation platform that integrates seamlessly with your GitHub workflow. Key benefits include:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;Native GitHub integration&lt;/strong&gt; — no external services needed&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Matrix builds&lt;/strong&gt; — test across multiple Python versions simultaneously&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Extensive marketplace&lt;/strong&gt; — pre-built actions for common tasks&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;Free for open source&lt;/strong&gt; — generous free tier for public repos&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;basic-workflow-structure&#34;&gt;Basic Workflow Structure&lt;/h2&gt;&#xA;&lt;p&gt;Create a &lt;code&gt;.github/workflows/ci.yml&lt;/code&gt; file in your repository:&lt;/p&gt;</description>
-			</item>
-	</channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>CI/CD on Mahmoud Adel — Security-minded Software Engineer</title><link>https://zrun.dev/tags/ci/cd/</link><description>Recent content in CI/CD on Mahmoud Adel — Security-minded Software Engineer</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 10 Jan 2025 10:00:00 +0000</lastBuildDate><atom:link href="https://zrun.dev/tags/ci/cd/index.xml" rel="self" type="application/rss+xml"/><item><title>Python CI/CD with GitHub Actions — Test, Build, Deploy</title><link>https://zrun.dev/blogs/github-actions-python-cicd/</link><pubDate>Fri, 10 Jan 2025 10:00:00 +0000</pubDate><guid>https://zrun.dev/blogs/github-actions-python-cicd/</guid><description>&lt;h2 id="introduction"&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Continuous Integration and Continuous Deployment (CI/CD) are essential practices in modern software development. In this guide, I&amp;rsquo;ll walk you through setting up a complete CI/CD pipeline for a Python project using GitHub Actions.&lt;/p&gt;
+&lt;h2 id="why-github-actions"&gt;Why GitHub Actions?&lt;/h2&gt;
+&lt;p&gt;GitHub Actions is a powerful, free (for public repositories) automation platform that integrates seamlessly with your GitHub workflow. Key benefits include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Native GitHub integration&lt;/strong&gt; — no external services needed&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Matrix builds&lt;/strong&gt; — test across multiple Python versions simultaneously&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Extensive marketplace&lt;/strong&gt; — pre-built actions for common tasks&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Free for open source&lt;/strong&gt; — generous free tier for public repos&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="basic-workflow-structure"&gt;Basic Workflow Structure&lt;/h2&gt;
+&lt;p&gt;Create a &lt;code&gt;.github/workflows/ci.yml&lt;/code&gt; file in your repository:&lt;/p&gt;</description></item></channel></rss>

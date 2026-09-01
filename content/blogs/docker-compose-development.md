@@ -1,5 +1,5 @@
 ---
-title: "Using Docker Compose for Local Development"
+title: "Docker Compose for Reproducible Python Development"
 date: 2025-01-05T10:00:00+00:00
 draft: false
 author: "Mahmoud"
@@ -9,7 +9,7 @@ tags:
   - Development
   - Python
 image: /images/post.jpg
-description: "How to use Docker Compose to create reproducible development environments for your web applications"
+description: "Reproducible Python dev environments with Docker Compose — multi-service YAML, hot-reload overrides, and production parity from local to deploy"
 toc: true
 ---
 

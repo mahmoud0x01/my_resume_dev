@@ -2,14 +2,14 @@
 <section id="achievements" class="recruiter-section recruiter-achievements" aria-labelledby="achievements-title">
     <div class="recruiter-container">
         <div class="recruiter-section-heading">
-            <p class="section-kicker">Verified learning</p>
-            <h2 id="achievements-title">{{ .Site.Params.achievements.title | default "Credentials" }}</h2>
-            <p class="section-dek">Structured training that complements hands-on engineering and platform work.</p>
+            <p class="section-kicker">Supplementary · Not a badge wall</p>
+            <h2 id="achievements-title">{{ .Site.Params.achievements.title | default "Credentials — Supplementary" }}</h2>
+            <p class="section-dek">Short-form certificates that supplement the formal BSc and hands-on work. Kept compact; see <a href="#education">Education</a> and <a href="#awards">Awards</a> for primary signal.</p>
         </div>
-        <div class="credentials-grid">
+        <div class="credentials-grid credentials-grid--compact">
             {{ range .Site.Params.achievements.items }}
             {{ $credential := . }}
-            <article class="credential-card">
+            <article class="credential-card credential-card--compact">
                 {{ with .image }}<img src="{{ . }}" alt="{{ $credential.title }} credential" loading="lazy">{{ end }}
                 <div class="credential-card-copy">
                     <h3>{{ .title }}</h3>
@@ -21,6 +21,7 @@
             </article>
             {{ end }}
         </div>
+        <p class="credentials-footnote"><i class="fas fa-info-circle" aria-hidden="true"></i> Top 5 / 100 recognition is listed once under Awards — not duplicated here.</p>
     </div>
 </section>
 {{ end }}

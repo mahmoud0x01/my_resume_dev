@@ -21,7 +21,7 @@
         return document.documentElement.classList.contains('dark') || document.body.classList.contains('dark');
     }
     function getCatColor(cat) {
-        var c = GROUP_COLORS[cat] || GROUP_COLORS.security;
+        var c = GROUP_COLORS[cat] || GROUP_COLORS.build || GROUP_COLORS.secure;
         return isDark() ? c.dark : c.light;
     }
     function escapeHtml(s) {
@@ -170,17 +170,16 @@
         if (!listEl) return;
 
         var groups = [
-            { key: 'security',       label: 'Security' },
-            { key: 'development',    label: 'Development' },
-            { key: 'infrastructure', label: 'Infrastructure' },
-            { key: 'experience',     label: 'Experience' },
-            { key: 'recognition',    label: 'Recognition' },
+            { key: 'build',    label: 'BUILD' },
+            { key: 'automate', label: 'AUTOMATE' },
+            { key: 'operate',  label: 'OPERATE' },
+            { key: 'secure',   label: 'SECURE' },
         ];
 
         var byGroup = {};
         PORTFOLIO_DATA.nodes.forEach(function (n) {
             if (n.type === 'me' || n.type === 'blog-more' || n.type === 'category' || n.type === 'subgroup') return;
-            var g = n.group || 'security';
+            var g = n.group || 'build';
             if (!byGroup[g]) byGroup[g] = [];
             byGroup[g].push(n);
         });
@@ -820,8 +819,8 @@
     var floatCard = null;
     var floatCardId = null;
     var GROUP_LABELS = {
-        security: 'Security', development: 'Development', infrastructure: 'Infrastructure',
-        experience: 'Experience', recognition: 'Recognition'
+        build: 'BUILD', automate: 'AUTOMATE', operate: 'OPERATE', secure: 'SECURE',
+        me: 'Profile'
     };
 
     function ensureFloatCard() {

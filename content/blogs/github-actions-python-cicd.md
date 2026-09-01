@@ -1,5 +1,5 @@
 ---
-title: "Setting Up CI/CD with GitHub Actions for Python Projects"
+title: "Python CI/CD with GitHub Actions — Test, Build, Deploy"
 date: 2025-01-10T10:00:00+00:00
 draft: false
 author: "Mahmoud"
@@ -9,7 +9,7 @@ tags:
   - Python
   - GitHub Actions
 image: /images/post.jpg
-description: "A practical guide to automating your Python project workflow with GitHub Actions - from testing to deployment"
+description: "Automating Python CI/CD with GitHub Actions — matrix tests, Docker builds, and zero-touch deployment from commit to container"
 toc: true
 ---
 

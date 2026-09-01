@@ -11,29 +11,36 @@
 
     <div class="hero-recruiter-shell">
         <div class="hero-recruiter-content">
-            <p class="hero-eyebrow">{{ .Site.Params.hero.intro | default "Open to work · Full Stack Developer" }}</p>
+            <p class="hero-eyebrow">{{ .Site.Params.hero.intro | default "OPEN TO WORK · SECURITY-MINDED SOFTWARE ENGINEER" }}</p>
             <p class="hero-status-chip" role="status">
                 <span class="hero-status-dot" aria-hidden="true"></span>
-                Open to full-stack &amp; DevOps opportunities
+                Open to software engineering · DevOps · infrastructure roles
             </p>
             <h1 id="hero-title">{{ .Site.Params.hero.title | default "Mahmoud Adel" }}</h1>
-            <p class="hero-role-line">{{ .Site.Params.hero.subtitle | default "Full Stack Developer & DevOps Engineer" }}</p>
+            <p class="hero-role-line">{{ .Site.Params.hero.subtitle | default "Security-minded Software Engineer" }}</p>
             <p class="hero-value-proposition">
-                {{ .Site.Params.hero.content | plainify | truncate 280 }}
+                I build software, automate how it ships, operate the systems around it, and understand how those systems fail.
+            </p>
+            <p class="hero-value-proposition hero-value-proposition--secondary" style="font-size:0.92rem !important; color: var(--recruiter-muted) !important; margin-top:0.6rem; line-height:1.6;">
+                My background spans software engineering, Linux infrastructure, and hands-on application security.
             </p>
 
             <div class="hero-proof-grid" aria-label="Selected proof points">
                 <article class="hero-proof-card">
-                    <strong>10+ Projects</strong>
-                    <span>Shipped to production</span>
+                    <strong>10+</strong>
+                    <span>engineering projects</span>
+                </article>
+                <article class="hero-proof-card">
+                    <strong>2</strong>
+                    <span>technical internships</span>
                 </article>
                 <article class="hero-proof-card">
                     <strong>Top 5 / 100</strong>
                     <span>Engineering competition</span>
                 </article>
                 <article class="hero-proof-card">
-                    <strong>Full-stack</strong>
-                    <span>Frontend to infrastructure</span>
+                    <strong>BSc</strong>
+                    <span>Software Engineering</span>
                 </article>
             </div>
 
@@ -42,7 +49,7 @@
                     <i class="fas fa-file-arrow-down" aria-hidden="true"></i>
                     Download résumé
                 </a>
-                <a class="hero-action hero-action-secondary" href="#experience">View experience</a>
+                <a class="hero-action hero-action-secondary" href="#projects">View selected work</a>
                 <a class="hero-action hero-action-text" href="mailto:contact@mahmoudouf.com">Email me</a>
             </div>
 
@@ -58,10 +65,10 @@
                 <span>Profile / 01</span>
                 <span>Code + infrastructure</span>
             </div>
-            <img class="hero-portrait" src="{{ .Site.Params.hero.image | default "/images/me-avatar.png" }}" alt="Portrait of Mahmoud Adel, full-stack developer" width="320" height="320">
+            <img class="hero-portrait" src="{{ .Site.Params.hero.image | default "/images/me-avatar.png" }}" alt="Portrait of Mahmoud Adel, security-minded software engineer" width="320" height="320">
             <div class="identity-card-info">
                 <p class="identity-card-name">Mahmoud Adel</p>
-                <p class="identity-card-role">{{ .Site.Params.hero.subtitle | default "Full Stack Developer & DevOps Engineer" }}</p>
+                <p class="identity-card-role">Python · Linux · Docker · Application Security</p>
                 <dl>
                     <div>
                         <dt>Based in</dt>
@@ -69,7 +76,7 @@
                     </div>
                     <div>
                         <dt>Focus</dt>
-                        <dd>Frontend, backend &amp; DevOps</dd>
+                        <dd>DevOps · Infrastructure · Application Security</dd>
                     </div>
                 </dl>
             </div>
@@ -79,24 +86,24 @@
     <div class="hero-graph-intro" aria-labelledby="capability-map-title">
         <div>
             <p class="hero-section-kicker">Proof layer</p>
-            <h2 id="capability-map-title">Interactive capability map</h2>
+            <h2 id="capability-map-title">Engineering Evidence Map</h2>
         </div>
-        <p id="capability-map-description">Click a node for evidence · switch to list view for a recruiter scan</p>
+        <p id="capability-map-description">BUILD → AUTOMATE → OPERATE → SECURE — every node links to shipped work or documented practice</p>
     </div>
 
     <div class="graph-view-controls" role="group" aria-label="Capability map view mode">
         <span class="graph-view-controls-label">View</span>
-        <button id="graph-list-toggle" class="graph-view-btn" type="button" aria-controls="portfolio-constellation portfolio-list-view" aria-pressed="false" aria-label="Toggle capability map view">Switch to List View</button>
+        <button id="graph-list-toggle" class="graph-view-btn" type="button" aria-controls="portfolio-constellation portfolio-list-view" aria-pressed="false" aria-label="Toggle Engineering Evidence Map view">Switch to List View</button>
     </div>
 
     <div class="constellation-wrap" role="region" aria-labelledby="capability-map-title" aria-describedby="capability-map-description">
         <div id="portfolio-constellation"></div>
         <!-- Legend dot colors are theme-aware --lg-* tokens defined in portfolio-graph.css -->
         <div class="constellation-legend" role="list" aria-label="Capability map legend">
-            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-scripting)" aria-hidden="true"></span> Development</span>
-            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-sysadmin)" aria-hidden="true"></span> DevOps &amp; Cloud</span>
-            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-experience)" aria-hidden="true"></span> Experience</span>
-            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-awards)" aria-hidden="true"></span> Recognition</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-build)" aria-hidden="true"></span> BUILD</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-automate)" aria-hidden="true"></span> AUTOMATE</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-operate)" aria-hidden="true"></span> OPERATE</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-secure)" aria-hidden="true"></span> SECURE</span>
         </div>
     </div>
 
@@ -106,10 +113,10 @@
     <noscript>
         <div class="hero-noscript">
             <strong>Mahmoud Adel</strong>
-            <span>{{ .Site.Params.hero.subtitle | default "Full Stack Developer & DevOps Engineer" }}</span>
+            <span>Security-minded Software Engineer</span>
             <div class="hero-noscript-links">
                 <a href="/MahmoudAdel_Cybersecurity_Resume.pdf" download>Download résumé</a>
-                <a href="#experience">View experience</a>
+                <a href="#projects">View selected work</a>
                 <a href="mailto:contact@mahmoudouf.com">Email me</a>
                 <a href="{{ $linkedinURL }}" rel="noopener noreferrer">LinkedIn</a>
                 <a href="{{ $githubURL }}" rel="noopener noreferrer">GitHub</a>

@@ -1,5 +1,6 @@
 /* ============================================================
-   PORTFOLIO CONSTELLATION — Data Model (Software Developer Edition)
+   PORTFOLIO CONSTELLATION — Data Model (Engineering Evidence Map)
+   BUILD → AUTOMATE → OPERATE → SECURE
    All nodes (me, skills, experience, education, courses,
    certificates, awards, writing) and their connections.
    ============================================================ */
@@ -7,96 +8,98 @@
 var PORTFOLIO_DATA = (function () {
     'use strict';
 
-    // ---- Coarse category groups (prototype color system) ----
-    // Kept identical to the design-system --cg-* tokens so category accents match.
+    // ---- Coarse category groups (evidence map) ----
+    // Design-system aligned: BUILD blue, AUTOMATE amber, OPERATE gray, SECURE green
     var GROUP_COLORS = {
-        me:             { light: '#1a1a1a', dark: '#ffffff' }, // neutral ink/white for the hub
-        development:    { light: '#3b82f6', dark: '#60a5fa' },
-        infrastructure: { light: '#6b7280', dark: '#9ca3af' },
-        experience:     { light: '#8b5cf6', dark: '#a78bfa' },
-        recognition:    { light: '#f59e0b', dark: '#fbbf24' },
+        me:       { light: '#1a1a1a', dark: '#ffffff' },
+        build:    { light: '#3b82f6', dark: '#60a5fa' },
+        automate: { light: '#f59e0b', dark: '#fbbf24' },
+        operate:  { light: '#6b7280', dark: '#9ca3af' },
+        secure:   { light: '#10b981', dark: '#34d399' },
     };
 
     // Maps a fine-grained `cat` to a coarse group
     var GROUP_MAP = {
-        frontend:     'development',
-        backend:      'development',
-        language:     'development',
-        cloud:        'infrastructure',
-        container:    'infrastructure',
-        cicd:         'infrastructure',
-        database:     'infrastructure',
-        experience:   'experience',
-        education:    'experience',
-        certificate:  'recognition',
-        award:        'recognition',
-        blog:         'recognition',
+        frontend:     'build',
+        backend:      'build',
+        language:     'build',
+        database:     'build',
+        container:    'automate',
+        cicd:         'automate',
+        cloud:        'operate',
+        experience:   'operate',
+        education:    'operate',
+        certificate:  'secure',
+        award:        'secure',
+        blog:         'secure',
+        course:       'secure',
         me:           'me',
     };
 
-    // Per-cat palette (mirrors the design system)
+    // Per-cat palette (mirrors the design system, grouped by evidence map)
     var CAT_COLORS = {
         me:          GROUP_COLORS.me,
-        frontend:    { light: '#3b82f6', dark: '#60a5fa' },
+        frontend:    GROUP_COLORS.build,
         backend:     { light: '#6366f1', dark: '#818cf8' },
-        language:    { light: '#10b981', dark: '#34d399' },
-        cloud:       { light: '#14b8a6', dark: '#2dd4bf' },
-        container:   { light: '#8b5cf6', dark: '#a78bfa' },
-        cicd:        { light: '#f59e0b', dark: '#fbbf24' },
-        database:    { light: '#0ea5e9', dark: '#38bdf8' },
-        experience:  GROUP_COLORS.experience,
-        education:   { light: '#db2777', dark: '#f472b6' },
-        certificate: GROUP_COLORS.recognition,
-        award:       GROUP_COLORS.recognition,
-        blog:        { light: '#0ea5e9', dark: '#38bdf8' },
+        language:    { light: '#0ea5e9', dark: '#38bdf8' },
+        database:    { light: '#14b8a6', dark: '#2dd4bf' },
+        container:   GROUP_COLORS.automate,
+        cicd:        { light: '#f97316', dark: '#fb923c' },
+        cloud:       GROUP_COLORS.operate,
+        experience:  GROUP_COLORS.operate,
+        education:   { light: '#64748b', dark: '#94a3b8' },
+        certificate: GROUP_COLORS.secure,
+        award:       { light: '#8b5cf6', dark: '#a78bfa' },
+        blog:        GROUP_COLORS.secure,
+        course:      GROUP_COLORS.secure,
     };
 
     // ---- Skill -> subgroup mapping (hierarchy) ----
     var SKILL_PARENT = {
-        // Frontend
+        // Frontend (BUILD)
         htmlcss: 'sg-frontend', javascript: 'sg-frontend', typescript: 'sg-frontend', react: 'sg-frontend',
         vue: 'sg-frontend', nextjs: 'sg-frontend', tailwind: 'sg-frontend',
-        // Backend
+        // Backend (BUILD)
         nodejs: 'sg-backend', python: 'sg-backend', django: 'sg-backend', fastapi: 'sg-backend',
         aspnet: 'sg-backend', restapi: 'sg-backend', graphql: 'sg-backend', websockets: 'sg-backend',
-        // Languages
+        // Languages (BUILD)
         go: 'sg-langs', csharp: 'sg-langs', sql: 'sg-langs', bash: 'sg-langs',
-        // Cloud
+        // Cloud / Infra (OPERATE)
         aws: 'sg-cloud', gcp: 'sg-cloud', nginx: 'sg-cloud', linux: 'sg-cloud',
-        // Containers
+        // Containers (AUTOMATE)
         docker: 'sg-containers', kubernetes: 'sg-containers',
-        // CI/CD
+        // CI/CD (AUTOMATE)
         cicd: 'sg-cicd', githubactions: 'sg-cicd', git: 'sg-cicd',
-        // Databases
+        // Databases (BUILD)
         postgresql: 'sg-databases', mongodb: 'sg-databases', redis: 'sg-databases', sqlalchemy: 'sg-databases',
     };
 
-    // ---- Main category (tier-1) nodes ----
+    // ---- Main category (tier-1) nodes — Evidence Map ----
     var categories = [
-        { id: 'cat-development', name: 'Development',        group: 'development',    cat: 'backend',  icon: 'fas fa-laptop-code', content: 'Frontend, backend and language work across the full web stack — from interfaces to APIs.' },
-        { id: 'cat-devops',     name: 'DevOps & Cloud',     group: 'infrastructure', cat: 'cloud',    icon: 'fas fa-cloud',       content: 'Containers, orchestration, CI/CD and cloud infrastructure that ships and scales software.' },
-        { id: 'cat-experience', name: 'Experience',         group: 'experience',     cat: 'experience',icon: 'fas fa-briefcase',   content: 'Professional roles, internships and academic background.' },
-        { id: 'cat-recognition',name: 'Recognition',        group: 'recognition',    cat: 'award',     icon: 'fas fa-award',       content: 'Certifications, courses, competition results and published writing.' }
+        { id: 'cat-build',    name: 'BUILD',    group: 'build',    cat: 'backend',     icon: 'fas fa-code',          content: 'Code, APIs and data — Python, Django, FastAPI, REST, WebSockets, PostgreSQL, JavaScript, C#/.NET.' },
+        { id: 'cat-automate', name: 'AUTOMATE', group: 'automate', cat: 'cicd',        icon: 'fas fa-infinity',      content: 'Shipping and repeatability — Git, GitHub Actions, CI/CD pipelines and Docker.' },
+        { id: 'cat-operate',  name: 'OPERATE',  group: 'operate',  cat: 'cloud',       icon: 'fas fa-server',        content: 'Running systems — Linux, Nginx, networking and self-hosted services.' },
+        { id: 'cat-secure',   name: 'SECURE',   group: 'secure',   cat: 'certificate', icon: 'fas fa-shield-halved', content: 'Understanding how systems fail — application security, testing, hardening and secure development.' }
     ].map(function (c) { c.type = 'category'; c.parent = 'me'; return c; });
 
     // ---- Sub-group (tier-2) nodes ----
     var subgroups = [
-        // Development
-        { id: 'sg-frontend', name: 'Frontend',      group: 'development',    cat: 'frontend',     parent: 'cat-development', icon: 'fas fa-palette' },
-        { id: 'sg-backend',  name: 'Backend',       group: 'development',    cat: 'backend',      parent: 'cat-development', icon: 'fas fa-server' },
-        { id: 'sg-langs',    name: 'Languages',     group: 'development',    cat: 'language',     parent: 'cat-development', icon: 'fas fa-code' },
-        // DevOps & Cloud
-        { id: 'sg-cloud',      name: 'Cloud',           group: 'infrastructure', cat: 'cloud',      parent: 'cat-devops', icon: 'fas fa-cloud' },
-        { id: 'sg-containers', name: 'Containers',      group: 'infrastructure', cat: 'container',  parent: 'cat-devops', icon: 'fab fa-docker' },
-        { id: 'sg-cicd',       name: 'CI/CD',           group: 'infrastructure', cat: 'cicd',       parent: 'cat-devops', icon: 'fas fa-infinity' },
-        { id: 'sg-databases',  name: 'Databases',       group: 'infrastructure', cat: 'database',   parent: 'cat-devops', icon: 'fas fa-database' },
-        // Experience
-        { id: 'sg-work', name: 'Work',     group: 'experience', cat: 'experience', parent: 'cat-experience', icon: 'fas fa-building' },
-        { id: 'sg-edu',  name: 'Education', group: 'experience', cat: 'education',  parent: 'cat-experience', icon: 'fas fa-school' },
-        // Recognition
-        { id: 'sg-certs',  name: 'Certifications', group: 'recognition', cat: 'certificate', parent: 'cat-recognition', icon: 'fas fa-certificate' },
-        { id: 'sg-awards', name: 'Awards',         group: 'recognition', cat: 'award',      parent: 'cat-recognition', icon: 'fas fa-trophy' },
-        { id: 'sg-writing',name: 'Writing',        group: 'recognition', cat: 'blog',       parent: 'cat-recognition', icon: 'fas fa-pen-nib' }
+        // BUILD
+        { id: 'sg-frontend',  name: 'Frontend',       group: 'build',    cat: 'frontend',  parent: 'cat-build',    icon: 'fas fa-palette' },
+        { id: 'sg-backend',   name: 'Backend',        group: 'build',    cat: 'backend',   parent: 'cat-build',    icon: 'fas fa-server' },
+        { id: 'sg-langs',     name: 'Languages',      group: 'build',    cat: 'language',  parent: 'cat-build',    icon: 'fas fa-code' },
+        { id: 'sg-databases', name: 'Databases',      group: 'build',    cat: 'database',  parent: 'cat-build',    icon: 'fas fa-database' },
+        // AUTOMATE
+        { id: 'sg-containers', name: 'Containers',    group: 'automate', cat: 'container', parent: 'cat-automate', icon: 'fab fa-docker' },
+        { id: 'sg-cicd',       name: 'CI/CD',         group: 'automate', cat: 'cicd',      parent: 'cat-automate', icon: 'fas fa-infinity' },
+        // OPERATE
+        { id: 'sg-cloud',      name: 'Cloud',         group: 'operate',  cat: 'cloud',     parent: 'cat-operate',  icon: 'fas fa-cloud' },
+        { id: 'sg-work',       name: 'Work',          group: 'operate',  cat: 'experience',parent: 'cat-operate',  icon: 'fas fa-building' },
+        { id: 'sg-edu',        name: 'Education',     group: 'operate',  cat: 'education', parent: 'cat-operate',  icon: 'fas fa-school' },
+        // SECURE
+        { id: 'sg-certs',   name: 'Certifications', group: 'secure', cat: 'certificate', parent: 'cat-secure', icon: 'fas fa-certificate' },
+        { id: 'sg-awards',  name: 'Awards',         group: 'secure', cat: 'award',       parent: 'cat-secure', icon: 'fas fa-trophy' },
+        { id: 'sg-writing', name: 'Writing',        group: 'secure', cat: 'blog',        parent: 'cat-secure', icon: 'fas fa-pen-nib' }
     ].map(function (s) { s.type = 'subgroup'; return s; });
 
     // ============================================================
@@ -106,12 +109,12 @@ var PORTFOLIO_DATA = (function () {
     // ---- Central node ----
     var meNode = {
         id: 'me', type: 'me', name: 'Mahmoud Adel', cat: 'me',
-        roles: ['Full Stack Developer', 'DevOps Engineer', 'Software Engineering Student'],
-        subtitle: 'Full Stack Developer · DevOps Engineer · Software Engineering Student',
-        terminalTitle: 'zsh — mahmoud@portfolio',
+        roles: ['Security-minded Software Engineer','DevOps \u00b7 Infrastructure \u00b7 Application Security','Software Engineering Student'],
+        subtitle: 'Security-minded Software Engineer \u00b7 DevOps \u00b7 Infrastructure \u00b7 Application Security \u00b7 Software Engineering Student',
+        terminalTitle: 'zsh \u2014 mahmoud@portfolio',
         image: '/images/me-avatar.png',
         icon: '',
-        content: "Full Stack Developer & DevOps Engineer building end-to-end web applications and scalable infrastructure. I transform ideas into production-ready solutions using Python, Django, FastAPI, modern frontend, and DevOps practices. Recognized as a Top 5 / 100 finalist in Bastion's internal engineering competition, and pursuing a Bachelor's in Software Engineering at Tomsk State University.",
+        content: "Security-minded Software Engineer with an evidence map of BUILD \u2192 AUTOMATE \u2192 OPERATE \u2192 SECURE \u2014 from building services with Python, Django, FastAPI and modern frontend, through automating delivery with Git, GitHub Actions, Docker and CI/CD, to operating Linux, Nginx and self-hosted systems, and understanding how those systems fail. Background spans software engineering, Linux infrastructure and hands-on application security. Recognized as Top 5 / 100 in Bastion\u2019s internal engineering competition and pursuing a BSc in Software Engineering at Tomsk State University. Every node here links to shipped work or documented practice.",
         links: {
             github: 'https://github.com/mahmoud0x01',
             linkedin: 'https://www.linkedin.com/in/mahmoudadelOx01/',
@@ -146,22 +149,22 @@ var PORTFOLIO_DATA = (function () {
         { id: 'sql',    name: 'SQL',    icon: 'fas fa-table',     cat: 'language' },
         { id: 'bash',   name: 'Bash',   icon: 'fas fa-terminal',  cat: 'language' },
 
-        // Cloud
+        // Cloud / Operate
         { id: 'aws',   name: 'AWS',          icon: 'fab fa-aws',          cat: 'cloud' },
         { id: 'gcp',   name: 'Google Cloud', icon: 'fab fa-google',       cat: 'cloud' },
         { id: 'nginx', name: 'Nginx',        icon: 'fas fa-network-wired',cat: 'cloud' },
         { id: 'linux', name: 'Linux',        icon: 'fab fa-linux',        cat: 'cloud' },
 
-        // Containers
+        // Containers (Automate)
         { id: 'docker',     name: 'Docker',     icon: 'fab fa-docker',   cat: 'container' },
         { id: 'kubernetes', name: 'Kubernetes', icon: 'fas fa-cubes',    cat: 'container' },
 
-        // CI/CD
+        // CI/CD (Automate)
         { id: 'cicd',          name: 'CI/CD',           icon: 'fas fa-infinity',  cat: 'cicd' },
         { id: 'githubactions', name: 'GitHub Actions',  icon: 'fab fa-github',   cat: 'cicd' },
         { id: 'git',           name: 'Git',             icon: 'fab fa-git-alt',  cat: 'cicd' },
 
-        // Databases
+        // Databases (Build)
         { id: 'postgresql', name: 'PostgreSQL', icon: 'fas fa-database',     cat: 'database' },
         { id: 'mongodb',    name: 'MongoDB',    icon: 'fas fa-database',     cat: 'database' },
         { id: 'redis',      name: 'Redis',      icon: 'fas fa-memory',       cat: 'database' },
@@ -308,7 +311,7 @@ var PORTFOLIO_DATA = (function () {
     var allNodes = [meNode].concat(categories, subgroups, skills, awards, experience, education, courses, certificates, blogs, [blogMore]);
 
     allNodes.forEach(function (n) {
-        n.group = GROUP_MAP[n.cat] || 'development';
+        n.group = GROUP_MAP[n.cat] || 'build';
         if (n.type === 'category' || n.type === 'subgroup') {
             n.cluster = n.id;
         } else {

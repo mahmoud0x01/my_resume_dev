@@ -1004,9 +1004,9 @@ body.light > #search-content { background-color: var(--bg) !important; }
     font-weight: 600 !important;
 }
 
-/* ----- Smooth scrolling offset for sticky nav ----- */
+/* ----- Smooth scrolling offset for sticky nav (56px header + safe-area) ----- */
 section[id] {
-    scroll-margin-top: 72px;
+    scroll-margin-top: calc(56px + env(safe-area-inset-top));
 }
 
 /* ----- Hero section heading text shadow (light) ----- */

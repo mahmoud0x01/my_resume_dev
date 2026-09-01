@@ -1,0 +1,39 @@
+{{ if .Site.Params.securityBackground.enable | default true }}
+<section id="security-background" class="recruiter-section recruiter-security-background" aria-labelledby="security-background-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Security background</p>
+            <h2 id="security-background-title">{{ .Site.Params.securityBackground.title | default "Security Background" }}</h2>
+            <p class="section-dek">Security is not a separate interest — it changes how I think about software, APIs and infrastructure.</p>
+        </div>
+
+        <div class="security-background-card">
+            <div class="security-background-main">
+                <div class="security-background-item">
+                    <span class="security-background-icon" aria-hidden="true"><i class="fas fa-shield-halved"></i></span>
+                    <div>
+                        <h3>Bastion Cybersec Solutions — Application Security Intern</h3>
+                        <p class="security-background-meta">May 2024 – Sep 2024 · Security testing &amp; vulnerability assessment</p>
+                        <p>Assessed web applications and network infrastructure for authentication, authorization and data-handling issues. Reviewed backend APIs and database configurations, and worked with developers to apply secure coding fixes. Gained hands-on practice with testing tools and methodologies that now inform how I build and review code.</p>
+                    </div>
+                </div>
+
+                <div class="security-background-item">
+                    <span class="security-background-icon" aria-hidden="true"><i class="fas fa-flag-checkered"></i></span>
+                    <div>
+                        <h3>Top 5 / 100 — Internal Engineering Competition</h3>
+                        <p class="security-background-meta">Bastion · August 2024</p>
+                        <p>Placed in the top 5 among 100 participants in Bastion’s internal engineering competition — signal for problem-solving under constraints, not a credential badge wall.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="security-background-side">
+                <p class="security-background-kicker">Separate research site</p>
+                <a class="security-background-link" href="https://mahmoudouf.com" target="_blank" rel="noopener noreferrer">Explore my security research <span aria-hidden="true">→</span></a>
+                <p class="security-background-note">For CTFs and deeper security write-ups, see mahmoudouf.com. This portfolio stays focused on engineering evidence; security context here is compact and verifiable.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}

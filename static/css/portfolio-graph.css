@@ -22,6 +22,11 @@
     --cg-education: #db2777;
     --cg-recognition: #f59e0b;
     --cg-blogs: #0ea5e9;
+    /* Evidence Map groups — BUILD/AUTOMATE/OPERATE/SECURE */
+    --cg-build: #3b82f6;
+    --cg-automate: #f59e0b;
+    --cg-operate: #6b7280;
+    --cg-secure: #10b981;
 
     /* glass surfaces */
     --cg-glass-fill: rgba(255, 255, 255, 0.72);
@@ -46,6 +51,11 @@
     --lg-courses: var(--cg-recognition);
     --lg-certificates: var(--cg-recognition);
     --lg-blogs: var(--cg-blogs);
+    /* Evidence Map legend aliases */
+    --lg-build: var(--cg-build);
+    --lg-automate: var(--cg-automate);
+    --lg-operate: var(--cg-operate);
+    --lg-secure: var(--cg-secure);
 }
 
 .dark {
@@ -60,6 +70,10 @@
     --cg-education: #f472b6;
     --cg-recognition: #fbbf24;
     --cg-blogs: #38bdf8;
+    --cg-build: #60a5fa;
+    --cg-automate: #fbbf24;
+    --cg-operate: #9ca3af;
+    --cg-secure: #34d399;
 
     --cg-glass-fill: rgba(15, 18, 28, 0.55);
     --cg-chip-fill: rgba(15, 18, 28, 0.62);

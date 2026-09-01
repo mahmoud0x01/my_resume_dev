@@ -1,35 +1,39 @@
 {{ if .Site.Params.experience.enable | default false }}
-<section id="experience" class="py-5">
-    <div class="container">
-        <h3 class="text-center">{{ .Site.Params.experience.title | default "Experience" }}</h3>
-        <div class="experience-timeline">
+<section id="experience" class="recruiter-section recruiter-experience" aria-labelledby="experience-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Experience</p>
+            <h2 id="experience-title">{{ .Site.Params.experience.title | default "Experience" }}</h2>
+            <p class="section-dek">Two focused internships — application security and software engineering — listed in chronological order and tied to verifiable work.</p>
+        </div>
+        <div class="recruiter-timeline">
             {{ range $index, $element := .Site.Params.experience.items }}
             {{ range $jobIdx, $job := .jobs }}
-            <div class="timeline-item {{ if eq $index 0 }}timeline-item--first{{ end }}">
-                <!-- Left: date + company -->
-                <div class="timeline-left">
-                    <span class="timeline-date">{{ $job.date }}</span>
+            <article class="recruiter-timeline-item {{ if eq $index 0 }}recruiter-timeline-item--first{{ end }}">
+                <div class="recruiter-timeline-meta">
+                    <span class="recruiter-timeline-date"><i class="far fa-calendar" aria-hidden="true"></i> {{ $job.date }}</span>
                     {{ if $element.companyUrl }}
-                     <a href="{{ $element.companyUrl }}" target="_blank" rel="noopener noreferrer" class="timeline-company">{{ $element.company }}</a>
+                    <a href="{{ $element.companyUrl }}" target="_blank" rel="noopener noreferrer" class="recruiter-timeline-company"><i class="far fa-building" aria-hidden="true"></i> {{ $element.company }}</a>
                     {{ else }}
-                    <span class="timeline-company">{{ $element.company }}</span>
+                    <span class="recruiter-timeline-company"><i class="fas fa-shield-halved" aria-hidden="true"></i> {{ $element.company }}</span>
                     {{ end }}
+                    <span class="recruiter-timeline-role-badge"><i class="fas fa-briefcase" aria-hidden="true"></i> {{ $job.name }}</span>
                 </div>
-                <!-- Center: dot + line -->
-                <div class="timeline-center">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-line"></div>
+                <div class="recruiter-timeline-center" aria-hidden="true">
+                    <div class="recruiter-timeline-dot"></div>
+                    <div class="recruiter-timeline-line"></div>
                 </div>
-                <!-- Right: content card -->
-                <div class="timeline-right">
-                    <div class="timeline-card">
-                        <h4 class="timeline-role">{{ $job.name }}</h4>
-                        <div class="timeline-body">
-                            {{ $job.content | markdownify }}
-                        </div>
+                <div class="recruiter-timeline-card">
+                    <h3 class="recruiter-timeline-role">{{ $job.name }}</h3>
+                    <p class="recruiter-timeline-company-inline">
+                        {{ if $element.companyUrl }}<a href="{{ $element.companyUrl }}" target="_blank" rel="noopener noreferrer">{{ $element.company }}</a>{{ else }}{{ $element.company }}{{ end }}
+                        · <span class="recruiter-timeline-date-inline">{{ $job.date }}</span>
+                    </p>
+                    <div class="recruiter-timeline-body">
+                        {{ $job.content | markdownify }}
                     </div>
                 </div>
-            </div>
+            </article>
             {{ end }}
             {{ end }}
         </div>

@@ -5,7 +5,7 @@
         <div class="recruiter-section-heading">
             <p class="section-kicker">Notes & research</p>
             <h2 id="writing-title">Selected writing</h2>
-            <p class="section-dek">Short, practical write-ups on software engineering, DevOps, and infrastructure.</p>
+            <p class="section-dek">Short, practical write-ups on software engineering, DevOps, and infrastructure — only published articles are listed below. Planned topics are clearly marked as not yet published.</p>
         </div>
 {{ if gt (len $writingPages) 0 }}
 {{ $writingPages = $writingPages.ByDate.Reverse }}
@@ -34,6 +34,38 @@
             <p>No writing published yet.</p>
         </div>
 {{ end }}
+
+        <!-- Planned topics — clearly not fabricated publications -->
+        <div class="writing-planned" aria-labelledby="writing-planned-title">
+            <div class="writing-planned-heading">
+                <h3 id="writing-planned-title">Next technical topics</h3>
+                <span class="writing-planned-kicker">Planned — not yet published · No fabricated dates</span>
+            </div>
+            <p class="writing-planned-dek">Draft titles for upcoming write-ups drawn directly from shipped projects and internships. Each will be published only when documented with evidence.</p>
+            <div class="writing-planned-grid">
+                <article class="writing-planned-card">
+                    <span class="writing-planned-badge"><i class="far fa-clock" aria-hidden="true"></i> Planned</span>
+                    <h4>Securing a Django API — lessons from building and reviewing APIs</h4>
+                    <p>Auth, authorization, CSRF, and input handling patterns learned while building TicketPro and reviewing backend APIs at Bastion.</p>
+                </article>
+                <article class="writing-planned-card">
+                    <span class="writing-planned-badge"><i class="far fa-clock" aria-hidden="true"></i> Planned</span>
+                    <h4>Deploying and hardening a Python app — from container to VPS</h4>
+                    <p>Docker → Nginx → Linux VPS flow, secrets handling in GitHub Actions, and hardening steps actually applied to Hugo + Python projects.</p>
+                </article>
+                <article class="writing-planned-card">
+                    <span class="writing-planned-badge"><i class="far fa-clock" aria-hidden="true"></i> Planned</span>
+                    <h4>Operating self-hosted services on constrained infrastructure</h4>
+                    <p>What scales and what doesn't when running services on limited resources — observations from Docker and Nginx operation, not claimed n8n/Listmonk scale.</p>
+                </article>
+                <article class="writing-planned-card">
+                    <span class="writing-planned-badge"><i class="far fa-clock" aria-hidden="true"></i> Planned</span>
+                    <h4>Lessons from real-time collaboration — WebSockets, presence, and notifications</h4>
+                    <p>Design notes from Team Work Platform and TicketPro: kanban state, WebSocket channels, notification delivery, and trade-offs.</p>
+                </article>
+            </div>
+        </div>
+
         <p class="writing-archive-link">
             <a class="writing-read-link" href="{{ $writingArchiveURL }}">Browse all writing <span aria-hidden="true">→</span></a>
         </p>
