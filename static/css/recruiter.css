@@ -1087,6 +1087,25 @@ html {
     font-weight: 600;
     letter-spacing: 0.02em;
 }
+.project-demo-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.38rem 0.7rem;
+    border: 1px solid color-mix(in srgb, var(--recruiter-accent) 30%, var(--recruiter-border));
+    border-radius: 0.5rem;
+    background: color-mix(in srgb, var(--recruiter-accent) 8%, transparent);
+    color: var(--recruiter-accent) !important;
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+.project-demo-link:hover {
+    background: var(--recruiter-accent);
+    border-color: var(--recruiter-accent);
+    color: #fff !important;
+}
 
 /* — Infrastructure & Operations — */
 .recruiter-infrastructure { background: var(--recruiter-bg) !important; }

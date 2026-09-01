@@ -117,6 +117,19 @@
                     {{ end }}
                     {{ end }}
                     {{ end }}
+                    {{ with $project.demo }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="project-demo-link" aria-label="Open live preview for {{ $projectTitle }}">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i> {{ with $project.demoLabel }}{{ . }}{{ else }}Live Preview{{ end }}
+                    </a>
+                    {{ else }}
+                    {{ with $project.demoUrl }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="project-demo-link" aria-label="Open live preview for {{ $projectTitle }}">
+                        <i class="fas fa-external-link-alt" aria-hidden="true"></i> {{ with $project.demoLabel }}{{ . }}{{ else }}Live Preview{{ end }}
+                    </a>
+                    {{ else }}
+                    {{ range $project.links }}{{ if eq .icon "fas fa-external-link-alt" }}<a href="{{ .url }}" target="_blank" rel="noopener noreferrer" class="project-demo-link"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Live Preview</a>{{ end }}{{ end }}
+                    {{ end }}
+                    {{ end }}
                     {{ if $evidenceNote }}
                     <span class="project-evidence-note">{{ $evidenceNote }}</span>
                     {{ else if not $hasDemo }}

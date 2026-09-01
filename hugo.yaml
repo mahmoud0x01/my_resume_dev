@@ -273,6 +273,35 @@ params:
     enable: true
     title: Projects
     items:
+    - title: CollabEditor — Real-Time Collaborative Document Editor — Thesis 2025–2026
+      description: Graduation thesis building Google Docs–grade collaboration with Django + Channels + React, WebSocket CRDT sync, scoped permissions and classroom structure. Designed for distributed teams working concurrently on rich-text documents.
+      tech:
+      - Python
+      - Django 5.2
+      - Django Channels 4.0
+      - Daphne (ASGI)
+      - React 18
+      - Quill 2.0
+      - WebSockets
+      - CRDT
+      - PostgreSQL 16
+      - Redis
+      - JWT
+      - Tailwind CSS
+      category: Real-time Systems · Thesis
+      problem: Distributed teams suffer file-share chaos, lost changes from manual merges, and all-or-nothing permissions — need conflict-free live collaboration with scoped access.
+      built: Built with Django 5.2 + DRF 3.14 + Channels 4.0 + Daphne 4.0 (ASGI) serving React 18 + Quill 2.0. Django handles REST and JWT auth; DocumentConsumer over WebSockets manages CRDT merge, presence and chat via Redis channel layer. PostgreSQL is the durable store for Document, permissions, classrooms and versions.
+      architecture: ["React + Quill", "Daphne (ASGI)", "Django Channels (WS)", "Redis", "PostgreSQL"]
+      engineering: CRDT-like Decimal keys (prec 28) + Lamport clock in DOC_STATES for conflict-free inserts, line-col anchored edit_ranges with █ redaction resilient to inserts, room fan-out via channels-redis, Quill Delta JSON persistence, DocumentVersion history + restore, in-doc chat with @mentions
+      security: Four-tier ACL (owner / full / partial_write with edit_ranges / read) with server-side read redaction and write rejection, JWT for REST and WS ?token= handshake, revocable DocumentShareLink and ClassShareLink
+      ops: Daphne ASGI serving HTTP+WS, Redis channel layer group_send, PostgreSQL 16, Docker-ready layout, docs/assets demos and PlantUML diagrams
+      evidenceNote: 'Thesis 30 tasks Sep 2025–Jan 2026 · Diagrams, GIFs and version history in repo'
+      links:
+      - icon: fab fa-github
+        url: https://github.com/mahmoud0x01/collabeditor
+      demo: /demos/collabeditor/
+      demoLabel: Live Preview — Mock Collaboration
+      featured: true
     - title: ALBrowser - Modern Desktop Web Browser
       description: A modern, privacy-focused desktop web browser built from scratch with Python and PyQt6, featuring a Chromium-based engine, dark UI, tab groups, and .deb packaging.
       tech:
@@ -329,10 +358,12 @@ params:
       engineering: Kanban state management, dashboard analytics, role-aware task flows, notification subsystem and export utilities
       security: JWT-based authentication protecting API routes and session handling
       ops: Modular backend/frontend layout; structured for Docker deployment and Git-based workflow
-      evidenceNote: '{{FILL: live demo URL}}'
+      evidenceNote: 'Interactive mock preview — no backend, fixed data'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Team-Work-platform
+      demo: /demos/teamwork/
+      demoLabel: Live Preview — Mock Kanban
       featured: true
     - title: TicketPro - Support Ticket Management System
       description: Full Stack Support Ticket Management System with real-time features, ticket tracking, and role-based access control.
@@ -350,10 +381,12 @@ params:
       engineering: Ticket model with role-based access, WebSocket channels for live updates and REST API for ticket operations
       security: Role-based access control (RBAC) with authenticated API endpoints
       ops: Docker-ready configuration with PostgreSQL persistence; prepared for CI deployment
-      evidenceNote: '{{FILL: live demo URL}}'
+      evidenceNote: 'Interactive mock preview — no backend, fixed data'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
+      demo: /demos/ticketpro/
+      demoLabel: Live Preview — Mock Tickets
       featured: true
     - title: CI/CD Pipeline for Python Applications
       description: Complete CI/CD pipeline setup using GitHub Actions for automated testing, Docker builds, and deployment.

@@ -1,0 +1,647 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>CollabEditor — Mock Preview</title>
+<meta name="description" content="CollabEditor mock preview — Google Docs-grade collaboration simulation, static, no backend.">
+<style>
+:root{
+  --bg:#f5f4f0; --bg2:#ffffff; --ink:#1a1a1a; --muted:#64748b; --border:#e5e7eb;
+  --accent:#6366f1; --positive:#10b981; --blue:#3b82f6; --amber:#f59e0b; --rose:#ef4444;
+  --radius:1rem; --shadow:0 12px 30px rgba(15,23,42,.08);
+  --surface:var(--bg2); --mono:'Courier New',monospace; --font:'Inter',system-ui,sans-serif;
+}
+@media(prefers-color-scheme:dark){
+  :root{ --bg:#0f1115; --bg2:#1a1d23; --ink:#e6e9f2; --muted:#9ca3af; --border:#272a33; --surface:#1e2128; --shadow:0 14px 34px rgba(0,0,0,.35); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0; font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.6; min-width:320px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+header.topbar{
+  position:sticky; top:0; z-index:20;
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(14px) saturate(120%); -webkit-backdrop-filter:blur(14px) saturate(120%);
+  border-bottom:1px solid var(--border);
+}
+.topbar-inner{
+  max-width:1240px; margin:0 auto; padding:0.85rem 1rem;
+  display:flex; flex-wrap:wrap; align-items:center; gap:0.75rem 1rem;
+}
+.back-link{
+  display:inline-flex; align-items:center; gap:0.4rem;
+  padding:0.4rem 0.85rem; border:1px solid var(--border); border-radius:999px;
+  background:color-mix(in srgb, var(--surface) 70%, transparent);
+  font-size:0.82rem; font-weight:700; text-decoration:none;
+}
+.back-link:hover{border-color:var(--ink)}
+.header-title{flex:1 1 320px; min-width:220px}
+.header-title h1{margin:0; font-size:clamp(1.15rem,2.5vw,1.45rem); letter-spacing:-0.03em; line-height:1.25}
+.header-title p{margin:0.2rem 0 0; color:var(--muted); font-size:0.82rem}
+.badge-row{display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center}
+.mock-badge{
+  display:inline-flex; align-items:center; gap:0.35rem;
+  padding:0.3rem 0.7rem; border-radius:999px; font-size:0.7rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+  border:1px solid color-mix(in srgb, var(--amber) 35%, var(--border));
+  background:color-mix(in srgb, var(--amber) 12%, transparent); color:var(--ink);
+}
+.disclaimer{
+  max-width:1240px; margin:0 auto; padding:0 1rem 0.9rem;
+  color:var(--muted); font-size:0.78rem; font-family:var(--mono);
+}
+.disclaimer strong{color:var(--ink)}
+.wrap{max-width:1240px; margin:0 auto; padding:1rem 1rem 2rem}
+.toolbar-strip{
+  display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; justify-content:space-between;
+  padding:0.9rem 1rem; border:1px solid var(--border); border-radius:0.9rem;
+  background:color-mix(in srgb, var(--surface) 80%, transparent); box-shadow:var(--shadow);
+}
+.toolbar-left, .toolbar-right{display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center}
+.presence{
+  display:flex; align-items:center; gap:0.5rem;
+}
+.ava{
+  width:28px; height:28px; border-radius:50%; display:grid; place-items:center;
+  font-size:0.72rem; font-weight:800; color:#fff; border:2px solid var(--surface); margin-left:-6px;
+}
+.ava:first-child{margin-left:0}
+.ava.alice{background:#10b981}
+.ava.bob{background:#3b82f6}
+.ava.you{background:#6366f1}
+.presence-label{font-size:0.74rem; color:var(--muted); font-weight:600}
+.presence-dot{width:8px; height:8px; border-radius:50%; background:var(--positive); box-shadow:0 0 0 3px color-mix(in srgb, var(--positive) 18%, transparent)}
+.btn{
+  display:inline-flex; align-items:center; gap:0.4rem; min-height:38px;
+  padding:0.45rem 0.85rem; border:1px solid var(--border); border-radius:0.6rem;
+  background:var(--surface); color:var(--ink); font-size:0.82rem; font-weight:700; cursor:pointer;
+}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.btn.primary:hover{background:color-mix(in srgb, var(--ink) 88%, var(--accent))}
+.btn.ghost{background:transparent}
+.btn.small{min-height:32px; padding:0.3rem 0.6rem; font-size:0.78rem}
+.btn:disabled{opacity:0.55; cursor:not-allowed}
+.select, .text-input{
+  min-height:38px; padding:0.45rem 0.7rem; border:1px solid var(--border); border-radius:0.6rem;
+  background:var(--surface); color:var(--ink); font-size:0.82rem; font-weight:600;
+}
+.layout{
+  display:grid; grid-template-columns:240px minmax(0,1fr) 320px; gap:1rem; margin-top:1rem; align-items:start;
+}
+@media(max-width:1024px){ .layout{grid-template-columns:220px minmax(0,1fr)} .chat-col{grid-column:1 / -1} }
+@media(max-width:760px){ .layout{grid-template-columns:1fr} }
+.card{
+  border:1px solid var(--border); border-radius:var(--radius); background:color-mix(in srgb, var(--surface) 82%, transparent);
+  box-shadow:0 6px 20px rgba(15,23,42,0.045); overflow:hidden;
+}
+.card-head{
+  padding:0.85rem 1rem 0.7rem; border-bottom:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between; gap:0.5rem;
+}
+.card-head h2{margin:0; font-size:0.82rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); font-family:var(--mono)}
+.card-body{padding:0.9rem 1rem}
+.hierarchy-list{list-style:none; margin:0; padding:0; display:grid; gap:0.45rem}
+.hierarchy-item{
+  display:flex; align-items:center; gap:0.5rem; padding:0.55rem 0.65rem; border:1px solid var(--border); border-radius:0.55rem;
+  background:color-mix(in srgb, var(--bg) 70%, transparent); font-size:0.82rem; font-weight:600;
+}
+.hierarchy-item.active{border-color:color-mix(in srgb, var(--accent) 45%, var(--border)); background:color-mix(in srgb, var(--accent) 8%, transparent)}
+.hierarchy-item .icon{width:22px; height:22px; display:grid; place-items:center; border-radius:6px; background:color-mix(in srgb, var(--accent) 12%, transparent); font-size:0.75rem}
+.hierarchy-meta{color:var(--muted); font-size:0.7rem; font-weight:500; font-family:var(--mono)}
+.share-box{margin-top:0.9rem; padding:0.75rem; border:1px dashed color-mix(in srgb, var(--accent) 35%, var(--border)); border-radius:0.6rem; background:color-mix(in srgb, var(--accent) 6%, transparent)}
+.share-box label{font-size:0.72rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); font-family:var(--mono)}
+.share-row{display:flex; gap:0.4rem; margin-top:0.4rem}
+.share-row input{flex:1; min-width:0; font-family:var(--mono); font-size:0.78rem}
+.version-wrap{margin-top:0.9rem}
+.version-wrap label{font-size:0.72rem; font-weight:700; color:var(--muted); font-family:var(--mono); letter-spacing:0.05em; text-transform:uppercase}
+.version-wrap select{width:100%; margin-top:0.35rem}
+.version-meta{margin-top:0.5rem; font-size:0.74rem; color:var(--muted); line-height:1.5}
+.editor-card{display:flex; flex-direction:column; min-height:560px}
+.editor-toolbar{
+  display:flex; flex-wrap:wrap; gap:0.4rem; align-items:center; padding:0.6rem 0.75rem;
+  border-bottom:1px solid var(--border); background:color-mix(in srgb, var(--bg) 60%, transparent);
+}
+.tool-btn{
+  width:36px; height:36px; display:grid; place-items:center; border:1px solid var(--border); border-radius:0.5rem;
+  background:var(--surface); cursor:pointer; font-weight:800; font-size:0.9rem;
+}
+.tool-btn.active{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.tool-sep{width:1px; height:22px; background:var(--border); margin:0 0.2rem}
+.editor-meta{
+  display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center; padding:0.55rem 0.9rem;
+  border-bottom:1px solid var(--border); font-size:0.74rem; color:var(--muted); font-family:var(--mono);
+}
+.live-dot{width:7px; height:7px; border-radius:50%; background:var(--positive); animation:pulse 1.6s infinite}
+@keyframes pulse{0%,100%{opacity:1} 50%{opacity:0.45}}
+.editor-scroller{position:relative; flex:1; overflow:auto; background:var(--surface)}
+.editor{
+  min-height:520px; padding:1.1rem 1.1rem 1.4rem; outline:none; font-size:0.92rem; line-height:1.75; color:var(--ink);
+}
+.editor p{margin:0 0 0.9rem}
+.editor p:last-child{margin-bottom:0}
+.editor:focus{box-shadow:inset 0 0 0 2px color-mix(in srgb, var(--accent) 18%, transparent)}
+.line-num{user-select:none; color:var(--muted); font-family:var(--mono); font-size:0.68rem; margin-right:0.6rem; opacity:0.7}
+.redacted{
+  background:color-mix(in srgb, var(--ink) 9%, transparent);
+  color:transparent !important; text-shadow:none;
+  border-radius:4px; padding:0 2px; letter-spacing:0.08em; user-select:none;
+}
+.cursors-layer{position:absolute; inset:0; pointer-events:none}
+.cursor{
+  position:absolute; width:2px; height:1.2em; border-radius:2px; transform:translateY(2px);
+  transition:left 0.35s ease, top 0.35s ease;
+}
+.cursor::after{
+  content:attr(data-label); position:absolute; top:-1.35rem; left:0;
+  padding:0.12rem 0.35rem; border-radius:999px; font-size:0.62rem; font-weight:800; color:#fff; white-space:nowrap;
+  font-family:var(--mono); letter-spacing:0.02em;
+}
+.cursor.alice{background:#10b981} .cursor.alice::after{background:#10b981}
+.cursor.bob{background:#3b82f6} .cursor.bob::after{background:#3b82f6}
+.cursor.you{background:#6366f1} .cursor.you::after{background:#6366f1}
+.merge-flash{animation:flash 0.6s ease}
+@keyframes flash{0%{background:color-mix(in srgb, var(--amber) 22%, transparent)} 100%{background:transparent}}
+.viewer-banner{
+  display:none; align-items:center; gap:0.5rem; padding:0.6rem 0.9rem;
+  background:color-mix(in srgb, var(--rose) 10%, transparent); border-bottom:1px solid color-mix(in srgb, var(--rose) 22%, var(--border));
+  color:var(--ink); font-size:0.78rem; font-weight:600;
+}
+.viewer-banner.show{display:flex}
+.chat-col{display:flex; flex-direction:column; gap:1rem}
+.chat-log{
+  display:grid; gap:0.7rem; max-height:260px; overflow:auto; padding-right:2px;
+}
+.chat-msg{
+  display:grid; grid-template-columns:32px minmax(0,1fr); gap:0.6rem; align-items:start;
+  padding:0.65rem 0.7rem; border:1px solid var(--border); border-radius:0.75rem; background:color-mix(in srgb, var(--bg) 60%, transparent);
+}
+.chat-ava{width:32px; height:32px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:800; font-size:0.72rem}
+.chat-meta{font-size:0.72rem; color:var(--muted); font-family:var(--mono)}
+.chat-text{margin:0.15rem 0 0; font-size:0.84rem; line-height:1.5}
+.mention{color:var(--accent); font-weight:700; background:color-mix(in srgb, var(--accent) 10%, transparent); padding:0 3px; border-radius:4px}
+.chat-composer{position:relative; display:grid; gap:0.5rem}
+.chat-input{
+  width:100%; min-height:74px; resize:vertical; padding:0.65rem 0.7rem; border:1px solid var(--border); border-radius:0.7rem;
+  background:var(--surface); color:var(--ink); font-size:0.86rem; font-family:inherit;
+}
+.mention-list{
+  position:absolute; left:0; right:0; bottom:calc(100% + 6px);
+  background:var(--surface); border:1px solid var(--border); border-radius:0.7rem; box-shadow:var(--shadow);
+  list-style:none; margin:0; padding:0.35rem; display:none; max-height:160px; overflow:auto; z-index:5;
+}
+.mention-list.show{display:grid; gap:0.2rem}
+.mention-item{
+  display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.6rem; border-radius:0.5rem; cursor:pointer; font-size:0.84rem; font-weight:600;
+}
+.mention-item:hover, .mention-item.active{background:color-mix(in srgb, var(--accent) 10%, transparent)}
+.toast{
+  position:fixed; right:1rem; bottom:1rem; max-width:360px; padding:0.75rem 0.9rem;
+  background:var(--ink); color:var(--bg); border-radius:0.7rem; font-size:0.82rem; font-weight:600;
+  box-shadow:var(--shadow); transform:translateY(12px); opacity:0; pointer-events:none; transition:all 0.25s ease; z-index:50;
+}
+.toast.show{transform:translateY(0); opacity:1}
+.kbd{font-family:var(--mono); font-size:0.7rem; padding:0.15rem 0.35rem; border:1px solid var(--border); border-bottom-width:2px; border-radius:4px; background:var(--surface)}
+</style>
+</head>
+<body>
+<header class="topbar" role="banner">
+  <div class="topbar-inner">
+    <a class="back-link" href="../../#projects" aria-label="Back to projects">← Back to Projects</a>
+    <div class="header-title">
+      <h1>CollabEditor — Real-Time Collaborative Document Editor</h1>
+      <p>Thesis 2025–2026 · Django + Channels + React · CRDT, presence &amp; scoped permissions (mock)</p>
+    </div>
+    <div class="badge-row">
+      <span class="mock-badge">● Mock Preview — fixed data, no backend</span>
+    </div>
+  </div>
+  <p class="disclaimer"><strong>Disclaimer:</strong> This is a static mock with local state only. No DB/backend calls. Share links, cursors and CRDT merges are simulated with fixed data.</p>
+</header>
+
+<main class="wrap" id="main">
+  <div class="toolbar-strip" role="region" aria-label="Collaboration controls">
+    <div class="toolbar-left">
+      <div class="presence" aria-label="Presence">
+        <div style="display:flex">
+          <span class="ava alice" title="Alice — editor">A</span>
+          <span class="ava bob" title="Bob — editor">B</span>
+          <span class="ava you" title="You — owner">Y</span>
+        </div>
+        <span class="presence-dot" aria-hidden="true"></span>
+        <span class="presence-label">3 online · <span id="saveState">All changes saved</span></span>
+      </div>
+      <span class="kbd" style="margin-left:0.4rem">CRDT + Lamport 28</span>
+    </div>
+    <div class="toolbar-right">
+      <button class="btn small" id="viewerToggle" aria-pressed="false" title="Toggle viewer permission — masks lines 10–20">Viewer (redacted) — off</button>
+      <button class="btn small" id="shareBtn" type="button">Generate share link</button>
+      <label class="sr-only" for="versionSelect">Version history</label>
+      <select id="versionSelect" class="select" aria-label="Version history">
+        <option value="v5" selected>v5 — Current (today 14:32)</option>
+        <option value="v4">v4 — Add methodology (yesterday 18:10)</option>
+        <option value="v3">v3 — Insert abstract (2 days ago)</option>
+        <option value="v2">v2 — Initial outline (3 days ago)</option>
+        <option value="v1">v1 — Empty doc</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- Left: hierarchy & share -->
+    <aside class="card" aria-label="Document hierarchy">
+      <div class="card-head"><h2>Structure</h2><span style="font-family:var(--mono); font-size:0.68rem; color:var(--muted)">Class → Post → Doc</span></div>
+      <div class="card-body">
+        <ul class="hierarchy-list">
+          <li class="hierarchy-item"><span class="icon">◈</span><span>Class: Thesis 2025–26</span></li>
+          <li class="hierarchy-item"><span class="icon">▦</span><span>Post: Chapter — Collaboration</span></li>
+          <li class="hierarchy-item active"><span class="icon">⬥</span><span>Document: Abstract — CRDT Editor</span><span style="margin-left:auto; font-size:0.68rem; color:var(--positive)">● live</span></li>
+          <li class="hierarchy-item"><span class="icon">⬥</span><span>Document: Methodology</span></li>
+          <li class="hierarchy-item"><span class="icon">⬥</span><span>Document: Evaluation</span></li>
+        </ul>
+        <div class="share-box">
+          <label for="shareLink">Share link (mock)</label>
+          <div class="share-row">
+            <input id="shareLink" class="text-input" type="text" readonly placeholder="Click generate…" aria-label="Share link">
+            <button class="btn small" id="copyLink" type="button">Copy</button>
+          </div>
+          <p style="margin:0.5rem 0 0; font-size:0.72rem; color:var(--muted); line-height:1.5">Token <code id="shareToken" style="font-family:var(--mono)">—</code> · ACL: owner / full / partial_write (edit_ranges) / read</p>
+        </div>
+        <div class="version-wrap">
+          <label>Version meta</label>
+          <p class="version-meta" id="versionMeta">Quill Delta JSON · Decimal keys (prec 28) · Restores create DocumentVersion snapshot. Current by <strong>You</strong>.</p>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Center: editor -->
+    <section class="card editor-card" aria-label="Document editor">
+      <div class="editor-toolbar" role="toolbar" aria-label="Formatting">
+        <button class="tool-btn" type="button" data-cmd="bold" aria-label="Bold (Ctrl+B)"><strong>B</strong></button>
+        <button class="tool-btn" type="button" data-cmd="italic" aria-label="Italic (Ctrl+I)"><em>I</em></button>
+        <span class="tool-sep" aria-hidden="true"></span>
+        <button class="btn small ghost" id="insertBtn" type="button">Insert comment</button>
+        <span style="margin-left:auto; display:flex; gap:0.4rem; align-items:center; font-family:var(--mono); font-size:0.7rem; color:var(--muted)">
+          <span class="live-dot"></span> WebSocket: connected · Redis fan-out
+        </span>
+      </div>
+      <div class="editor-meta">
+        <span id="docTitle">Abstract — CRDT Editor</span> · <span id="wordCount">— words</span> · <span>JWT WS ?token= handshake</span>
+      </div>
+      <div class="viewer-banner" id="viewerBanner" role="status" aria-live="polite">
+        <span style="width:8px; height:8px; border-radius:50%; background:var(--rose)"></span>
+        Viewer mode — lines 10–20 redacted with █ (server-side read redaction demo)
+      </div>
+      <div class="editor-scroller" id="scroller">
+        <div id="editor" class="editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="Thesis abstract editor" spellcheck="false"></div>
+        <div class="cursors-layer" id="cursors" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Right: chat -->
+    <div class="chat-col">
+      <section class="card" aria-label="In-document chat">
+        <div class="card-head"><h2>Chat — @mentions</h2><span class="kbd">@ to mention</span></div>
+        <div class="card-body" style="display:grid; gap:0.75rem">
+          <div class="chat-log" id="chatLog" role="log" aria-live="polite"></div>
+          <div class="chat-composer">
+            <ul class="mention-list" id="mentionList" role="listbox" aria-label="Mention suggestions">
+              <li class="mention-item" role="option" data-user="Alice"><span class="ava alice" style="width:22px;height:22px; font-size:0.62rem">A</span> Alice — editor</li>
+              <li class="mention-item" role="option" data-user="Bob"><span class="ava bob" style="width:22px;height:22px; font-size:0.62rem">B</span> Bob — editor</li>
+              <li class="mention-item" role="option" data-user="You"><span class="ava you" style="width:22px;height:22px; font-size:0.62rem">Y</span> You — owner</li>
+            </ul>
+            <label class="sr-only" for="chatInput">Chat message</label>
+            <textarea id="chatInput" class="chat-input" placeholder="Message… type @ to mention Alice or Bob"></textarea>
+            <div style="display:flex; gap:0.5rem; justify-content:flex-end">
+              <button class="btn small" id="sendChat" type="button">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card" aria-label="CRDT explainer">
+        <div class="card-head"><h2>How the mock CRDT works</h2></div>
+        <div class="card-body" style="font-size:0.82rem; color:var(--muted); line-height:1.6">
+          <p style="margin:0">Typing inserts locally. After ~2s Bob's cursor moves and merges <code style="font-family:var(--mono)">[Bob merged]</code> at his caret — illusion of conflict-free Decimal keys + Lamport clock. No server.</p>
+          <ul style="margin:0.6rem 0 0; padding-left:1.1rem">
+            <li>DOC_STATES keyed by Decimal(28) + lamport</li>
+            <li>Partial_write edit_ranges line-col anchored</li>
+            <li>Try Viewer toggle to see █ redaction (lines 10–20)</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const lines = [
+  "1 — Abstract. CollabEditor is a graduation thesis (2025–2026) building Google Docs–grade collaboration with Django 5.2, Channels 4.0 and React 18 + Quill 2.0.",
+  "2 — Problem: distributed teams suffer file-share chaos, lost changes from manual merges and all-or-nothing permissions.",
+  "3 — Built: Django + DRF 3.14 serve REST and JWT auth; DocumentConsumer over WebSockets manages CRDT merge, presence and chat via Redis channel layer.",
+  "4 — Architecture: React + Quill → Daphne (ASGI) → Django Channels (WS) → Redis (fan-out) → PostgreSQL (Document, permissions, classrooms, versions).",
+  "5 — Engineering: CRDT-like Decimal keys (prec 28) + Lamport clock in DOC_STATES for conflict-free inserts, line-col anchored edit_ranges with █ redaction resilient to inserts.",
+  "6 — Quill Delta JSON persistence per operation; DocumentVersion history with restore; in-doc chat with @mentions and presence (Alice, Bob, You).",
+  "7 — Security: four-tier ACL — owner / full / partial_write with edit_ranges / read — with server-side read redaction and write rejection, JWT for REST and WS ?token= handshake.",
+  "8 — Share links: revocable DocumentShareLink and ClassShareLink (mock token demo-xxxx) carry scoped ACL without exposing DB.",
+  "9 — Ops: Daphne serves HTTP+WS, channels-redis group_send, PostgreSQL 16 durable store, Docker-ready layout, PlantUML diagrams and GIF demos.",
+  "10 — Evaluation: concurrent edits from Alice and Bob converge; viewer role masks lines 10–20 instantly to demonstrate partial_write enforcement.",
+  "11 — Classroom structure: Class → Post → Document hierarchy mirrors teaching flow; students inherit post-level defaults then document overrides.",
+  "12 — Performance: Delta ops < 2KB, WS round-trip p95 < 45ms locally; Redis fan-out scales to N rooms without DB hit on broadcast.",
+  "13 — Limitations: no offline sync in this mock; cursor positions are interpolated; history is linear (no branching).",
+  "14 — Future: offline Yjs interop, operational transform fallback, and row-level security policies in Postgres.",
+  "15 — Keywords: CRDT, WebSockets, Django Channels, Daphne, Redis, JWT, ACL, Quill Delta, collaboration."
+];
+
+const snapshots = {
+  v5: lines,
+  v4: lines.slice(0,12).concat(["13 — Methodology: mixed-methods with 12 remote editing sessions measuring merge latency and intent preservation."]),
+  v3: lines.slice(0,6).concat(["7 — Early abstract draft — CRDT vs OT trade-offs not yet decided."]),
+  v2: ["1 — Outline: problem → arch → CRDT → ACL → eval","2 — TODO: write abstract","3 — TODO: add diagrams"],
+  v1: ["1 — (empty document) Start typing…"]
+};
+
+const editor = document.getElementById('editor');
+const wordCount = document.getElementById('wordCount');
+const cursorsEl = document.getElementById('cursors');
+const scroller = document.getElementById('scroller');
+const saveState = document.getElementById('saveState');
+const viewerToggle = document.getElementById('viewerToggle');
+const viewerBanner = document.getElementById('viewerBanner');
+let isViewer = false;
+let bobTimer = null;
+let cursors = [
+  {id:'alice', label:'Alice', cls:'alice', line:3, ch: 12},
+  {id:'bob', label:'Bob', cls:'bob', line:7, ch: 18},
+  {id:'you', label:'You', cls:'you', line:1, ch: 2}
+];
+
+function renderEditor(arr){
+  editor.innerHTML = arr.map((t,i)=>{
+    const n=i+1;
+    const txt = t.replace(/^\d+\s—\s*/,'');
+    return '<p data-line="'+n+'"><span class="line-num">'+String(n).padStart(2,'0')+'</span><span>'+escapeHtml(txt)+'</span></p>';
+  }).join('');
+  if(isViewer) applyViewer(true);
+  updateCount();
+  placeCursors();
+}
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function updateCount(){
+  const words = editor.innerText.trim().split(/\s+/).filter(Boolean).length;
+  wordCount.textContent = words + " words · " + editor.querySelectorAll('[data-line]').length + " lines";
+}
+
+function applyViewer(on){
+  viewerBanner.classList.toggle('show', on);
+  editor.querySelectorAll('[data-line]').forEach(p=>{
+    const n=parseInt(p.dataset.line,10);
+    if(n>=10 && n<=20){
+      const span=p.querySelector('span:last-child');
+      if(!span) return;
+      if(on){
+        if(!p.dataset.orig) p.dataset.orig = span.innerHTML;
+        const len = Math.max(28, span.textContent.length);
+        span.innerHTML = '<span class="redacted" aria-label="redacted">'+'█'.repeat(len)+'</span>';
+      } else {
+        if(p.dataset.orig){ span.innerHTML = p.dataset.orig; delete p.dataset.orig; }
+      }
+    }
+  });
+}
+
+function placeCursors(){
+  cursorsEl.innerHTML='';
+  const rect = editor.getBoundingClientRect();
+  const linesEls = [...editor.querySelectorAll('[data-line]')];
+  cursors.forEach(c=>{
+    const lineEl = linesEls[c.line-1];
+    if(!lineEl) return;
+    const lineRect = lineEl.getBoundingClientRect();
+    const editorRect = editor.getBoundingClientRect();
+    // approximate char width 7.2px, plus line-num offset
+    const left = 44 + c.ch*7.1; // 44 ~ line-num + padding
+    const top = lineEl.offsetTop + 2;
+    const div=document.createElement('div');
+    div.className='cursor '+c.cls;
+    div.dataset.label=c.label;
+    div.style.left=left+'px';
+    div.style.top=top+'px';
+    div.style.height=(lineRect.height-2)+'px';
+    cursorsEl.appendChild(div);
+  });
+}
+
+// initial
+renderEditor(snapshots.v5);
+
+// toolbar bold/italic
+document.querySelectorAll('.tool-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    const cmd=b.dataset.cmd;
+    document.execCommand(cmd,false,null);
+    b.classList.toggle('active');
+    editor.focus();
+  });
+});
+document.getElementById('insertBtn').addEventListener('click',()=>{
+  document.execCommand('insertText', false, ' [comment: needs citation]');
+  flashSave();
+});
+
+// viewer toggle
+viewerToggle.addEventListener('click',()=>{
+  isViewer=!isViewer;
+  viewerToggle.setAttribute('aria-pressed', String(isViewer));
+  viewerToggle.textContent = isViewer ? 'Viewer (redacted) — on' : 'Viewer (redacted) — off';
+  viewerToggle.style.borderColor = isViewer ? 'var(--rose)' : '';
+  applyViewer(isViewer);
+  toast(isViewer ? 'Viewer ACL active — lines 10–20 masked with █' : 'Owner ACL — full visibility restored');
+});
+
+// CRDT illusion: on input, schedule Bob move
+let inputDebounce;
+editor.addEventListener('input',()=>{
+  updateCount();
+  saveState.textContent='Saving…';
+  clearTimeout(inputDebounce);
+  inputDebounce=setTimeout(()=>{ saveState.textContent='All changes saved'; },600);
+  // schedule bob
+  clearTimeout(bobTimer);
+  bobTimer=setTimeout(()=>{
+    // Bob merges at his cursor
+    const bob = cursors.find(c=>c.id==='bob');
+    if(!bob) return;
+    const fixedSeq = [
+      " [Bob: + clarification]",
+      " [Bob merged ✓]",
+      " [Bob: rephrase]",
+    ];
+    const seq = fixedSeq[Math.floor(Math.random()*fixedSeq.length)];
+    // insert into editor at Bob's line
+    const lineEls=[...editor.querySelectorAll('[data-line]')];
+    const target=lineEls[bob.line-1];
+    if(target){
+      const span=target.querySelector('span:last-child');
+      span.textContent += seq;
+      target.classList.add('merge-flash');
+      setTimeout(()=>target.classList.remove('merge-flash'),650);
+      updateCount();
+      // move Bob cursor forward
+      bob.ch = Math.min(42, bob.ch + seq.length);
+      if(bob.line < lines.length && Math.random()>0.6) bob.line++;
+      placeCursors();
+      toast('CRDT merge: Bob\'s edit converged at line '+(bob.line));
+    }
+  },2000);
+  placeCursors();
+});
+
+window.addEventListener('resize', placeCursors);
+scroller.addEventListener('scroll', placeCursors);
+
+// share link
+const shareLink=document.getElementById('shareLink');
+const shareToken=document.getElementById('shareToken');
+document.getElementById('shareBtn').addEventListener('click',()=>{
+  const token='demo-'+Math.random().toString(36).slice(2,6);
+  shareToken.textContent=token;
+  shareLink.value=location.origin + location.pathname + '#share/' + token;
+  toast('Share link generated — token '+token);
+});
+document.getElementById('copyLink').addEventListener('click', async()=>{
+  if(!shareLink.value) { toast('Generate a link first'); return; }
+  try{ await navigator.clipboard.writeText(shareLink.value); toast('Copied to clipboard'); }
+  catch{ shareLink.select(); document.execCommand('copy'); toast('Copied'); }
+});
+
+// version history
+const versionSelect=document.getElementById('versionSelect');
+const versionMeta=document.getElementById('versionMeta');
+const metaMap={
+  v5:"Quill Delta JSON · Decimal keys (prec 28) · Current by You.",
+  v4:"Added methodology — Delta snapshot, author Bob, 1.2KB.",
+  v3:"Abstract inserted — 6 paragraphs, author Alice.",
+  v2:"Outline only — no Deltas yet.",
+  v1:"Empty — initial DocumentVersion."
+};
+versionSelect.addEventListener('change',()=>{
+  const v=versionSelect.value;
+  renderEditor(snapshots[v] || snapshots.v5);
+  versionMeta.textContent = metaMap[v] || metaMap.v5;
+  toast('Restored '+ v);
+});
+
+// chat + mentions
+const chatLog=document.getElementById('chatLog');
+const chatInput=document.getElementById('chatInput');
+const mentionList=document.getElementById('mentionList');
+let chatData=[
+  {user:'Alice', color:'#10b981', text:'Hey — is the thesis abstract final? @You check line 10?', time:'14:28'},
+  {user:'Bob', color:'#3b82f6', text:'I pushed a rephrase on line 7 — CRDT merge looks good.', time:'14:30'},
+  {user:'You', color:'#6366f1', text:'Viewer ACL demo masks lines 10–20 with █ — try the toggle.', time:'14:31'}
+];
+function renderChat(){
+  chatLog.innerHTML = chatData.map(m=>`
+    <div class="chat-msg">
+      <span class="chat-ava" style="background:${m.color}">${m.user[0]}</span>
+      <div>
+        <div class="chat-meta">${m.user} · ${m.time}</div>
+        <p class="chat-text">${linkMentions(m.text)}</p>
+      </div>
+    </div>`).join('');
+  chatLog.scrollTop=chatLog.scrollHeight;
+}
+function linkMentions(t){ return escapeHtml(t).replace(/@(\w+)/g,'<span class="mention">@$1</span>'); }
+renderChat();
+
+function sendChat(){
+  const v=chatInput.value.trim();
+  if(!v) return;
+  chatData.push({user:'You', color:'#6366f1', text:v, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})});
+  renderChat();
+  chatInput.value=''; hideMentions();
+  // fake reply after 1.2s
+  setTimeout(()=>{
+    const replies=["Got it — will review.","Merge confirmed. No conflicts.","Nice — viewer mask works!"];
+    const reply=replies[Math.floor(Math.random()*replies.length)];
+    chatData.push({user:'Alice', color:'#10b981', text: reply, time: new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})});
+    renderChat();
+  },1200);
+}
+document.getElementById('sendChat').addEventListener('click', sendChat);
+chatInput.addEventListener('keydown', e=>{
+  if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendChat(); }
+  if(e.key==='Escape') hideMentions();
+});
+chatInput.addEventListener('input', ()=>{
+  const cur = chatInput.value;
+  const atIdx = cur.lastIndexOf('@');
+  if(atIdx!==-1){
+    const q = cur.slice(atIdx+1).split(/\s/)[0].toLowerCase();
+    const items=[...mentionList.querySelectorAll('.mention-item')];
+    let any=false;
+    items.forEach(it=>{
+      const name=it.dataset.user.toLowerCase();
+      const show = name.startsWith(q) || q==='';
+      it.style.display = show ? 'flex' : 'none';
+      if(show) any=true;
+    });
+    if(any) mentionList.classList.add('show'); else hideMentions();
+  } else hideMentions();
+});
+mentionList.querySelectorAll('.mention-item').forEach(it=>{
+  it.addEventListener('click',()=>{
+    const u=it.dataset.user;
+    const at = chatInput.value.lastIndexOf('@');
+    if(at!==-1){
+      const before=chatInput.value.slice(0,at);
+      const afterPart=chatInput.value.slice(at).split(/\s/).slice(1).join(' ');
+      chatInput.value = before + '@'+u+' ' + afterPart;
+    } else chatInput.value+='@'+u+' ';
+    hideMentions(); chatInput.focus();
+  });
+});
+function hideMentions(){ mentionList.classList.remove('show'); }
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.chat-composer')) hideMentions();
+});
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('show'),2200);
+}
+function flashSave(){ saveState.textContent='Saving…'; setTimeout(()=>saveState.textContent='All changes saved',700); }
+
+// keyboard: Ctrl B/I
+editor.addEventListener('keydown', e=>{
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='b'){ e.preventDefault(); document.execCommand('bold',false,null); }
+  if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='i'){ e.preventDefault(); document.execCommand('italic',false,null); }
+});
+
+// initial cursor placement after font load
+setTimeout(placeCursors, 300);
+
+// simulate Bob cursor drift every 4s even without typing (illusion)
+setInterval(()=>{
+  const bob=cursors.find(c=>c.id==='bob');
+  const alice=cursors.find(c=>c.id==='alice');
+  if(!isViewer && Math.random()>0.5){
+    bob.ch = 10 + Math.floor(Math.random()*28);
+    bob.line = 3 + Math.floor(Math.random()*6);
+    placeCursors();
+  }
+  if(Math.random()>0.7){
+    alice.ch = 8 + Math.floor(Math.random()*20);
+    placeCursors();
+  }
+},4200);
+</script>
+</body>
+</html>

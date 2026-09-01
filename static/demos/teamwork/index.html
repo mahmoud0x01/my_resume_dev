@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Team Work Platform — Mock Preview</title>
+<meta name="description" content="Team Work Platform mock preview — kanban, dashboards, analytics, notifications, JWT mock, static no backend.">
+<style>
+:root{
+  --bg:#f5f4f0; --bg2:#fff; --ink:#1a1a1a; --muted:#64748b; --border:#e5e7eb;
+  --accent:#6366f1; --positive:#10b981; --blue:#3b82f6; --amber:#f59e0b; --rose:#ef4444;
+  --radius:1rem; --shadow:0 12px 30px rgba(15,23,42,.08); --surface:var(--bg2);
+  --mono:'Courier New',monospace; --font:'Inter',system-ui,sans-serif;
+}
+@media(prefers-color-scheme:dark){
+  :root{ --bg:#0f1115; --bg2:#1a1d23; --ink:#e6e9f2; --muted:#9ca3af; --border:#272a33; --surface:#1e2128; --shadow:0 14px 34px rgba(0,0,0,.35);}
+}
+*{box-sizing:border-box}
+body{margin:0; font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.6; min-width:320px}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+header.topbar{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(14px) saturate(120%); -webkit-backdrop-filter:blur(14px) saturate(120%); border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1240px; margin:0 auto; padding:0.85rem 1rem; display:flex; flex-wrap:wrap; gap:0.75rem 1rem; align-items:center}
+.back-link{display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 0.85rem; border:1px solid var(--border); border-radius:999px; background:color-mix(in srgb, var(--surface) 70%, transparent); font-size:0.82rem; font-weight:700; text-decoration:none}
+.back-link:hover{border-color:var(--ink)}
+.header-title{flex:1 1 320px}
+.header-title h1{margin:0; font-size:clamp(1.15rem,2.5vw,1.45rem); letter-spacing:-0.03em}
+.header-title p{margin:0.2rem 0 0; color:var(--muted); font-size:0.82rem}
+.mock-badge{display:inline-flex; align-items:center; gap:0.35rem; padding:0.3rem 0.7rem; border-radius:999px; font-size:0.7rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; border:1px solid color-mix(in srgb, var(--amber) 35%, var(--border)); background:color-mix(in srgb, var(--amber) 12%, transparent)}
+.disclaimer{max-width:1240px; margin:0 auto; padding:0 1rem 0.9rem; color:var(--muted); font-size:0.78rem; font-family:var(--mono)}
+.wrap{max-width:1240px; margin:0 auto; padding:1rem 1rem 2rem}
+.top-row{display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; justify-content:space-between; padding:0.9rem 1rem; border:1px solid var(--border); border-radius:0.9rem; background:color-mix(in srgb, var(--surface) 80%, transparent); box-shadow:var(--shadow)}
+.metrics{display:flex; flex-wrap:wrap; gap:0.7rem; align-items:center}
+.metric{
+  min-width:140px; padding:0.75rem 0.9rem; border:1px solid var(--border); border-radius:0.8rem; background:var(--surface);
+  display:grid; gap:0.15rem;
+}
+.metric strong{font-size:1.35rem; line-height:1; letter-spacing:-0.03em}
+.metric span{font-size:0.7rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); font-family:var(--mono)}
+.spark-card{
+  flex:1 1 280px; min-width:260px; display:flex; align-items:center; gap:0.75rem; padding:0.6rem 0.75rem; border:1px solid var(--border); border-radius:0.8rem; background:var(--surface);
+}
+.spark-card svg{flex:0 0 120px; height:40px}
+.spark-meta{font-size:0.72rem; color:var(--muted); line-height:1.4}
+.spark-meta strong{color:var(--ink); font-size:0.84rem}
+.actions{display:flex; flex-wrap:wrap; gap:0.5rem; align-items:center}
+.btn{display:inline-flex; align-items:center; gap:0.4rem; min-height:38px; padding:0.45rem 0.85rem; border:1px solid var(--border); border-radius:0.6rem; background:var(--surface); color:var(--ink); font-size:0.82rem; font-weight:700; cursor:pointer}
+.btn:hover{border-color:var(--ink)}
+.btn.primary{background:var(--ink); color:var(--bg); border-color:var(--ink)}
+.btn.small{min-height:32px; padding:0.32rem 0.65rem; font-size:0.78rem}
+.btn.ghost{background:transparent}
+.icon-btn{
+  width:42px; height:42px; display:grid; place-items:center; border:1px solid var(--border); border-radius:0.7rem; background:var(--surface); cursor:pointer; position:relative;
+}
+.badge-dot{position:absolute; top:-4px; right:-4px; min-width:18px; height:18px; padding:0 4px; display:grid; place-items:center; border-radius:999px; background:var(--rose); color:#fff; font-size:0.68rem; font-weight:800; border:2px solid var(--surface)}
+.notif-wrap{position:relative}
+.dropdown{
+  position:absolute; right:0; top:calc(100% + 8px); width:min(360px, 90vw); max-height:380px; overflow:auto;
+  background:var(--surface); border:1px solid var(--border); border-radius:0.9rem; box-shadow:var(--shadow); padding:0.5rem; display:none; z-index:30;
+}
+.dropdown.show{display:grid; gap:0.4rem}
+.notif-item{padding:0.65rem 0.7rem; border:1px solid var(--border); border-radius:0.65rem; background:color-mix(in srgb, var(--bg) 60%, transparent); font-size:0.82rem}
+.notif-item strong{font-size:0.82rem}
+.jwt-panel{
+  margin-top:1rem; border:1px solid var(--border); border-radius:var(--radius); background:color-mix(in srgb, var(--surface) 82%, transparent); box-shadow:0 6px 20px rgba(15,23,42,.045); overflow:hidden;
+}
+.jwt-head{padding:0.85rem 1rem; display:flex; flex-wrap:wrap; gap:0.6rem; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border)}
+.jwt-head h2{margin:0; font-size:0.8rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); font-family:var(--mono)}
+.jwt-body{padding:1rem; display:grid; gap:0.9rem}
+.token-box{
+  padding:0.75rem; border:1px solid var(--border); border-radius:0.65rem; background:var(--bg); font-family:var(--mono); font-size:0.72rem; word-break:break-all; line-height:1.5;
+}
+.decoded{
+  display:none; grid-template-columns:repeat(3, minmax(0,1fr)); gap:0.7rem;
+}
+.decoded.show{display:grid}
+@media(max-width:760px){ .decoded{grid-template-columns:1fr} }
+.decoded pre{
+  margin:0; padding:0.7rem; border:1px solid var(--border); border-radius:0.6rem; background:var(--surface); font-family:var(--mono); font-size:0.72rem; white-space:pre-wrap; word-break:break-all;
+}
+.decoded h3{margin:0 0 0.4rem; font-size:0.7rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); font-family:var(--mono)}
+.board{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:1rem; margin-top:1rem; align-items:start}
+@media(max-width:900px){ .board{grid-template-columns:1fr} }
+.col{border:1px solid var(--border); border-radius:var(--radius); background:color-mix(in srgb, var(--surface) 82%, transparent); box-shadow:0 6px 20px rgba(15,23,42,0.045); min-height:380px; display:flex; flex-direction:column}
+.col.drag-over{border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent)}
+.col-head{padding:0.9rem 1rem 0.75rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:color-mix(in srgb, var(--surface) 92%, transparent); border-radius:var(--radius) var(--radius) 0 0}
+.col-title{margin:0; font-size:0.8rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-family:var(--mono); color:var(--muted)}
+.count{min-width:22px; height:22px; display:grid; place-items:center; padding:0 6px; border-radius:999px; font-size:0.72rem; font-weight:800; background:color-mix(in srgb, var(--ink) 7%, transparent); border:1px solid var(--border)}
+.col-body{padding:0.85rem; display:grid; gap:0.7rem; align-content:start; min-height:280px}
+.card-task{padding:0.8rem 0.85rem; border:1px solid var(--border); border-radius:0.8rem; background:var(--surface); box-shadow:0 2px 10px rgba(15,23,42,0.06); cursor:grab; transition:transform 0.15s, box-shadow 0.15s, border-color 0.15s}
+.card-task:hover{border-color:color-mix(in srgb, var(--accent) 28%, var(--border)); transform:translateY(-1px); box-shadow:0 8px 20px rgba(15,23,42,0.08)}
+.card-task.dragging{opacity:0.55; transform:rotate(1deg) scale(0.98)}
+.card-task h3{margin:0; font-size:0.88rem; font-weight:700; line-height:1.35}
+.card-meta{margin-top:0.45rem; display:flex; gap:0.4rem; flex-wrap:wrap; font-size:0.72rem; color:var(--muted); font-family:var(--mono)}
+.tag{padding:0.15rem 0.45rem; border-radius:999px; border:1px solid var(--border); background:color-mix(in srgb, var(--bg) 70%, transparent); font-size:0.68rem; font-weight:700}
+.card-actions{display:flex; gap:0.35rem; margin-top:0.6rem; flex-wrap:wrap}
+.toast{position:fixed; right:1rem; bottom:1rem; max-width:360px; padding:0.75rem 0.9rem; background:var(--ink); color:var(--bg); border-radius:0.7rem; font-size:0.82rem; font-weight:600; box-shadow:var(--shadow); transform:translateY(12px); opacity:0; pointer-events:none; transition:all 0.25s ease; z-index:50}
+.toast.show{transform:translateY(0); opacity:1}
+</style>
+</head>
+<body>
+<header class="topbar" role="banner">
+  <div class="topbar-inner">
+    <a class="back-link" href="../../#projects">← Back to Projects</a>
+    <div class="header-title">
+      <h1>Team Work Platform — Kanban &amp; Dashboards</h1>
+      <p>FastAPI + SQLAlchemy + Jinja2 + Vanilla JS · Analytics, notifications, export (mock, no backend)</p>
+    </div>
+    <span class="mock-badge">● Mock Preview — fixed data, no backend</span>
+  </div>
+  <p class="disclaimer"><strong>Disclaimer:</strong> This is a static mock with local state only. No DB/backend calls. Drag, metrics and JWT are in-memory.</p>
+</header>
+
+<main class="wrap">
+  <div class="top-row" role="region" aria-label="Dashboard summary">
+    <div class="metrics" aria-label="Metrics">
+      <div class="metric"><span>Tasks</span><strong id="mTasks">24</strong><span style="font-size:0.68rem">total in workspace</span></div>
+      <div class="metric"><span>Completed</span><strong id="mDone" style="color:var(--positive)">8</strong><span style="font-size:0.68rem">in Done</span></div>
+      <div class="metric"><span>Notifications</span><strong id="mNotifs" style="color:var(--rose)">3</strong><span>unread</span></div>
+    </div>
+
+    <div class="spark-card" aria-label="Analytics sparkline">
+      <svg viewBox="0 0 120 40" role="img" aria-label="Tasks completed sparkline last 7 days">
+        <rect x="0" y="0" width="120" height="40" rx="8" fill="color-mix(in srgb, var(--accent) 7%, transparent)" />
+        <polyline fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"
+          points="4,28 20,22 36,26 52,14 68,18 84,8 100,12 116,6" />
+        <circle cx="116" cy="6" r="3" fill="var(--accent)" />
+      </svg>
+      <div class="spark-meta">
+        <strong>Analytics — 7 days</strong><br>
+        Completed per day: 2 · 3 · 2 · 5 · 4 · 7 · 6 · Trend +18%
+      </div>
+    </div>
+
+    <div class="actions">
+      <div class="notif-wrap">
+        <button class="icon-btn" id="bellBtn" type="button" aria-label="Notifications, 3 unread" aria-expanded="false" aria-controls="notifDrop">
+          <span aria-hidden="true" style="font-size:1.1rem">🔔</span>
+          <span class="badge-dot" id="bellBadge">3</span>
+        </button>
+        <div class="dropdown" id="notifDrop" role="region" aria-label="Notifications">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:0.2rem 0.2rem 0.4rem">
+            <strong style="font-size:0.82rem">Notifications</strong>
+            <button class="btn small ghost" id="markRead" type="button">Mark all read</button>
+          </div>
+          <div class="notif-item"><strong>Alice assigned you “API auth hardening”</strong><br><span style="color:var(--muted)">2m ago · Doing</span></div>
+          <div class="notif-item"><strong>Bob completed “Docker Compose dev env”</strong><br><span style="color:var(--muted)">1h ago · Done</span></div>
+          <div class="notif-item"><strong>System: export ready for download</strong><br><span style="color:var(--muted)">3h ago</span></div>
+        </div>
+      </div>
+      <button class="btn" id="exportBtn" type="button">⬇ Export JSON</button>
+      <button class="btn small ghost" id="resetBtn" type="button">Reset board</button>
+    </div>
+  </div>
+
+  <section class="jwt-panel" aria-label="JWT mock">
+    <div class="jwt-head">
+      <h2>JWT — mock token (no backend)</h2>
+      <div style="display:flex; gap:0.5rem; align-items:center">
+        <span style="font-family:var(--mono); font-size:0.7rem; color:var(--muted)">HS256 · 1h exp</span>
+        <button class="btn small" id="jwtToggle" type="button" aria-expanded="false" aria-controls="jwtDecoded">Show decoded</button>
+      </div>
+    </div>
+    <div class="jwt-body">
+      <div class="token-box" id="jwtToken" aria-label="JWT token">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJtYWhtb3VkIiwicm9sZSI6Im93bmVyIiwiZXhwIjoxNzM1Njg5NjAwfQ.mock-signature-demo</div>
+      <div class="decoded" id="jwtDecoded">
+        <div>
+          <h3>Header</h3>
+          <pre>{
+  "alg": "HS256",
+  "typ": "JWT"
+}</pre>
+        </div>
+        <div>
+          <h3>Payload</h3>
+          <pre>{
+  "sub": "mahmoud",
+  "role": "owner",
+  "iat": 1735686000,
+  "exp": 1735689600,
+  "iss": "teamwork.mock"
+}</pre>
+        </div>
+        <div>
+          <h3>Signature</h3>
+          <pre>mock-signature-demo
+(HS256 would be
+HMAC-SHA256
+base64url)</pre>
+        </div>
+      </div>
+      <p style="margin:0; font-size:0.74rem; color:var(--muted)">Toggle shows decoded panels locally — no verification, no storage. Refresh clears state.</p>
+    </div>
+  </section>
+
+  <div class="board" id="board" aria-label="Kanban board"></div>
+
+  <p style="margin-top:1rem; color:var(--muted); font-size:0.78rem; font-family:var(--mono); text-align:center">Drag cards between To Do / Doing / Done or use Move buttons · Export downloads static JSON · JWT is mocked locally</p>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const cols = [
+  {id:'todo', label:'To Do', color:'var(--slate)'},
+  {id:'doing', label:'Doing', color:'var(--amber)'},
+  {id:'done', label:'Done', color:'var(--positive)'}
+];
+let tasks = [
+  {id:1, title:"Design kanban schema (FastAPI + SQLAlchemy)", col:'todo', tag:"backend", assignee:"You"},
+  {id:2, title:"Build analytics aggregation endpoint", col:'todo', tag:"api", assignee:"Alice"},
+  {id:3, title:"Jinja2 dashboard — responsive grid", col:'todo', tag:"frontend", assignee:"Bob"},
+  {id:4, title:"API auth hardening — JWT refresh", col:'doing', tag:"security", assignee:"You"},
+  {id:5, title:"Docker Compose dev env + hot reload", col:'doing', tag:"devops", assignee:"Alice"},
+  {id:6, title:"Notifications WS + polling fallback", col:'done', tag:"realtime", assignee:"Bob"},
+  {id:7, title:"Export service — JSON & CSV", col:'done', tag:"export", assignee:"You"},
+  {id:8, title:"Task search & filters (in-memory)", col:'done', tag:"ux", assignee:"Sara"},
+  {id:9, title:"Role-aware task assignment", col:'todo', tag:"auth", assignee:"Sara"},
+  {id:10, title:"Kanban drag reordering + persistence", col:'todo', tag:"ux", assignee:"You"},
+  {id:11, title:"Dashboard charts — sparkline + bar", col:'todo', tag:"analytics", assignee:"Alice"},
+  {id:12, title:"JWT middleware + refresh flow", col:'doing', tag:"backend", assignee:"Bob"},
+  {id:13, title:"Email notifications digest", col:'todo', tag:"notifications", assignee:"You"},
+  {id:14, title:"Task comments + @mentions", col:'doing', tag:"collab", assignee:"Sara"},
+  {id:15, title:"Project activity timeline", col:'todo', tag:"frontend", assignee:"Alice"},
+  {id:16, title:"File attachments — upload + preview", col:'todo', tag:"storage", assignee:"Bob"},
+  {id:17, title:"Initial project scaffold", col:'done', tag:"setup", assignee:"You"},
+  {id:18, title:"CI — lint + tests + build", col:'done', tag:"ci", assignee:"Alice"},
+  {id:19, title:"Dockerfile + compose prod", col:'done', tag:"devops", assignee:"Bob"},
+  {id:20, title:"Seed demo data (24 tasks)", col:'done', tag:"data", assignee:"You"},
+  {id:21, title:"Responsive board 3→1 col", col:'done', tag:"ui", assignee:"Sara"},
+  {id:22, title:"Keyboard a11y for drag", col:'todo', tag:"a11y", assignee:"You"},
+  {id:23, title:"Perf — virtualize large boards", col:'doing', tag:"perf", assignee:"Alice"},
+  {id:24, title:"E2E tests — drag + export", col:'doing', tag:"qa", assignee:"Bob"}
+];
+const initial = JSON.parse(JSON.stringify(tasks));
+
+const board=document.getElementById('board');
+function render(){
+  board.innerHTML = cols.map(c=>{
+    const items=tasks.filter(t=>t.col===c.id);
+    return `
+      <section class="col" data-col="${c.id}" aria-label="${c.label}">
+        <div class="col-head">
+          <h2 class="col-title" style="color:${c.color}">${c.label}</h2>
+          <span class="count">${items.length}</span>
+        </div>
+        <div class="col-body" data-drop="${c.id}">
+          ${items.map(t=>taskHtml(t)).join('') || `<div style="padding:1rem; text-align:center; color:var(--muted); font-size:0.84rem; border:1px dashed var(--border); border-radius:0.65rem; background:color-mix(in srgb, var(--bg) 60%, transparent)">No tasks</div>`}
+        </div>
+      </section>
+    `;
+  }).join('');
+  attachDrag();
+  updateMetrics();
+}
+function taskHtml(t){
+  return `
+    <article class="card-task" draggable="true" data-id="${t.id}" tabindex="0" aria-label="${t.title} in ${t.col}">
+      <h3>${escapeHtml(t.title)}</h3>
+      <div class="card-meta">
+        <span class="tag">${t.tag}</span>
+        <span>${t.assignee}</span>
+        <span>#${t.id}</span>
+      </div>
+      <div class="card-actions">
+        ${cols.filter(c=>c.id!==t.col).map(c=>`<button class="btn small" data-move="${t.id}:${c.id}" type="button">→ ${c.label}</button>`).join('')}
+      </div>
+    </article>
+  `;
+}
+function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+function attachDrag(){
+  board.querySelectorAll('.card-task').forEach(el=>{
+    el.addEventListener('dragstart', e=>{
+      el.classList.add('dragging');
+      e.dataTransfer.setData('text/plain', el.dataset.id);
+      e.dataTransfer.effectAllowed='move';
+    });
+    el.addEventListener('dragend', ()=> el.classList.remove('dragging'));
+    el.querySelectorAll('[data-move]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const [id,col]=btn.dataset.move.split(':');
+        move(parseInt(id,10), col);
+      });
+    });
+  });
+  board.querySelectorAll('.col-body').forEach(col=>{
+    col.addEventListener('dragover', e=>{ e.preventDefault(); col.closest('.col').classList.add('drag-over'); e.dataTransfer.dropEffect='move'; });
+    col.addEventListener('dragleave', ()=> col.closest('.col').classList.remove('drag-over'));
+    col.addEventListener('drop', e=>{
+      e.preventDefault(); col.closest('.col').classList.remove('drag-over');
+      const id=parseInt(e.dataTransfer.getData('text/plain'),10);
+      const target=col.dataset.drop;
+      if(id && target) move(id, target);
+    });
+  });
+}
+function move(id, col){
+  const t=tasks.find(x=>x.id===id);
+  if(!t || t.col===col) return;
+  const old=t.col;
+  t.col=col;
+  render();
+  toast(`Moved #${id} — ${old} → ${col}`);
+}
+function updateMetrics(){
+  const total=tasks.length;
+  const done=tasks.filter(t=>t.col==='done').length;
+  document.getElementById('mTasks').textContent=total;
+  document.getElementById('mDone').textContent=done;
+  // notifications badge stays 3 unless marked read
+}
+
+// bell
+const bellBtn=document.getElementById('bellBtn');
+const notifDrop=document.getElementById('notifDrop');
+const bellBadge=document.getElementById('bellBadge');
+let notifsUnread=3;
+bellBtn.addEventListener('click', ()=>{
+  const open = notifDrop.classList.toggle('show');
+  bellBtn.setAttribute('aria-expanded', String(open));
+});
+document.addEventListener('click', e=>{
+  if(!e.target.closest('.notif-wrap')){ notifDrop.classList.remove('show'); bellBtn.setAttribute('aria-expanded','false'); }
+});
+document.getElementById('markRead').addEventListener('click', ()=>{
+  notifsUnread=0;
+  bellBadge.style.display='none';
+  document.getElementById('mNotifs').textContent='0';
+  toast('All notifications marked read');
+  notifDrop.classList.remove('show');
+});
+
+// export
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const payload = {
+    exported_at: new Date().toISOString(),
+    mock: true,
+    no_backend: true,
+    tasks,
+    metrics: { tasks: tasks.length, completed: tasks.filter(t=>t.col==='done').length, notifications: notifsUnread },
+    analytics: { sparkline: [2,3,2,5,4,7,6], trend:"+18%" }
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url; a.download='teamwork-mock-export.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  toast('Export downloaded — teamwork-mock-export.json');
+});
+
+// JWT toggle
+document.getElementById('jwtToggle').addEventListener('click', e=>{
+  const dec=document.getElementById('jwtDecoded');
+  const open=dec.classList.toggle('show');
+  e.currentTarget.textContent = open ? 'Hide decoded' : 'Show decoded';
+  e.currentTarget.setAttribute('aria-expanded', String(open));
+});
+
+// reset
+document.getElementById('resetBtn').addEventListener('click', ()=>{
+  tasks=JSON.parse(JSON.stringify(initial));
+  notifsUnread=3;
+  bellBadge.style.display='grid';
+  document.getElementById('mNotifs').textContent='3';
+  render();
+  toast('Board reset to initial mock data');
+});
+
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg; el.classList.add('show');
+  clearTimeout(el._tm); el._tm=setTimeout(()=> el.classList.remove('show'), 2500);
+}
+
+// keyboard
+board.addEventListener('keydown', e=>{
+  const card=e.target.closest('.card-task');
+  if(!card) return;
+  if(e.key==='Enter' || e.key===' '){
+    e.preventDefault();
+    const id=parseInt(card.dataset.id,10);
+    const cur=tasks.find(t=>t.id===id)?.col;
+    const next=cols.find(c=>c.id!==cur)?.id || 'done';
+    move(id, next);
+  }
+});
+
+render();
+</script>
+</body>
+</html>
