@@ -225,6 +225,38 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
 .scope-marker.edit{border:1px solid rgba(26,26,46,.42);background:linear-gradient(90deg,rgba(26,26,46,.07),rgba(26,26,46,.02));box-shadow:inset 3px 0 0 rgba(26,26,46,.78),0 0 0 4px rgba(26,26,46,.03)}
 .scope-marker.read{border:1px solid rgba(79,70,229,.32);background:linear-gradient(90deg,rgba(79,70,229,.06),rgba(20,184,166,.03));box-shadow:inset 3px 0 0 rgba(79,70,229,.46),0 0 0 4px rgba(79,70,229,.03)}
 .hint{font-size:12px;color:var(--ink2);line-height:1.5}
+
+/* --- enhancement: auth/dashboard/find/ctx/page/class --- */
+.ctx-menu{position:fixed;z-index:45;min-width:200px;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 24px rgba(0,0,0,.14);padding:6px;display:none}
+.ctx-menu.show{display:block}
+.ctx-item{width:100%;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;border:0;background:transparent;text-align:left;font-size:13px;cursor:pointer;color:var(--ink)}
+.ctx-item:hover{background:var(--surface3)}
+.ctx-item .mi-shortcut{margin-left:auto;font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace}
+.find-bar{display:none;align-items:center;gap:6px;padding:8px 12px;background:#fff;border-bottom:1px solid var(--borderL);flex-wrap:wrap}
+.find-bar.show{display:flex}
+.find-bar input{padding:6px 8px;border:1px solid var(--border);border-radius:8px;font-size:13px;min-width:120px}
+.find-bar input:focus{border-color:var(--ink);outline:none}
+.find-hit{background:#fef08a;border-radius:2px;box-shadow:0 0 0 1px #fde68a}
+.find-hit.active{background:#f59e0b;color:#fff;box-shadow:0 0 0 1px #d97706}
+.page-break{margin:18px 0;padding:10px;border:1px dashed #cbd5e1;border-radius:8px;background:#f8fafc;text-align:center;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace;user-select:none}
+.page-break span{pointer-events:none}
+.class-cover{height:72px;border-radius:12px;background:#607d8b;display:flex;align-items:center;gap:12px;padding:12px 14px;color:#fff;position:relative;overflow:hidden}
+.class-cover::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.18),transparent)}
+.class-cover-inner{position:relative;z-index:1;display:flex;align-items:center;gap:10px}
+.doc-card{display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);font-size:13px}
+.doc-card.active{border-color:#c7d2fe;background:#eef2ff}
+.doc-actions{margin-left:auto;display:flex;gap:4px}
+.icon-btn{width:26px;height:26px;display:grid;place-items:center;border:1px solid var(--border);border-radius:6px;background:var(--surface);cursor:pointer;font-size:12px}
+.icon-btn:hover{border-color:var(--ink)}
+.dash-tabs{margin-top:10px}
+.doc-search{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface);font-size:13px}
+.invite-box{margin-top:8px;padding:8px;border:1px dashed #c7d2fe;border-radius:10px;background:#eef2ff}
+.post-card{padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);display:grid;gap:6px}
+.post-actions{font-size:11px;color:var(--ink2);display:flex;gap:8px}
+.comment-thread{margin-top:8px;padding-top:8px;border-top:1px solid var(--borderL);display:grid;gap:6px}
+.comment{font-size:13px;padding:6px 8px;background:var(--surface);border-radius:8px;border:1px solid var(--borderL)}
+.jwt-box{margin-top:8px;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--surface2);font-family:'JetBrains Mono',monospace;font-size:11px;word-break:break-all;line-height:1.5}
+
 </style>
 </head>
 <body>
@@ -244,19 +276,41 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
     <aside class="card" aria-label="Class hierarchy and sharing">
       <div class="card-head"><h2>Structure</h2><span class="hierarchy-meta">Class → Post → Doc</span></div>
       <div class="card-body">
-        <ul class="hierarchy-list">
-          <li class="hierarchy-item"><span class="ic">◈</span><span>Class: Thesis 2025–26</span><span style="margin-left:auto;font-size:11px;color:var(--ink2)">#607d8b</span></li>
-          <li class="hierarchy-item"><span class="ic" style="background:#607d8b">▦</span>
-            <span style="display:grid;line-height:1.2"><span>Post: Chapter — Collaboration</span><span class="hierarchy-meta">2 posts · Stream</span></span>
-          </li>
-          <li class="hierarchy-item"><span class="ic" style="background:#607d8b">▦</span>
-            <span style="display:grid;line-height:1.2"><span>Post: Evaluation — CRDT</span><span class="hierarchy-meta">comments · Classwork</span></span>
-          </li>
-          <li class="hierarchy-item active"><span class="ic">⬥</span>
-            <span style="display:grid;line-height:1.2"><span>Document: Abstract — CRDT Editor</span><span class="hierarchy-meta">permission: owner · <span style="color:var(--success)">● live</span></span></span>
-          </li>
-          <li class="hierarchy-item"><span class="ic" style="background:var(--ink2)">⬥</span><span>Document: Methodology</span></li>
-        </ul>
+        <div class="tabs dash-tabs" id="dashTabs" role="tablist"><button class="tab active" data-dashtab="docs" role="tab" aria-selected="true">Documents</button><button class="tab" data-dashtab="classes" role="tab">Classes</button></div>
+        <div id="docsView">
+          <div style="display:flex;gap:6px;margin-top:10px"><input id="docSearch" class="doc-search" placeholder="Search documents…" aria-label="Search documents"><button class="btn small primary" id="newDocBtn" type="button" style="white-space:nowrap">＋ New</button></div>
+          <div style="margin-top:10px;display:grid;gap:6px" id="docsList"></div>
+        </div>
+        <div id="classesView" style="display:none;margin-top:10px">
+          <div class="class-cover"><div class="class-cover-inner"><span style="width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.22);display:grid;place-items:center">▦</span><div style="display:grid;line-height:1.1"><strong style="font-size:14px">Thesis 2025–26</strong><span style="font-size:11px;opacity:.9">Class · #607d8b · 3 members</span></div></div></div>
+          <div class="tabs" id="classTabs" style="margin-top:10px"><button class="tab active" data-ctab="stream">Stream</button><button class="tab" data-ctab="classwork">Classwork</button><button class="tab" data-ctab="people">People</button></div>
+          <div id="ctab-stream" style="margin-top:10px;display:grid;gap:10px">
+            <form id="createPostForm" style="display:grid;gap:8px;padding:10px;border:1px solid var(--border);border-radius:10px;background:var(--surface)">
+              <div class="field" style="margin:0"><label>Create post</label><textarea id="postDesc" rows="2" placeholder="Share with class… (description)" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;resize:vertical"></textarea></div>
+              <div class="field" style="margin:0"><label>Attach document</label><select id="postDocSelect" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface)"></select></div>
+              <div style="display:flex;justify-content:flex-end"><button class="btn small primary" type="submit">Post</button></div>
+            </form>
+            <div id="streamList" style="display:grid;gap:8px"></div>
+          </div>
+          <div id="ctab-classwork" style="display:none;margin-top:10px">
+            <div style="font-size:12px;color:var(--ink2)">Classwork · assignments grouped by post</div>
+            <div id="classworkList" style="margin-top:8px;display:grid;gap:8px"></div>
+          </div>
+          <div id="ctab-people" style="display:none;margin-top:10px">
+            <div style="display:grid;gap:6px" id="peopleList"></div>
+            <div class="invite-box">
+              <label style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace">Invite link</label>
+              <div style="display:flex;gap:6px;margin-top:6px"><input id="inviteLinkInput" type="text" readonly placeholder="Generate…" style="flex:1;min-width:0;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface);font-family:'JetBrains Mono',monospace;font-size:12px"><button class="btn small" id="copyInviteBtn" type="button">Copy</button></div>
+              <div style="display:flex;gap:6px;margin-top:8px"><button class="btn small primary" id="genInviteBtn" type="button">Generate invite</button><select id="invitePerm" class="select"><option value="read">Read</option><option value="write">Full edit</option></select></div>
+              <p style="margin:6px 0 0;font-size:11px;color:var(--ink2);font-family:'JetBrains Mono',monospace">ClassShareLink · token <code id="inviteToken">—</code></p>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface2);display:flex;gap:6px;align-items:center">
+          <span style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace">Public join</span>
+          <input id="joinTokenInput" placeholder="demo-xxxx" style="flex:1;min-width:0;padding:6px 8px;border:1px solid var(--border);border-radius:8px;font-family:'JetBrains Mono',monospace;font-size:12px">
+          <button class="btn small" id="joinTokenBtn" type="button">Join</button>
+        </div>
 
         <div class="share-box">
           <label for="shareLinkInput">Share link</label>
@@ -309,9 +363,11 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
           <button class="btn ghost small" id="backBtn" aria-label="Back to dashboard" style="padding:6px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button>
           <span style="display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:var(--ink);color:#fff"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span>
           <input id="docTitleInput" class="doc-title-input" value="Thesis — CollabEditor" aria-label="Document title">
-          <span class="sync-indicator" id="syncIndicator"><span class="dot"></span><span id="syncText">Synced</span></span>
+          <span class="sync-indicator" id="syncIndicator"><span class="dot"></span><span id="syncText">Synced</span></span><button class="btn small ghost" id="deltaBtn" style="padding:4px 8px;font-size:11px;font-family:'JetBrains Mono',monospace">Δ Delta</button>
         </div>
         <div class="ec-top-right">
+          <button class="btn small" id="authBtn" type="button" style="font-weight:700">Sign in</button>
+          <span id="authPill" style="display:none;align-items:center;gap:6px;padding:4px 8px;border:1px solid var(--border);border-radius:999px;background:var(--surface2);font-size:12px;font-weight:600"><span style="width:22px;height:22px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center;font-size:11px">Y</span><span>You</span><span style="font-size:10px;color:var(--success)">● JWT</span></span>
           <div class="avatars" aria-label="Active users">
             <span class="ava you" title="You — owner">Y</span>
             <span class="ava alice" title="Alice — editor">A</span>
@@ -392,6 +448,16 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
       </div>
 
       <div class="partial-banner" id="partialBanner"><span style="width:8px;height:8px;border-radius:50%;background:var(--err)"></span> Scoped read — lines 10–20 visible, rest masked with █ · server-side redaction demo <span style="margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink2)">edit_ranges line-col anchored</span></div>
+      <div class="find-bar" id="findBar">
+        <input id="findInput" placeholder="Find" aria-label="Find" style="flex:1;min-width:120px">
+        <input id="replaceInput" placeholder="Replace" aria-label="Replace" style="flex:1;min-width:120px">
+        <button class="btn small" id="findPrev" type="button" title="Previous">↑</button>
+        <button class="btn small" id="findNext" type="button" title="Next">↓</button>
+        <button class="btn small" id="replaceBtn" type="button">Replace</button>
+        <button class="btn small" id="replaceAllBtn" type="button">All</button>
+        <span id="findCount" style="font-size:11px;color:var(--ink2);font-family:'JetBrains Mono',monospace;min-width:48px"></span>
+        <button class="btn small ghost" id="findClose" type="button">✕</button>
+      </div>
 
       <!-- main -->
       <div class="ec-main">
@@ -439,8 +505,8 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
             </div>
             <div class="toolbar-row">
               <span class="tb-group">
-                <button class="tb-btn" title="Link">🔗</button>
-                <button class="tb-btn" title="Image">🖼</button>
+                <button class="tb-btn" id="tbLinkBtn" title="Link">🔗</button>
+                <button class="tb-btn" id="tbImageBtn" title="Image">🖼</button>
               </span>
               <span class="tb-group">
                 <button class="tb-btn" title="Ordered list">1.</button>
@@ -469,6 +535,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
   </div>
 </main>
 
+<input type="file" id="imageInput" accept="image/*" style="display:none">
 <!-- FAB -->
 <button class="fab" id="chatFab" aria-label="Open chat"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="fab-badge" id="fabBadge">3</span></button>
 
@@ -557,6 +624,59 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
   </div>
 </div>
 
+<!-- Auth modal -->
+<div class="modal-overlay" id="authModal" aria-hidden="true">
+  <div class="modal" style="max-width:420px" role="dialog" aria-modal="true" aria-label="Sign in">
+    <div class="modal-head"><h3>Sign in</h3><button class="btn small ghost" id="authClose">✕</button></div>
+    <div class="modal-body">
+      <div class="tabs" id="authTabs"><button class="tab active" data-atab="login">Sign in</button><button class="tab" data-atab="register">Create account</button></div>
+      <div id="atab-login">
+        <div class="field"><label>Email</label><input id="authEmail" type="email" placeholder="you@example.com" value="you@example.com"></div>
+        <div class="field"><label>Password</label><input id="authPassword" type="password" placeholder="••••••••" value="password123"></div>
+        <button class="btn small primary" id="authSubmit" type="button" style="width:100%;margin-top:4px">Sign in</button>
+        <div id="jwtBox" style="display:none"><div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink2);font-family:'JetBrains Mono',monospace;margin-top:10px">JWT · HS256 · stored in memory</div><div class="jwt-box" id="jwtTokenText">—</div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn small" id="copyJwtBtn" type="button">Copy token</button><button class="btn small ghost" id="logoutBtn" type="button">Sign out</button></div></div>
+        <p style="font-size:11px;color:var(--ink2);margin-top:10px">WS handshake uses <code style="font-family:'JetBrains Mono',monospace">?token=&lt;jwt&gt;</code> · token persisted in memory for this session.</p>
+      </div>
+      <div id="atab-register" style="display:none">
+        <div class="field"><label>Email</label><input id="regEmail" type="email" placeholder="you@example.com"></div>
+        <div class="field"><label>Password</label><input id="regPassword" type="password" placeholder="••••••••"></div>
+        <div class="field"><label>Confirm password</label><input id="regConfirm" type="password" placeholder="••••••••"></div>
+        <button class="btn small primary" id="regSubmit" type="button" style="width:100%">Create account</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- New Document modal -->
+<div class="modal-overlay" id="newDocModal" aria-hidden="true">
+  <div class="modal" style="max-width:420px" role="dialog" aria-modal="true" aria-label="New document">
+    <div class="modal-head"><h3>New document</h3><button class="btn small ghost" id="newDocClose">✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Title</label><input id="newDocTitle" type="text" placeholder="Untitled document"></div>
+      <div class="field"><label>Class → Post</label><select id="newDocPost"><option value="1">Thesis 2025–26 → Chapter — Collaboration</option><option value="2">Thesis 2025–26 → Evaluation — CRDT</option></select></div>
+      <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:4px"><button class="btn small ghost" id="newDocCancel" type="button">Cancel</button><button class="btn small primary" id="newDocCreate" type="button">Create</button></div>
+    </div>
+  </div>
+</div>
+<!-- Page setup modal -->
+<div class="modal-overlay" id="pageSetupModal" aria-hidden="true">
+  <div class="modal" style="max-width:420px" role="dialog" aria-modal="true" aria-label="Page setup">
+    <div class="modal-head"><h3>Page setup</h3><button class="btn small ghost" id="pageSetupClose">✕</button></div>
+    <div class="modal-body">
+      <div class="grid2"><div class="field"><label>Left margin (″)</label><input id="psLeft" type="number" min="0" max="3" step="0.25" value="1"></div><div class="field"><label>Right margin (″)</label><input id="psRight" type="number" min="0" max="3" step="0.25" value="1"></div></div>
+      <div class="grid2"><div class="field"><label>Top (″)</label><input id="psTop" type="number" min="0" max="3" step="0.25" value="1"></div><div class="field"><label>Bottom (″)</label><input id="psBottom" type="number" min="0" max="3" step="0.25" value="1"></div></div>
+      <div class="grid2"><div class="field"><label>Paper</label><select id="psPaper"><option>Letter 8.5 × 11″</option><option>A4</option></select></div><div class="field"><label>Orientation</label><select id="psOrient"><option>Portrait</option><option>Landscape</option></select></div></div>
+      <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px"><button class="btn small ghost" id="pageSetupCancel" type="button">Cancel</button><button class="btn small primary" id="pageSetupApply" type="button">Apply</button></div>
+    </div>
+  </div>
+</div>
+<!-- Delta view modal -->
+<div class="modal-overlay" id="deltaModal" aria-hidden="true">
+  <div class="modal" style="max-width:560px" role="dialog" aria-modal="true" aria-label="Quill Delta">
+    <div class="modal-head"><h3>Quill Delta · JSON</h3><button class="btn small ghost" id="deltaClose">✕</button></div>
+    <div class="modal-body"><pre id="deltaJson" style="margin:0;padding:10px;background:var(--surface2);border:1px solid var(--border);border-radius:10px;font-family:'JetBrains Mono',monospace;font-size:11px;white-space:pre-wrap;word-break:break-word;max-height:360px;overflow:auto"></pre></div>
+  </div>
+</div>
+
 <!-- Word count modal -->
 <div class="modal-overlay" id="wordCountModal" aria-hidden="true">
   <div class="modal" style="max-width:360px" role="dialog" aria-modal="true" aria-label="Word count">
@@ -565,6 +685,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
   </div>
 </div>
 
+<div id="ctxMenu" class="ctx-menu" role="menu" aria-hidden="true"><button class="ctx-item" data-act="cut">Cut <span class="mi-shortcut">Ctrl+X</span></button><button class="ctx-item" data-act="copy">Copy <span class="mi-shortcut">Ctrl+C</span></button><button class="ctx-item" data-act="paste">Paste <span class="mi-shortcut">Ctrl+V</span></button><div class="menu-sep"></div><button class="ctx-item" data-act="grant">Grant Partial…</button><button class="ctx-item" data-act="pagebreak">Insert page break</button></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -1238,6 +1359,382 @@ setTimeout(()=>{
     }
   }
 },2000);
+
+// === enhancements: dashboard/docs/classes/auth/find/ctx/pagesetup/image/delta ===
+let docs = [
+  {id:1,title:'Abstract — CRDT Editor',postId:1,updated:'today 14:32',perm:'owner'},
+  {id:2,title:'Methodology',postId:1,updated:'yesterday',perm:'owner'}
+];
+let posts = [
+  {id:1,title:'Chapter — Collaboration',classId:1,desc:'Collab thesis chapter',docIds:[1,2],comments:[{user:'Alice',text:'Great start — add CRDT figure?'},{user:'You',text:'Will add PlantUML next'}]},
+  {id:2,title:'Evaluation — CRDT',classId:1,desc:'Eval of concurrent merges',docIds:[],comments:[{user:'Bob',text:'Latency p95 45ms locally'}]}
+];
+let currentDocId = 1;
+let authToken = null; let authEmail = null;
+function b64url(o){ try{ return btoa(JSON.stringify(o)).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'')}catch(e){return 'eyJ'}} 
+function genJWT(email){ const h=b64url({alg:'HS256',typ:'JWT'}); const pl=b64url({sub:email||'you@example.com',exp:Math.floor(Date.now()/1000)+3600,iat:Math.floor(Date.now()/1000)}); const sig=b64url({s:'sig'}).slice(0,16); return h+'.'+pl+'.'+sig; }
+function renderDocs(){
+  const q=(document.getElementById('docSearch')?.value||'').toLowerCase();
+  const list=document.getElementById('docsList'); if(!list) return;
+  const filtered=docs.filter(d=>d.title.toLowerCase().includes(q));
+  list.innerHTML=filtered.map(d=>`<div class="doc-card ${d.id===currentDocId?'active':''}" data-id="${d.id}"><span style="width:26px;height:26px;border-radius:7px;background:${d.id===currentDocId?'var(--ink)':'#e5e7eb'};color:${d.id===currentDocId?'#fff':'var(--ink2)'};display:grid;place-items:center;font-size:12px">⬥</span><span style="flex:1;min-width:0"><span style="display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(d.title)}</span><span style="font-size:11px;color:var(--ink2);font-family:'JetBrains Mono',monospace">${esc(d.updated)} · ${d.perm}</span></span><span class="doc-actions"><button class="icon-btn" data-dup="${d.id}" title="Duplicate">⧉</button><button class="icon-btn" data-del="${d.id}" title="Delete">✕</button></span></div>`).join('') || '<div style="font-size:12px;color:var(--ink3);padding:8px">No documents</div>';
+  list.querySelectorAll('[data-dup]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation(); const id=parseInt(b.dataset.dup); const src=docs.find(x=>x.id===id); if(src){ const nid=Date.now(); docs.push({id:nid,title:src.title+' (copy)',postId:src.postId,updated:'just now',perm:'owner'}); renderDocs(); fillPostSelect(); toast('Duplicated "'+src.title+'"'); }}));
+  list.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation(); const id=parseInt(b.dataset.del); if(docs.length<=1){toast('Keep at least one document');return} docs=docs.filter(x=>x.id!==id); if(currentDocId===id) currentDocId=docs[0].id; renderDocs(); fillPostSelect(); const t=docs.find(x=>x.id===currentDocId); if(t) document.getElementById('docTitleInput').value=t.title; toast('Deleted'); }));
+  list.querySelectorAll('.doc-card').forEach(el=>el.addEventListener('click',()=>{ const id=parseInt(el.dataset.id); currentDocId=id; const t=docs.find(x=>x.id===id); if(t){ document.getElementById('docTitleInput').value=t.title; renderDocs(); toast('Opened "'+t.title+'"'); } }));
+  fillPostSelect();
+}
+function fillPostSelect(){
+  const sel=document.getElementById('postDocSelect'); if(!sel) return;
+  sel.innerHTML=docs.map(d=>`<option value="${d.id}">${esc(d.title)}</option>`).join('');
+  const nd=document.getElementById('newDocPost'); if(nd){ /* preserve */ }
+}
+function renderStream(){
+  const container=document.getElementById('streamList'); if(!container) return;
+  container.innerHTML=posts.map(po=>{
+    const docNames=po.docIds.map(id=>docs.find(d=>d.id===id)?.title||'').filter(Boolean).join(', ') || 'No docs';
+    return `<div class="post-card"><div style="display:flex;align-items:center;gap:8px"><span style="width:22px;height:22px;border-radius:6px;background:#607d8b;color:#fff;display:grid;place-items:center;font-size:11px">▦</span><strong style="font-size:13px">${esc(po.title)}</strong><span style="margin-left:auto;font-size:11px;color:var(--ink2);font-family:'JetBrains Mono',monospace">Post #${po.id}</span></div><div style="font-size:13px;color:var(--ink2)">${esc(po.desc)} · <span style="font-family:'JetBrains Mono',monospace;font-size:11px">${esc(docNames)}</span></div><div class="post-actions"><span>${po.comments.length} comments</span><button class="btn small ghost" data-addc="${po.id}" style="padding:2px 6px;font-size:11px;margin-left:auto">Comment</button><button class="btn small ghost" data-delp="${po.id}" style="padding:2px 6px;font-size:11px">Delete</button></div><div class="comment-thread">${po.comments.map(c=>`<div class="comment"><strong style="font-size:12px">${esc(c.user)}</strong> <span style="color:var(--ink2)">·</span> <span>${esc(c.text)}</span></div>`).join('')}</div></div>`;
+  }).join('');
+  container.querySelectorAll('[data-delp]').forEach(b=>b.addEventListener('click',()=>{ const id=parseInt(b.dataset.delp); posts=posts.filter(p=>p.id!==id); renderStream(); renderClasswork(); }));
+  container.querySelectorAll('[data-addc]').forEach(b=>b.addEventListener('click',()=>{ const id=parseInt(b.dataset.addc); const txt=prompt('Add comment'); if(txt){ const p=posts.find(x=>x.id===id); if(p){ p.comments.push({user:'You',text:txt}); renderStream(); renderClasswork(); }}}));
+}
+function renderClasswork(){
+  const el=document.getElementById('classworkList'); if(!el) return;
+  el.innerHTML=posts.map(p=>`<div class="post-card"><strong style="font-size:13px">${esc(p.title)}</strong><div style="font-size:12px;color:var(--ink2)">${esc(p.desc)}</div><div style="font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace">${p.docIds.length} doc(s) · ${p.comments.length} comments</div></div>`).join('');
+}
+function renderPeople(){
+  const el=document.getElementById('peopleList'); if(!el) return;
+  const people=[{name:'You',role:'owner',email:'you@example.com'},{name:'Alice',role:'editor',email:'alice@example.com'},{name:'Bob',role:'editor',email:'bob@example.com'}];
+  el.innerHTML=people.map(pe=>`<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;background:var(--surface2)"><span style="width:26px;height:26px;border-radius:50%;background:${pe.name==='You'?'var(--ink)':pe.name==='Alice'?'#0ea5e9':'#10b981'};color:#fff;display:grid;place-items:center;font-size:11px;font-weight:700">${pe.name[0]}</span><span style="font-size:13px;font-weight:600">${pe.name}</span><span style="font-size:11px;color:var(--ink3);font-family:'JetBrains Mono',monospace">${pe.role} · ${pe.email}</span></div>`).join('');
+}
+// dashboard tabs
+document.getElementById('dashTabs')?.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('#dashTabs .tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const isDocs=tab.dataset.dashtab==='docs';
+    document.getElementById('docsView').style.display=isDocs?'block':'none';
+    document.getElementById('classesView').style.display=isDocs?'none':'block';
+  });
+});
+document.getElementById('classTabs')?.querySelectorAll('.tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('#classTabs .tab').forEach(t=>t.classList.remove('active'));
+    tab.classList.add('active');
+    const v=tab.dataset.ctab;
+    document.getElementById('ctab-stream').style.display=v==='stream'?'grid':'none';
+    document.getElementById('ctab-classwork').style.display=v==='classwork'?'block':'none';
+    document.getElementById('ctab-people').style.display=v==='people'?'block':'none';
+  });
+});
+document.getElementById('docSearch')?.addEventListener('input',renderDocs);
+document.getElementById('newDocBtn')?.addEventListener('click',()=>document.getElementById('newDocModal').classList.add('show'));
+document.getElementById('newDocClose')?.addEventListener('click',()=>document.getElementById('newDocModal').classList.remove('show'));
+document.getElementById('newDocCancel')?.addEventListener('click',()=>document.getElementById('newDocModal').classList.remove('show'));
+document.getElementById('newDocModal')?.addEventListener('click',e=>{ if(e.target===document.getElementById('newDocModal')) e.currentTarget.classList.remove('show')});
+document.getElementById('newDocCreate')?.addEventListener('click',()=>{
+  const title=document.getElementById('newDocTitle').value.trim()||'Untitled document';
+  const postId=parseInt(document.getElementById('newDocPost').value)||1;
+  const nid=Date.now();
+  docs.push({id:nid,title,postId,updated:'just now',perm:'owner'});
+  const post=posts.find(p=>p.id===postId); if(post) post.docIds.push(nid);
+  document.getElementById('newDocTitle').value='';
+  document.getElementById('newDocModal').classList.remove('show');
+  renderDocs(); renderStream(); renderClasswork(); fillPostSelect();
+  currentDocId=nid; document.getElementById('docTitleInput').value=title;
+  toast('Created "'+title+'"');
+});
+
+// create post
+document.getElementById('createPostForm')?.addEventListener('submit',e=>{
+  e.preventDefault();
+  const desc=document.getElementById('postDesc').value.trim();
+  if(!desc){ toast('Enter post description'); return }
+  const docId=parseInt(document.getElementById('postDocSelect').value);
+  const nid=Date.now();
+  posts.unshift({id:nid,title:desc.slice(0,32)+(desc.length>32?'…':''),classId:1,desc,docIds:docId?[docId]:[],comments:[]});
+  document.getElementById('postDesc').value='';
+  renderStream(); renderClasswork();
+  toast('Posted to Stream');
+});
+
+// invite link
+let inviteToken='';
+function genInviteToken(){ return 'demo-'+Math.random().toString(36).slice(2,6); }
+document.getElementById('genInviteBtn')?.addEventListener('click',()=>{
+  inviteToken=genInviteToken(); const perm=document.getElementById('invitePerm').value;
+  const base=location.origin+location.pathname;
+  document.getElementById('inviteLinkInput').value=base+'#share/'+inviteToken+'?permission='+perm;
+  document.getElementById('inviteToken').textContent=inviteToken;
+  toast('Invite link generated');
+});
+document.getElementById('copyInviteBtn')?.addEventListener('click',async()=>{
+  const v=document.getElementById('inviteLinkInput').value;
+  if(!v){ toast('Generate invite first'); return }
+  try{await navigator.clipboard.writeText(v); toast('Copied')}catch{document.getElementById('inviteLinkInput').select(); document.execCommand('copy'); toast('Copied')}
+});
+
+// public join via token input
+document.getElementById('joinTokenBtn')?.addEventListener('click',()=>{
+  const tok=document.getElementById('joinTokenInput').value.trim();
+  if(!tok){ toast('Enter token like demo-xxxx'); return }
+  currentToken=tok; shareLinkInput.value=genLink(tok, 'read'); shareTokenEl.textContent=tok;
+  modalLink.value=genLink(tok,'read'); modalToken.textContent=tok;
+  location.hash='#share/'+tok+'?permission=read';
+  toast('Joined via link token '+tok+' · WS ?token='+tok);
+});
+
+// auth modal
+const authModal=document.getElementById('authModal');
+document.getElementById('authBtn')?.addEventListener('click',()=>authModal.classList.add('show'));
+document.getElementById('authClose')?.addEventListener('click',()=>authModal.classList.remove('show'));
+authModal?.addEventListener('click',e=>{ if(e.target===authModal) authModal.classList.remove('show')});
+document.querySelectorAll('#authTabs .tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('#authTabs .tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    const isLogin=t.dataset.atab==='login';
+    document.getElementById('atab-login').style.display=isLogin?'block':'none';
+    document.getElementById('atab-register').style.display=isLogin?'none':'block';
+  });
+});
+function setAuth(email){
+  authEmail=email; authToken=genJWT(email);
+  document.getElementById('jwtTokenText').textContent=authToken;
+  document.getElementById('jwtBox').style.display='block';
+  document.getElementById('authPill').style.display='inline-flex';
+  document.getElementById('authBtn').style.display='none';
+  // gating hint
+  toast('Signed in as '+email+' · JWT stored');
+}
+document.getElementById('authSubmit')?.addEventListener('click',()=>{
+  const email=document.getElementById('authEmail').value.trim();
+  const pw=document.getElementById('authPassword').value;
+  if(!email||!pw){ toast('Enter email and password'); return }
+  setAuth(email);
+});
+document.getElementById('regSubmit')?.addEventListener('click',()=>{
+  const email=document.getElementById('regEmail').value.trim();
+  const pw=document.getElementById('regPassword').value;
+  const cp=document.getElementById('regConfirm').value;
+  if(!email||!pw){ toast('Enter email and password'); return }
+  if(pw!==cp){ toast('Passwords do not match'); return }
+  setAuth(email); document.querySelector('#authTabs .tab[data-atab="login"]').click();
+});
+document.getElementById('copyJwtBtn')?.addEventListener('click',async()=>{
+  if(!authToken){ toast('Sign in first'); return }
+  try{await navigator.clipboard.writeText(authToken); toast('Copied JWT')}catch{ toast(authToken.slice(0,24)+'…')}
+});
+document.getElementById('logoutBtn')?.addEventListener('click',()=>{
+  authToken=null; authEmail=null;
+  document.getElementById('jwtBox').style.display='none';
+  document.getElementById('authPill').style.display='none';
+  document.getElementById('authBtn').style.display='inline-flex';
+  document.getElementById('jwtTokenText').textContent='—';
+  toast('Signed out');
+});
+// hash share join handling
+function handleHash(){
+  const h=location.hash;
+  const m=h.match(/#share\/([^?]+)/);
+  if(m){
+    const tok=m[1];
+    currentToken=tok;
+    if(document.getElementById('shareLinkInput')){
+      shareLinkInput.value=genLink(tok,'read'); shareTokenEl.textContent=tok;
+      modalLink.value=genLink(tok,'read'); modalToken.textContent=tok;
+      document.getElementById('joinTokenInput').value=tok;
+    }
+    toast('Public link opened · token '+tok);
+  }
+}
+window.addEventListener('hashchange',handleHash);
+handleHash();
+
+// find/replace
+let findHits=[]; let findIdx=-1;
+const findBar=document.getElementById('findBar');
+const findInput=document.getElementById('findInput');
+const replaceInput=document.getElementById('replaceInput');
+const findCount=document.getElementById('findCount');
+function clearFind(){
+  editor.querySelectorAll('.find-hit').forEach(m=>{
+    const parent=m.parentNode; while(m.firstChild) parent.insertBefore(m.firstChild,m); parent.removeChild(m); parent.normalize();
+  });
+  findHits=[]; findIdx=-1; if(findCount) findCount.textContent='';
+}
+function doFind(){
+  clearFind();
+  const q=findInput.value;
+  if(!q){ return }
+  const walker=document.createTreeWalker(editor, NodeFilter.SHOW_TEXT, null);
+  const textNodes=[];
+  let n; while(n=walker.nextNode()){
+    if(n.parentElement.closest('.find-hit')) continue;
+    if(n.nodeValue.includes(q)) textNodes.push(n);
+  }
+  textNodes.forEach(tn=>{
+    const val=tn.nodeValue; let idx=val.indexOf(q); let last=0; const frag=document.createDocumentFragment();
+    while(idx!==-1){
+      frag.appendChild(document.createTextNode(val.slice(last,idx)));
+      const mark=document.createElement('mark'); mark.className='find-hit'; mark.textContent=q;
+      frag.appendChild(mark); last=idx+q.length; idx=val.indexOf(q,last);
+    }
+    frag.appendChild(document.createTextNode(val.slice(last)));
+    tn.parentNode.replaceChild(frag,tn);
+  });
+  findHits=[...editor.querySelectorAll('.find-hit')];
+  if(findHits.length){ findIdx=0; updateFindActive(); findCount.textContent=findHits.length+' found'; } else { findCount.textContent='0 found'; }
+}
+function updateFindActive(){
+  findHits.forEach((el,i)=>el.classList.toggle('active', i===findIdx));
+  if(findIdx>=0 && findHits[findIdx]) findHits[findIdx].scrollIntoView({behavior:'smooth',block:'center'});
+  if(findHits.length) findCount.textContent=(findIdx+1)+'/'+findHits.length;
+}
+document.querySelector('[data-action="findreplace"]')?.addEventListener('click',e=>{
+  e.preventDefault(); findBar.classList.add('show'); findInput.focus(); 
+});
+document.getElementById('findClose')?.addEventListener('click',()=>{ findBar.classList.remove('show'); clearFind(); });
+findInput?.addEventListener('input',doFind);
+document.getElementById('findNext')?.addEventListener('click',()=>{ if(!findHits.length) doFind(); if(findHits.length){ findIdx=(findIdx+1)%findHits.length; updateFindActive(); }});
+document.getElementById('findPrev')?.addEventListener('click',()=>{ if(!findHits.length) doFind(); if(findHits.length){ findIdx=(findIdx-1+findHits.length)%findHits.length; updateFindActive(); }});
+document.getElementById('replaceBtn')?.addEventListener('click',()=>{
+  if(findIdx>=0 && findHits[findIdx]){ const rep=replaceInput.value; findHits[findIdx].textContent=rep; clearFind(); doFind(); toast('Replaced'); }
+});
+document.getElementById('replaceAllBtn')?.addEventListener('click',()=>{
+  const q=findInput.value; const rep=replaceInput.value; if(!q) return;
+  // simple: replace all hits
+  findHits.forEach(el=>el.textContent=rep);
+  const n=findHits.length; clearFind(); if(q!==rep) doFind(); toast(n?'Replaced '+n:'Nothing to replace');
+});
+// also wire menu findreplace to open findBar (override toast)
+document.querySelectorAll('.menu-item[data-action="findreplace"]').forEach(el=>{
+  const clone=el.cloneNode(true); el.parentNode.replaceChild(clone,el);
+  clone.addEventListener('click',()=>{ findBar.classList.add('show'); findInput.focus(); document.querySelectorAll('.menu-dropdown').forEach(d=>d.classList.remove('show')); });
+});
+
+// page setup
+const psModal=document.getElementById('pageSetupModal');
+function openPageSetup(){ psModal.classList.add('show'); }
+document.querySelectorAll('.menu-item[data-action="pagesetup"]').forEach(el=>{
+  const c=el.cloneNode(true); el.parentNode.replaceChild(c,el);
+  c.addEventListener('click',()=>{ openPageSetup(); document.querySelectorAll('.menu-dropdown').forEach(d=>d.classList.remove('show')); });
+});
+document.getElementById('pageSetupClose')?.addEventListener('click',()=>psModal.classList.remove('show'));
+document.getElementById('pageSetupCancel')?.addEventListener('click',()=>psModal.classList.remove('show'));
+psModal?.addEventListener('click',e=>{ if(e.target===psModal) psModal.classList.remove('show')});
+document.getElementById('pageSetupApply')?.addEventListener('click',()=>{
+  const l=parseFloat(document.getElementById('psLeft').value)||1;
+  const r=parseFloat(document.getElementById('psRight').value)||1;
+  const t=parseFloat(document.getElementById('psTop').value)||1;
+  const b=parseFloat(document.getElementById('psBottom').value)||1;
+  const px = v=> Math.round(v*96)+'px';
+  const vp=document.querySelector('.visual-page');
+  if(vp){ vp.style.paddingLeft=px(l); vp.style.paddingRight=px(r); vp.style.paddingTop=px(t); vp.style.paddingBottom=px(b); }
+  document.getElementById('rulerLeft').style.width=px(l); document.getElementById('handleLeft').style.left=px(l);
+  document.getElementById('rulerRight').style.width=px(r); document.getElementById('handleRight').style.right=px(r);
+  const orient=document.getElementById('psOrient').value;
+  if(vp){ vp.style.width=orient==='Landscape'?'1056px':'816px'; vp.style.minHeight=orient==='Landscape'?'816px':'1056px'; }
+  psModal.classList.remove('show'); placeCursors(); toast('Page setup applied');
+});
+
+// image attach
+const imageInput=document.getElementById('imageInput');
+document.getElementById('tbImageBtn')?.addEventListener('click',()=>imageInput.click());
+document.querySelectorAll('.menu-item[data-action="inserthr"]')?.forEach(el=>{ /* keep horizontal line */ });
+imageInput?.addEventListener('change',e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const url=URL.createObjectURL(f);
+  // insert at cursor or end
+  const sel=window.getSelection(); let inserted=false;
+  if(sel && sel.rangeCount && editor.contains(sel.anchorNode)){
+    const range=sel.getRangeAt(0);
+    const img=document.createElement('img'); img.src=url; img.alt=f.name; img.style.maxWidth='100%'; img.style.borderRadius='8px'; img.style.border='1px solid var(--border)'; img.style.margin='10px 0'; img.style.display='block';
+    range.insertNode(img); inserted=true;
+  }
+  if(!inserted){
+    const img=document.createElement('img'); img.src=url; img.alt=f.name; img.style.maxWidth='100%'; img.style.borderRadius='8px'; img.style.border='1px solid var(--border)'; img.style.margin='10px 0'; img.style.display='block';
+    editor.appendChild(img);
+  }
+  renderTOC(); placeCursors(); toast('Image attached');
+  imageInput.value='';
+});
+// link insert
+document.getElementById('tbLinkBtn')?.addEventListener('click',()=>{
+  const url=prompt('Enter URL','https://'); if(!url) return;
+  document.execCommand('createLink',false,url); toast('Link inserted');
+});
+
+// page break
+function insertPageBreak(){
+  const div=document.createElement('div'); div.className='page-break'; div.contentEditable='false'; div.innerHTML='<span>— Page break —</span>';
+  const sel=window.getSelection();
+  if(sel && sel.rangeCount && editor.contains(sel.anchorNode)){
+    const range=sel.getRangeAt(0); range.insertNode(div);
+  } else editor.appendChild(div);
+  // also create visual second page duplicate if needed
+  placeCursors(); toast('Page break inserted');
+}
+document.querySelectorAll('.menu-item[data-action="insertpagebreak"]').forEach(el=>{
+  const c=el.cloneNode(true); el.parentNode.replaceChild(c,el);
+  c.addEventListener('click',()=>{ insertPageBreak(); document.querySelectorAll('.menu-dropdown').forEach(d=>d.classList.remove('show')); });
+});
+document.querySelectorAll('.menu-item[data-action="inserthr"]').forEach(el=>{
+  const c=el.cloneNode(true); el.parentNode.replaceChild(c,el);
+  c.addEventListener('click',()=>{ document.execCommand('insertHorizontalRule',false,null); toast('Divider inserted'); document.querySelectorAll('.menu-dropdown').forEach(d=>d.classList.remove('show')); });
+});
+
+// context menu
+const ctxMenu=document.getElementById('ctxMenu');
+let ctxRange=null;
+editor.addEventListener('contextmenu',e=>{
+  e.preventDefault();
+  const sel=window.getSelection();
+  if(sel && sel.rangeCount) ctxRange=sel.getRangeAt(0).cloneRange();
+  ctxMenu.style.left=(e.clientX+6)+'px'; ctxMenu.style.top=(e.clientY+6)+'px';
+  ctxMenu.classList.add('show'); ctxMenu.setAttribute('aria-hidden','false');
+});
+document.addEventListener('click',e=>{ if(!e.target.closest('#ctxMenu')){ ctxMenu.classList.remove('show'); ctxMenu.setAttribute('aria-hidden','true'); }});
+ctxMenu.querySelectorAll('.ctx-item').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const act=btn.dataset.act;
+    ctxMenu.classList.remove('show');
+    if(act==='cut'){ document.execCommand('cut'); toast('Cut'); }
+    else if(act==='copy'){ document.execCommand('copy'); toast('Copied'); }
+    else if(act==='paste'){
+      if(navigator.clipboard && navigator.clipboard.readText){
+        navigator.clipboard.readText().then(t=>{ if(ctxRange){ ctxRange.deleteContents(); ctxRange.insertNode(document.createTextNode(t)); } else document.execCommand('insertText',false,t); toast('Pasted'); }).catch(()=>{ toast('Paste — Ctrl+V'); });
+      } else toast('Paste — Ctrl+V');
+    }
+    else if(act==='grant'){ document.getElementById('grantPartialBtn').click(); }
+    else if(act==='pagebreak'){ insertPageBreak(); }
+  });
+});
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') ctxMenu.classList.remove('show'); });
+
+// delta view
+function buildDelta(){
+  const ops=[];
+  editor.querySelectorAll('[data-line]').forEach(el=>{
+    const line=el.textContent.replace(/^\d{2}/,'').trim();
+    const tag=el.tagName.toLowerCase();
+    const attrs={}; if(tag==='h1') attrs.header=1; if(tag==='h2') attrs.header=2; if(tag==='h3') attrs.header=3;
+    if(el.querySelector('img')) ops.push({insert:{image: el.querySelector('img').src}});
+    ops.push({insert: line+'\n', attributes: Object.keys(attrs).length?attrs:undefined});
+  });
+  return {ops};
+}
+document.getElementById('deltaBtn')?.addEventListener('click',()=>{
+  const delta=buildDelta();
+  document.getElementById('deltaJson').textContent=JSON.stringify(delta,null,2);
+  document.getElementById('deltaModal').classList.add('show');
+});
+document.getElementById('deltaClose')?.addEventListener('click',()=>document.getElementById('deltaModal').classList.remove('show'));
+document.getElementById('deltaModal')?.addEventListener('click',e=>{ if(e.target===document.getElementById('deltaModal')) e.currentTarget.classList.remove('show')});
+
+// init renders
+renderDocs(); renderStream(); renderClasswork(); renderPeople(); fillPostSelect();
+
+
 </script>
 </body>
 </html>
