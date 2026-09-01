@@ -3,377 +3,883 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="color-scheme" content="light dark">
+<meta name="color-scheme" content="light">
 <title>TicketPro — Mock Preview</title>
-<meta name="description" content="TicketPro mock preview — Support ticket board with drag, RBAC and WebSocket banner, static no backend.">
+<meta name="description" content="TicketPro mock preview — Django + DRF + Channels dashboard replica: table, filter pills, stat cards, ticket_detail 5 boxes + chat ws/chat/{id}. Static, no backend.">
 <style>
-:root{
-  --bg:#f5f4f0; --bg2:#fff; --ink:#1a1a1a; --muted:#64748b; --border:#e5e7eb;
-  --accent:#6366f1; --positive:#10b981; --blue:#3b82f6; --amber:#f59e0b; --rose:#ef4444; --slate:#6b7280;
-  --radius:1rem; --shadow:0 12px 30px rgba(15,23,42,.08); --surface:var(--bg2);
-  --mono:'Courier New',monospace; --font:'Inter',system-ui,sans-serif;
-}
-@media(prefers-color-scheme:dark){
-  :root{ --bg:#0f1115; --bg2:#1a1d23; --ink:#e6e9f2; --muted:#9ca3af; --border:#272a33; --surface:#1e2128; --shadow:0 14px 34px rgba(0,0,0,.35);}
-}
 *{box-sizing:border-box}
-body{margin:0; font-family:var(--font); background:var(--bg); color:var(--ink); line-height:1.6; min-width:320px}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;background:#f3f4f6;color:#111827;line-height:1.6;min-width:320px}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--accent); outline-offset:2px}
+:where(a,button,select,input,textarea):focus-visible{outline:3px solid #6366f1;outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-header.topbar{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter:blur(14px) saturate(120%); -webkit-backdrop-filter:blur(14px) saturate(120%); border-bottom:1px solid var(--border)}
-.topbar-inner{max-width:1240px; margin:0 auto; padding:0.85rem 1rem; display:flex; flex-wrap:wrap; gap:0.75rem 1rem; align-items:center}
-.back-link{display:inline-flex; align-items:center; gap:0.4rem; padding:0.4rem 0.85rem; border:1px solid var(--border); border-radius:999px; background:color-mix(in srgb, var(--surface) 70%, transparent); font-size:0.82rem; font-weight:700; text-decoration:none}
-.back-link:hover{border-color:var(--ink)}
-.header-title{flex:1 1 320px}
-.header-title h1{margin:0; font-size:clamp(1.15rem,2.5vw,1.45rem); letter-spacing:-0.03em}
-.header-title p{margin:0.2rem 0 0; color:var(--muted); font-size:0.82rem}
-.mock-badge{display:inline-flex; align-items:center; gap:0.35rem; padding:0.3rem 0.7rem; border-radius:999px; font-size:0.7rem; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; border:1px solid color-mix(in srgb, var(--amber) 35%, var(--border)); background:color-mix(in srgb, var(--amber) 12%, transparent)}
-.disclaimer{max-width:1240px; margin:0 auto; padding:0 1rem 0.9rem; color:var(--muted); font-size:0.78rem; font-family:var(--mono)}
-.wrap{max-width:1240px; margin:0 auto; padding:1rem 1rem 2rem}
-.controls{
-  display:flex; flex-wrap:wrap; gap:0.75rem; align-items:end; justify-content:space-between;
-  padding:1rem; border:1px solid var(--border); border-radius:0.9rem; background:color-mix(in srgb, var(--surface) 80%, transparent); box-shadow:var(--shadow);
-}
-.controls-left, .controls-right{display:flex; flex-wrap:wrap; gap:0.6rem; align-items:end}
-.field{display:grid; gap:0.3rem}
-.field label{font-size:0.7rem; font-weight:800; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted); font-family:var(--mono)}
-.select, .input{
-  min-height:38px; padding:0.45rem 0.7rem; border:1px solid var(--border); border-radius:0.6rem; background:var(--surface); color:var(--ink); font-size:0.82rem; font-weight:600;
-}
-.btn{display:inline-flex; align-items:center; gap:0.4rem; min-height:38px; padding:0.45rem 0.85rem; border:1px solid var(--border); border-radius:0.6rem; background:var(--surface); color:var(--ink); font-size:0.82rem; font-weight:700; cursor:pointer}
-.btn:hover{border-color:var(--ink)}
-.btn.primary{background:var(--ink); color:var(--bg); border-color:var(--ink)}
-.btn.small{min-height:32px; padding:0.32rem 0.65rem; font-size:0.78rem}
-.rbac{
-  display:flex; align-items:center; gap:0.6rem; padding:0.5rem 0.75rem; border:1px solid var(--border); border-radius:999px; background:var(--surface);
-}
-.toggle{
-  width:44px; height:26px; border-radius:999px; background:var(--border); position:relative; cursor:pointer; border:0; padding:0;
-}
-.toggle::after{content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; transition:transform 0.2s ease, background 0.2s ease; box-shadow:0 1px 4px rgba(0,0,0,.2)}
-.toggle.on{background:var(--ink)} .toggle.on::after{transform:translateX(18px)}
-.live-banner{
-  display:none; align-items:center; gap:0.6rem; margin-top:0.9rem; padding:0.7rem 0.9rem;
-  border:1px solid color-mix(in srgb, var(--blue) 30%, var(--border)); border-radius:0.7rem;
-  background:color-mix(in srgb, var(--blue) 10%, transparent); font-size:0.82rem; font-weight:600;
-}
-.live-banner.show{display:flex}
-.live-banner .pulse{width:8px; height:8px; border-radius:50%; background:var(--blue); animation:pulse 1.4s infinite}
-@keyframes pulse{0%,100%{opacity:1} 50%{opacity:0.4}}
-.board{
-  display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:1rem; margin-top:1rem; align-items:start;
-}
-@media(max-width:900px){ .board{grid-template-columns:1fr} }
-.col{
-  border:1px solid var(--border); border-radius:var(--radius); background:color-mix(in srgb, var(--surface) 82%, transparent);
-  box-shadow:0 6px 20px rgba(15,23,42,0.045); min-height:420px; display:flex; flex-direction:column;
-}
-.col.drag-over{border-color:var(--accent); box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent)}
-.col-head{
-  padding:0.9rem 1rem 0.75rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:0.5rem;
-  position:sticky; top:0; background:color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter:blur(8px); border-radius:var(--radius) var(--radius) 0 0;
-}
-.col-title{margin:0; font-size:0.82rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; font-family:var(--mono); color:var(--muted)}
-.count{
-  min-width:22px; height:22px; display:grid; place-items:center; padding:0 6px; border-radius:999px; font-size:0.72rem; font-weight:800;
-  background:color-mix(in srgb, var(--ink) 7%, transparent); border:1px solid var(--border);
-}
-.col-body{padding:0.85rem; display:grid; gap:0.75rem; align-content:start; min-height:320px}
-.ticket{
-  padding:0.85rem 0.9rem; border:1px solid var(--border); border-radius:0.85rem; background:var(--surface);
-  box-shadow:0 2px 10px rgba(15,23,42,0.06); cursor:grab; user-select:none; transition:transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-}
-.ticket:active{cursor:grabbing}
-.ticket.dragging{opacity:0.55; transform:rotate(1deg) scale(0.98)}
-.ticket.viewer{cursor:not-allowed; opacity:0.9}
-.ticket:hover{border-color:color-mix(in srgb, var(--accent) 28%, var(--border)); transform:translateY(-1px); box-shadow:0 8px 20px rgba(15,23,42,0.08)}
-.t-top{display:flex; gap:0.5rem; align-items:center; justify-content:space-between; margin-bottom:0.45rem}
-.t-id{font-family:var(--mono); font-size:0.72rem; font-weight:800; color:var(--muted)}
-.badge{padding:0.18rem 0.5rem; border-radius:999px; font-size:0.68rem; font-weight:800; letter-spacing:0.04em; text-transform:uppercase; border:1px solid var(--border)}
-.badge.high{ background:color-mix(in srgb, var(--rose) 12%, transparent); border-color:color-mix(in srgb, var(--rose) 30%, var(--border)); color:var(--rose)}
-.badge.medium{ background:color-mix(in srgb, var(--amber) 14%, transparent); border-color:color-mix(in srgb, var(--amber) 30%, var(--border)); color:#a16207}
-.badge.low{ background:color-mix(in srgb, var(--positive) 12%, transparent); border-color:color-mix(in srgb, var(--positive) 28%, var(--border)); color:#047857}
-.badge.critical{ background:color-mix(in srgb, var(--rose) 16%, transparent); border-color:var(--rose); color:var(--rose)}
-.t-title{margin:0; font-size:0.92rem; font-weight:700; line-height:1.35; letter-spacing:-0.01em}
-.t-meta{margin-top:0.55rem; display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; font-size:0.74rem; color:var(--muted)}
-.avatar{width:22px; height:22px; border-radius:50%; display:grid; place-items:center; color:#fff; font-weight:800; font-size:0.66rem}
-.status-dot{width:7px; height:7px; border-radius:50%}
-.t-actions{display:flex; gap:0.35rem; margin-top:0.6rem; flex-wrap:wrap}
-.t-actions button{font-size:0.72rem; min-height:28px; padding:0.25rem 0.55rem}
-.empty{padding:1.2rem; text-align:center; color:var(--muted); font-size:0.84rem; border:1px dashed var(--border); border-radius:0.7rem; background:color-mix(in srgb, var(--bg) 60%, transparent)}
-.toast{position:fixed; right:1rem; bottom:1rem; max-width:360px; padding:0.75rem 0.9rem; background:var(--ink); color:var(--bg); border-radius:0.7rem; font-size:0.82rem; font-weight:600; box-shadow:var(--shadow); transform:translateY(12px); opacity:0; pointer-events:none; transition:all 0.25s ease; z-index:50}
-.toast.show{transform:translateY(0); opacity:1}
-.toast.error{background:var(--rose); color:#fff}
+/* mock preview chrome (outer) */
+.mock-topbar{position:sticky;top:0;z-index:40;background:rgba(249,250,251,.92);backdrop-filter:blur(12px) saturate(120%);-webkit-backdrop-filter:blur(12px) saturate(120%);border-bottom:1px solid #e5e7eb}
+.mock-topbar-inner{max-width:1280px;margin:0 auto;padding:0.85rem 1rem;display:flex;flex-wrap:wrap;gap:0.75rem 1rem;align-items:center}
+.back-link{display:inline-flex;align-items:center;gap:0.35rem;padding:0.42rem 0.9rem;border:1px solid #d1d5db;border-radius:999px;background:#fff;font-size:0.82rem;font-weight:700;text-decoration:none;color:#111827}
+.back-link:hover{border-color:#4f46e5;color:#4f46e5}
+.header-title{flex:1 1 340px;min-width:220px}
+.header-title h1{margin:0;font-size:clamp(1.15rem,2.5vw,1.45rem);letter-spacing:-0.03em;line-height:1.2}
+.header-title p{margin:0.15rem 0 0;color:#6b7280;font-size:0.82rem}
+.mock-badge{display:inline-flex;align-items:center;gap:0.35rem;padding:0.32rem 0.7rem;border-radius:999px;font-size:0.7rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#92400e}
+.disclaimer{max-width:1280px;margin:0 auto;padding:0 1rem 0.8rem;color:#6b7280;font-size:0.78rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.disclaimer strong{color:#111827}
+/* indigo nav — replica of base.html */
+nav.app-nav{background:#4f46e5;color:#fff;box-shadow:0 4px 12px rgba(79,70,229,.25)}
+.app-nav-inner{max-width:1280px;margin:0 auto;padding:0.75rem 1rem;display:flex;flex-wrap:wrap;gap:0.75rem 1rem;align-items:center;justify-content:space-between}
+.brand{font-size:1.35rem;font-weight:800;letter-spacing:-0.02em;text-decoration:none;color:#fff}
+.app-nav-right{display:flex;flex-wrap:wrap;gap:0.6rem 1rem;align-items:center;font-size:0.9rem}
+.role-pill{padding:0.28rem 0.65rem;border-radius:999px;background:#4338ca;font-size:0.72rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.18)}
+.app-nav-right a{color:#e0e7ff;text-decoration:none;font-weight:600}
+.app-nav-right a:hover{color:#fff}
+.app-nav-right .sep{width:1px;height:18px;background:rgba(255,255,255,.2)}
+/* container */
+.container{max-width:1280px;margin:0 auto;padding:1.25rem 1rem 2rem}
+.card-shadow{box-shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.06)}
+/* RBAC control bar */
+.rbac-bar{display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;justify-content:space-between;padding:0.85rem 1rem;background:#fff;border:1px solid #e5e7eb;border-radius:0.75rem;margin-bottom:0.9rem}
+.rbac-left{display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center}
+.rbac-label{font-size:0.72rem;font-weight:800;letter-spacing:0.06em;text-transform:uppercase;color:#6b7280;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.role-group{display:inline-flex;gap:0.35rem;padding:0.28rem;background:#f3f4f6;border:1px solid #e5e7eb;border-radius:999px}
+.role-btn{padding:0.42rem 0.85rem;border-radius:999px;border:1px solid transparent;background:transparent;font-size:0.82rem;font-weight:700;cursor:pointer;color:#374151}
+.role-btn.active{background:#4f46e5;color:#fff;border-color:#4f46e5;box-shadow:0 1px 6px rgba(79,70,229,.35)}
+.role-hint{font-size:0.76rem;color:#6b7280;line-height:1.4;max-width:520px}
+.role-hint strong{color:#111827}
+/* dashboard header */
+.dash-head{display:flex;flex-wrap:wrap;gap:0.75rem 1rem;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+.dash-title{margin:0;font-size:1.85rem;font-weight:800;letter-spacing:-0.03em;color:#4338ca;line-height:1.1}
+.btn{display:inline-flex;align-items:center;gap:0.45rem;padding:0.6rem 1.1rem;border-radius:0.5rem;font-weight:700;font-size:0.9rem;cursor:pointer;border:1px solid transparent;line-height:1;transition:all .15s}
+.btn-indigo{background:#4f46e5;color:#fff}
+.btn-indigo:hover{background:#4338ca}
+.btn-white{background:#fff;border-color:#e5e7eb;color:#111827}
+.btn-white:hover{border-color:#d1d5db;background:#f9fafb}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn-sm{padding:0.42rem 0.7rem;font-size:0.82rem;border-radius:0.45rem}
+/* filter */
+.filter-block{margin-bottom:1rem}
+.filter-label{font-size:1rem;font-weight:600;color:#111827;margin:0 0 0.6rem}
+.filter-pills{display:flex;flex-wrap:wrap;gap:0.6rem}
+.pill{padding:0.5rem 0.95rem;border-radius:0.5rem;background:#e5e7eb;color:#374151;font-size:0.84rem;font-weight:600;border:1px solid transparent;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.pill:hover{background:#d1d5db}
+.pill.active{background:#4f46e5;color:#fff;border-color:#4f46e5}
+.pill.active:hover{background:#4338ca}
+/* stats */
+.stats-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem;margin-bottom:1.1rem}
+@media(max-width:1024px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.stats-grid{grid-template-columns:1fr}}
+.stat-card{background:#fff;border-radius:0.7rem;padding:1.15rem 1.2rem;display:flex;align-items:center;gap:1rem;border:1px solid #e5e7eb}
+.stat-icon{width:44px;height:44px;border-radius:999px;display:grid;place-items:center;flex-shrink:0}
+.stat-icon.blue{background:#dbeafe;color:#2563eb}
+.stat-icon.yellow{background:#fef3c7;color:#d97706}
+.stat-icon.green{background:#dcfce7;color:#16a34a}
+.stat-icon.red{background:#fee2e2;color:#dc2626}
+.stat-icon svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.stat-label{font-size:0.78rem;color:#6b7280}
+.stat-value{font-size:1.45rem;font-weight:800;line-height:1}
+.stat-sub{font-size:0.72rem;color:#9ca3af}
+.table-wrap{background:#fff;border-radius:0.7rem;overflow:hidden;border:1px solid #e5e7eb}
+.table-head{padding:1rem 1.25rem;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.table-head h2{margin:0;font-size:1.05rem;font-weight:700}
+.table-head span{font-size:0.78rem;color:#6b7280;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:760px}
+thead th{padding:0.75rem 1.25rem;text-align:left;font-size:0.68rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#6b7280;background:#f9fafb;border-bottom:1px solid #e5e7eb;white-space:nowrap}
+tbody td{padding:0.9rem 1.25rem;font-size:0.85rem;border-bottom:1px solid #f3f4f6;vertical-align:middle}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#f9fafb}
+tbody tr.clickable{cursor:pointer}
+.badge{padding:0.22rem 0.55rem;border-radius:999px;font-size:0.7rem;font-weight:700;letter-spacing:0.02em;text-transform:capitalize;display:inline-flex;align-items:center;white-space:nowrap;border:1px solid transparent}
+.badge-open{background:#fef3c7;color:#92400e;border-color:#fde68a}
+.badge-in_progress{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.badge-resolved{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+.badge-closed{background:#f3f4f6;color:#1f2937;border-color:#e5e7eb}
+.badge-low{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+.badge-medium{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.badge-high{background:#ffedd5;color:#9a3412;border-color:#fed7aa}
+.badge-urgent{background:#fee2e2;color:#991b1b;border-color:#fecaca}
+.id-link{font-weight:700;color:#111827;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.action-link{color:#4f46e5;font-weight:600;text-decoration:none}
+.action-link:hover{color:#4338ca;text-decoration:underline}
+.unassigned{color:#9ca3af;font-style:italic}
+.empty-row{padding:2rem 1rem;text-align:center;color:#6b7280;font-size:0.9rem}
+/* detail */
+.detail-grid{display:grid;grid-template-columns:2fr 1fr;gap:1.25rem;align-items:start}
+@media(max-width:1024px){.detail-grid{grid-template-columns:1fr}}
+.detail-card{background:#fff;border-radius:0.7rem;overflow:hidden;border:1px solid #e5e7eb}
+.detail-head{padding:1rem 1.25rem;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:0.75rem;flex-wrap:wrap}
+.detail-head h2{margin:0;font-size:1.15rem;font-weight:700;flex:1}
+.back-to{display:inline-flex;align-items:center;gap:0.35rem;color:#4f46e5;font-weight:700;text-decoration:none;font-size:0.9rem}
+.back-to:hover{color:#4338ca}
+.info-grid{display:flex;flex-wrap:wrap;gap:0.75rem;margin:0 0 1.1rem}
+.info-box{background:#f3f4f6;padding:0.75rem 1rem;border-radius:0.6rem;min-width:140px;flex:1 1 140px}
+.info-box .lbl{font-size:0.72rem;color:#6b7280;letter-spacing:0.04em}
+.info-box .val{font-weight:700;font-size:0.9rem;margin-top:0.15rem}
+.info-box .val.status-open{color:#d97706}
+.info-box .val.status-in_progress{color:#2563eb}
+.info-box .val.status-resolved{color:#16a34a}
+.info-box .val.status-closed{color:#374151}
+.info-box .val.priority-low{color:#16a34a}
+.info-box .val.priority-medium{color:#2563eb}
+.info-box .val.priority-high{color:#ea580c}
+.info-box .val.priority-urgent{color:#dc2626}
+.desc-box{background:#f9fafb;border:1px solid #f3f4f6;padding:0.9rem 1rem;border-radius:0.6rem;white-space:pre-wrap;line-height:1.6;font-size:0.9rem}
+.mgmt{border-top:1px solid #e5e7eb;padding-top:1rem;margin-top:1rem}
+.mgmt h3{margin:0 0 0.7rem;font-size:1rem;font-weight:700}
+.mgmt-row{display:flex;flex-wrap:wrap;gap:0.6rem;align-items:center;margin-bottom:0.75rem}
+.select{padding:0.55rem 0.75rem;border:1px solid #d1d5db;border-radius:0.5rem;background:#fff;font-size:0.86rem;font-weight:600;color:#111827;min-width:160px}
+.select:disabled{background:#f3f4f6;color:#9ca3af;cursor:not-allowed}
+.help{font-size:0.75rem;color:#6b7280;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.4}
+.help code{background:#f3f4f6;padding:0.1rem 0.3rem;border-radius:4px}
+/* chat */
+.chat-card{background:#fff;border-radius:0.7rem;overflow:hidden;border:1px solid #e5e7eb;display:flex;flex-direction:column;height:100%;min-height:520px}
+.chat-head{padding:1rem 1.25rem;border-bottom:1px solid #e5e7eb}
+.chat-head h2{margin:0;font-size:1.05rem;font-weight:700}
+.chat-sub{font-size:0.75rem;color:#6b7280;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;margin-top:0.2rem}
+.chat-messages{flex:1;overflow-y:auto;padding:1rem 1rem 0.5rem;display:flex;flex-direction:column;gap:0.7rem;background:#fff;height:380px;min-height:280px}
+.chat-empty{text-align:center;color:#9ca3af;font-size:0.85rem;padding:1.2rem}
+.msg{display:flex;flex-direction:column;gap:0.15rem;max-width:85%}
+.msg.me{align-self:flex-end;align-items:flex-end}
+.msg.other{align-self:flex-start;align-items:flex-start}
+.msg.system{align-self:center;max-width:82%}
+.bubble{padding:0.55rem 0.8rem;border-radius:0.85rem;font-size:0.86rem;line-height:1.5;word-break:break-word}
+.msg.me .bubble{background:#e0e7ff;color:#1e1b4b;border-top-right-radius:0.25rem}
+.msg.other .bubble{background:#f3f4f6;color:#111827;border-top-left-radius:0.25rem}
+.msg.system .bubble{background:linear-gradient(90deg,#f3f4f6,#e5e7eb);border:1px solid #d1d5db;color:#374151;text-align:center;font-size:0.8rem;display:flex;flex-direction:column;gap:0.15rem;align-items:center}
+.msg-meta{font-size:0.68rem;color:#9ca3af;display:flex;gap:0.4rem;align-items:center;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.msg-meta .is-read{color:#16a34a;font-weight:700}
+.badge-support{padding:0.1rem 0.4rem;border-radius:999px;background:#e0e7ff;color:#4338ca;font-size:0.65rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase}
+.badge-admin{padding:0.1rem 0.4rem;border-radius:999px;background:#f3e8ff;color:#7c3aed;font-size:0.65rem;font-weight:800}
+.chat-composer{border-top:1px solid #e5e7eb;padding:0.75rem;display:flex;gap:0.5rem;align-items:center;background:#fff}
+.chat-input{flex:1;padding:0.6rem 0.9rem;border:1px solid #d1d5db;border-radius:0.6rem;font-size:0.9rem}
+.chat-input:focus{border-color:#4f46e5;outline:none}
+.chat-input:disabled{background:#f3f4f6}
+.icon-btn{width:38px;height:38px;display:grid;place-items:center;border-radius:0.5rem;background:#4f46e5;color:#fff;border:0;cursor:pointer;flex-shrink:0}
+.icon-btn:disabled{opacity:.5;cursor:not-allowed}
+.icon-btn:hover:not(:disabled){background:#4338ca}
+.icon-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.ws-indicator{display:inline-flex;align-items:center;gap:0.35rem;font-size:0.7rem;font-weight:700;color:#6b7280;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.ws-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.15)}
+.ws-dot.off{background:#9ca3af;box-shadow:none}
+/* modal */
+.modal-backdrop{position:fixed;inset:0;background:rgba(17,24,39,.45);display:none;align-items:center;justify-content:center;z-index:60;padding:1rem}
+.modal-backdrop.show{display:flex}
+.modal{background:#fff;border-radius:0.85rem;max-width:560px;width:100%;padding:1.25rem;border:1px solid #e5e7eb;box-shadow:0 20px 50px rgba(0,0,0,.15)}
+.modal h3{margin:0 0 0.5rem;font-size:1.1rem}
+.modal label{font-size:0.8rem;font-weight:700;color:#374151;display:block;margin-top:0.7rem;margin-bottom:0.3rem}
+.modal input,.modal textarea,.modal select{width:100%;padding:0.6rem 0.75rem;border:1px solid #d1d5db;border-radius:0.5rem;font-size:0.9rem;font-family:inherit}
+.modal textarea{min-height:90px;resize:vertical}
+.modal-actions{display:flex;gap:0.6rem;justify-content:flex-end;margin-top:1rem}
+.toast{position:fixed;right:1rem;bottom:1rem;max-width:360px;padding:0.8rem 1rem;background:#111827;color:#f9fafb;border-radius:0.6rem;font-size:0.85rem;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);transform:translateY(10px);opacity:0;pointer-events:none;transition:all .22s;z-index:70}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.error{background:#991b1b}
+.toast.ok{background:#065f46}
+.stack{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:0.72rem;color:#6b7280}
+@media(max-width:640px){table{min-width:640px}.app-nav-inner{flex-direction:column;align-items:stretch}.brand{text-align:center}}
 </style>
 </head>
 <body>
-<header class="topbar" role="banner">
-  <div class="topbar-inner">
-    <a class="back-link" href="../../#projects">← Back to Projects</a>
+<header class="mock-topbar" role="banner">
+  <div class="mock-topbar-inner">
+    <a class="back-link" href="../../#projects" aria-label="Back to projects">← Back to Projects</a>
     <div class="header-title">
-      <h1>TicketPro — Support Ticket Management</h1>
-      <p>Real-time ticket lifecycle with RBAC &amp; WebSocket updates (mock, no backend)</p>
+      <h1>TicketPro — Mock Preview</h1>
+      <p>Django + DRF + Channels + Redis + Daphne · Tailwind · table dashboard replica</p>
     </div>
     <span class="mock-badge">● Mock Preview — fixed data, no backend</span>
   </div>
-  <p class="disclaimer"><strong>Disclaimer:</strong> This is a static mock with local state only. No DB/backend calls. Drag, RBAC and WebSocket banner are in-memory.</p>
+  <p class="disclaimer"><strong>Disclaimer:</strong> Static replica of the real Django templates. No DB, no Channels/Redis, no auth. All data is fixed (6 tickets 101–106) and lives in-memory. Status updates emit mock <code>channel_layer.group_send</code> system messages.</p>
 </header>
 
-<main class="wrap">
-  <div class="controls" role="region" aria-label="Ticket controls">
-    <div class="controls-left">
-      <div class="field">
-        <label for="newTitle">New ticket</label>
-        <input id="newTitle" class="input" placeholder="e.g., Checkout 500 on retry" style="min-width:220px">
-      </div>
-      <div class="field">
-        <label for="newPriority">Priority</label>
-        <select id="newPriority" class="select">
-          <option value="low">Low</option>
-          <option value="medium" selected>Medium</option>
-          <option value="high">High</option>
-          <option value="critical">Critical</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="newAssignee">Assignee</label>
-        <select id="newAssignee" class="select">
-          <option value="Alice">Alice</option>
-          <option value="Bob">Bob</option>
-          <option value="You" selected>You</option>
-          <option value="Sara">Sara</option>
-        </select>
-      </div>
-      <button class="btn primary" id="addTicket" type="button">Add to Open</button>
-    </div>
-    <div class="controls-right">
-      <div class="rbac" aria-label="Role toggle">
-        <span style="font-size:0.78rem; font-weight:800; font-family:var(--mono); letter-spacing:0.04em; text-transform:uppercase; color:var(--muted)">Role</span>
-        <strong id="roleLabel" style="font-size:0.84rem">Agent</strong>
-        <button class="toggle on" id="roleToggle" type="button" role="switch" aria-checked="true" aria-label="Toggle Agent vs Viewer"></button>
-        <span style="font-size:0.72rem; color:var(--muted)">Viewer cannot move</span>
-      </div>
-      <button class="btn small" id="simulateWs" type="button">Simulate WS move</button>
+<nav class="app-nav" aria-label="TicketPro navigation">
+  <div class="app-nav-inner">
+    <a class="brand" href="#">TicketPro</a>
+    <div class="app-nav-right">
+      <span class="stack" style="color:#e0e7ff">Hello, <strong id="navHello" style="color:#fff">You</strong></span>
+      <span class="role-pill" id="navRole">ADMIN</span>
+      <span class="sep" aria-hidden="true"></span>
+      <a href="#dashboard" id="navDash">Dashboard</a>
+      <a href="#" id="navLogout" style="opacity:.9">Logout</a>
     </div>
   </div>
+</nav>
 
-  <div class="live-banner" id="liveBanner" role="status" aria-live="polite">
-    <span class="pulse" aria-hidden="true"></span>
-    <span id="liveText">WebSocket: ticket #102 moved by analyst → In Progress</span>
-    <button class="btn small" id="dismissBanner" type="button" style="margin-left:auto">Dismiss</button>
+<main class="container" id="main">
+  <!-- RBAC toggle -->
+  <div class="rbac-bar" role="region" aria-label="Role toggle">
+    <div class="rbac-left">
+      <span class="rbac-label">Preview as</span>
+      <div class="role-group" role="group" aria-label="Role selector">
+        <button class="role-btn" data-role="user" type="button">User</button>
+        <button class="role-btn" data-role="support" type="button">Support</button>
+        <button class="role-btn active" data-role="admin" type="button">Admin</button>
+      </div>
+      <span class="stack" id="rbacHint" style="margin-left:0.5rem">Admin sees all · can update any status &amp; assign</span>
+    </div>
+    <div class="role-hint" id="roleHintLong">Current: <strong>You (admin)</strong> — full access. Switch to <em>User</em> to see only your tickets and no Created By/Assigned To columns. Switch to <em>Support</em> to see all but only assigned rows can update status.</div>
   </div>
 
-  <div class="board" id="board" aria-label="Ticket board">
-    <!-- columns injected -->
-  </div>
+  <!-- Dashboard view -->
+  <section id="dashboardView" aria-label="Dashboard">
+    <div class="dash-head">
+      <h1 class="dash-title">Dashboard</h1>
+      <button class="btn btn-indigo" id="createBtn" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg> Create Ticket</button>
+    </div>
 
-  <p style="margin-top:1rem; color:var(--muted); font-size:0.78rem; font-family:var(--mono); text-align:center">Drag cards or use Move buttons · Viewer mode shows permission_denied toast · State is in-memory, refresh resets</p>
+    <!-- Filter pills (support/admin only, hidden for user via JS) -->
+    <div class="filter-block" id="filterBlock">
+      <h3 class="filter-label" style="font-size:0.92rem;font-weight:700;color:#111827;margin:0 0 0.5rem">Filter Tickets</h3>
+      <div class="filter-pills" role="group" aria-label="Ticket filters">
+        <button class="pill active" data-status="" type="button">All Tickets</button>
+        <button class="pill" data-status="open" type="button">Open</button>
+        <button class="pill" data-status="in_progress" type="button">In Progress</button>
+        <button class="pill" data-status="resolved" type="button">Resolved</button>
+        <button class="pill" data-status="closed" type="button">Closed</button>
+        <button class="pill" data-assigned="me" type="button">Assigned to Me</button>
+        <button class="pill" data-assigned="unassigned" type="button">Unassigned</button>
+      </div>
+      <p class="stack" style="margin:0.5rem 0 0;color:#9ca3af">Query params: <code>?status=&amp;assigned=</code> — mocked as pill state. Support/Admin see 7 pills; User view hides assignment pills and shows only own tickets.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid" role="region" aria-label="Stats">
+      <div class="stat-card card-shadow">
+        <div class="stat-icon blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V9Z"/><path d="M13 9h.01M9 15h.01"/><path d="M16 15a3 3 0 0 0-6 0"/></svg></div>
+        <div><div class="stat-label">Total Tickets</div><div class="stat-value" id="statTotal">6</div></div>
+      </div>
+      <div class="stat-card card-shadow">
+        <div class="stat-icon yellow" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+        <div><div class="stat-label">Open Tickets</div><div class="stat-value" id="statOpen">2</div></div>
+      </div>
+      <div class="stat-card card-shadow">
+        <div class="stat-icon green" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-5"/><circle cx="12" cy="12" r="8"/></svg></div>
+        <div><div class="stat-label">Resolved Tickets</div><div class="stat-value" id="statResolved">1</div></div>
+      </div>
+      <div class="stat-card card-shadow">
+        <div class="stat-icon red" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg></div>
+        <div><div class="stat-label">Urgent Tickets</div><div class="stat-value" id="statUrgent">1</div></div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap card-shadow">
+      <div class="table-head">
+        <h2>Your Tickets</h2>
+        <span id="tableMeta">6 tickets · role: admin</span>
+      </div>
+      <div class="table-scroll">
+        <table aria-label="Tickets table">
+          <thead>
+            <tr id="theadRow">
+              <th>ID</th>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Created</th>
+              <th class="col-support">Created By</th>
+              <th class="col-support">Assigned To</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+      <div id="emptyState" style="display:none;padding:1.2rem;text-align:center;color:#6b7280">No tickets found.</div>
+    </div>
+    <p class="stack" style="margin:0.7rem 0 0;text-align:center">Table columns ID · Title · Status · Priority · Created · Created By · Assigned To · Actions — badges: status yellow/blue/green/gray, priority green/blue/orange/red. Click <em>View</em> for detail.</p>
+  </section>
+
+  <!-- Detail view -->
+  <section id="detailView" style="display:none" aria-label="Ticket detail">
+    <div class="detail-head" style="background:#fff;border:1px solid #e5e7eb;border-radius:0.7rem;padding:0.9rem 1rem;margin-bottom:1rem">
+      <a href="#" class="back-to" id="backToDash" type="button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg> Back to Dashboard</a>
+      <h1 class="dash-title" style="font-size:1.45rem;margin:0" id="detailTitleId">Ticket #101</h1>
+      <span class="ws-indicator" title="WebSocket room_group chat_{id}"><span class="ws-dot" id="wsDot"></span> ws/chat/<span id="wsId">101</span>/ · <span id="wsGroup">chat_101</span></span>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-card card-shadow">
+        <div class="detail-head">
+          <h2 id="detailH2">Login fails on Safari 17 — 401 on refresh</h2>
+        </div>
+        <div style="padding:1.1rem 1.25rem">
+          <div class="info-grid" id="infoGrid">
+            <!-- 5 gray boxes injected -->
+          </div>
+          <div>
+            <h3 style="margin:0 0 0.45rem;font-size:0.95rem;font-weight:700">Description</h3>
+            <div class="desc-box" id="descBox"></div>
+          </div>
+          <div class="mgmt" id="mgmtBlock">
+            <h3>Ticket Management</h3>
+            <div class="mgmt-row">
+              <select id="statusSelect" class="select" aria-label="Update status">
+                <option value="open">Open</option>
+                <option value="in_progress">In Progress</option>
+                <option value="resolved">Resolved</option>
+                <option value="closed">Closed</option>
+              </select>
+              <button class="btn btn-indigo btn-sm" id="updateStatusBtn" type="button">Update Status</button>
+              <span class="help" id="statusHelp">channel_layer.group_send → system message</span>
+            </div>
+            <div class="mgmt-row" id="assignRow">
+              <select id="assignSelect" class="select" aria-label="Assign ticket">
+                <option value="">Unassigned</option>
+              </select>
+              <button class="btn btn-indigo btn-sm" id="assignBtn" type="button">Assign</button>
+              <span class="help" id="assignHelp">admin only</span>
+            </div>
+          </div>
+          <div style="margin-top:1rem;padding:1rem;background:#f9fafb;border:1px solid #f3f4f6;border-radius:0.6rem" id="assignStatusCard">
+            <h3 style="margin:0 0 0.3rem;font-size:0.95rem;font-weight:700">Ticket Assignment</h3>
+            <p class="stack" style="margin:0" id="assignStatusText">Currently assigned to: —</p>
+            <p class="help" style="margin:0.5rem 0 0">Uses <code>POST /assign/</code> · updates <code>assigned_to</code> FK · not a WS event in real app</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-card card-shadow">
+        <div class="chat-head">
+          <h2>Support Chat</h2>
+          <div class="chat-sub">ws://…/ws/chat/<span id="chatTicketId">101</span>/ · room <code id="chatRoom">chat_101</code> · history preserved · <span class="ws-indicator"><span class="ws-dot"></span> live</span></div>
+        </div>
+        <div id="chatMessages" class="chat-messages" role="log" aria-live="polite"></div>
+        <div class="chat-composer">
+          <input id="chatInput" class="chat-input" type="text" placeholder="Type your message..." aria-label="Chat message">
+          <button class="icon-btn" id="chatSend" type="button" aria-label="Send message"><svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg></button>
+        </div>
+        <p class="help" style="padding:0 1rem 0.75rem;margin:0">ChatConsumer: <code>save_message() → group_send(type=chat_message) → is_read=False</code>. Switch role to see badge differences.</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="stack" style="margin:1rem 0 0;text-align:center">
+    Stack: Django + DRF + Channels + Redis + Daphne + SQLite (PostgreSQL in prod) · Tailwind CDN + FontAwesome + jQuery · Django templates NOT SPA ·
+    Endpoints: <code>/dashboard/ ?status=&amp;assigned=</code> · <code>POST /update_status/</code> · <code>POST /assign/</code> · <code>ws/chat/&lt;ticket_id&gt;/</code> ·
+    <a href="https://github.com/mahmoud0x01/Ticket_Support_full_stack" target="_blank" rel="noopener" style="color:#4f46e5;font-weight:700">GitHub →</a>
+  </p>
 </main>
 
-<div class="toast" id="toast" role="status"></div>
+<footer style="background:#1f2937;color:#9ca3af;padding:1.2rem 1rem;margin-top:1.5rem">
+  <div style="max-width:1280px;margin:0 auto;display:flex;flex-wrap:wrap;gap:0.75rem 1rem;justify-content:space-between;align-items:center;font-size:0.8rem">
+    <span>© 2025 TicketPro. All rights reserved.</span>
+    <span style="display:flex;gap:1rem"><a href="#" style="color:#9ca3af;text-decoration:none">Terms</a><a href="#" style="color:#9ca3af;text-decoration:none">Privacy</a><a href="#" style="color:#9ca3af;text-decoration:none">Contact</a></span>
+  </div>
+</footer>
+
+<!-- Create modal -->
+<div class="modal-backdrop" id="createModal" role="dialog" aria-modal="true" aria-label="Create ticket">
+  <div class="modal">
+    <h3>Create Ticket</h3>
+    <p class="stack" style="margin:0 0 0.4rem">POST <code>/create_ticket/</code> — creates <code>Ticket(status=open, created_by=request.user)</code></p>
+    <label for="newTitle">Title</label>
+    <input id="newTitle" type="text" placeholder="e.g., Login fails on Safari 17 — 401 on refresh">
+    <label for="newDesc">Description</label>
+    <textarea id="newDesc" placeholder="Steps to reproduce, expected vs actual..."></textarea>
+    <label for="newPriority">Priority</label>
+    <select id="newPriority">
+      <option value="low">Low</option>
+      <option value="medium" selected>Medium</option>
+      <option value="high">High</option>
+      <option value="urgent">Urgent</option>
+    </select>
+    <div class="modal-actions">
+      <button class="btn btn-white btn-sm" id="cancelCreate" type="button">Cancel</button>
+      <button class="btn btn-indigo btn-sm" id="doCreate" type="button">Create</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const cols = [
-  {id:'Open', label:'Open', color:'var(--blue)'},
-  {id:'In Progress', label:'In Progress', color:'var(--amber)'},
-  {id:'Resolved', label:'Resolved', color:'var(--positive)'}
+/* Data — 6 fixed tickets matching real Ticket model */
+const users = [
+  {id:1, first_name:"You", last_name:"", email:"you@example.com", user_type:"admin"},
+  {id:2, first_name:"Alice", last_name:"Smith", email:"alice@example.com", user_type:"user"},
+  {id:3, first_name:"Bob", last_name:"Johnson", email:"bob@example.com", user_type:"support"},
+  {id:4, first_name:"Sara", last_name:"Lee", email:"sara@example.com", user_type:"support"},
+  {id:5, first_name:"Admin", last_name:"Ops", email:"admin@example.com", user_type:"admin"}
 ];
-let isAgent = true;
+const supportStaff = users.filter(u=>u.user_type==="support");
+function nameOf(u){ return (u.first_name + (u.last_name ? " "+u.last_name : "")).trim() }
+function userById(id){ return users.find(u=>u.id===id) || null }
+
 let tickets = [
-  {id:101, title:"Login fails on Safari 17 — 401 on refresh", priority:"high", status:"Open", assignee:"Alice", updated:"2m ago"},
-  {id:102, title:"Payment webhook retries infinitely (Stripe)", priority:"critical", status:"Open", assignee:"Bob", updated:"8m ago"},
-  {id:103, title:"CSV export truncates last row on large datasets", priority:"medium", status:"In Progress", assignee:"You", updated:"1h ago"},
-  {id:104, title:"Role guard allows viewer to PATCH /tickets", priority:"high", status:"In Progress", assignee:"Sara", updated:"3h ago"},
-  {id:105, title:"Email notifications not sent on resolve", priority:"low", status:"Resolved", assignee:"Alice", updated:"yesterday"},
-  {id:106, title:"Nginx 502 after deploy — upstream timeout", priority:"medium", status:"Resolved", assignee:"Bob", updated:"2d ago"},
+  {id:101, title:"Login fails on Safari 17 — 401 on refresh", description:"Steps to reproduce: Log in on Safari 17, refresh page — API returns 401. Session cookie not persisted. Likely SameSite / Secure attribute handling for Safari. Needs investigation into session backend and Daphne cookie forwarding.", status:"open", priority:"high", created_at:"2025-09-22", created_by:1, assigned_to:null},
+  {id:102, title:"Payment webhook retries infinitely (Stripe)", description:"Stripe webhook endpoint returns 500 due to idempotency collision, causing infinite retries. Handler should acknowledge with 200 after logging duplicate events and ensure DB constraint on event_id.", status:"open", priority:"urgent", created_at:"2025-09-21", created_by:2, assigned_to:3},
+  {id:103, title:"CSV export truncates last row on large datasets", description:"CSV export via Django view truncates last row when dataset exceeds 10k rows. StreamingHttpResponse not flushing final buffer. Repro: export tickets with >10k rows, compare count.", status:"in_progress", priority:"medium", created_at:"2025-09-20", created_by:1, assigned_to:1},
+  {id:104, title:"Role guard allows viewer to PATCH /tickets", description:"IsOwnerOrSupport permission was bypassed on PATCH /api/tickets/{id}/ — viewer role could update. Fix: enforce has_object_permission on viewset and dashboard ticket_detail_view check.", status:"in_progress", priority:"high", created_at:"2025-09-19", created_by:3, assigned_to:4},
+  {id:105, title:"Email notifications not sent on resolve", description:"When ticket status changes to resolved, email notification via signals not triggered. Check post_save signal on Ticket.status and Celery/Redis delivery.", status:"resolved", priority:"low", created_at:"2025-09-18", created_by:2, assigned_to:3},
+  {id:106, title:"Nginx 502 after deploy — upstream timeout", description:"After deploy via Daphne + Nginx, upstream timeout (502) on /ws/chat/ endpoint. Nginx proxy_read_timeout and Daphne worker config need tuning for Channels.", status:"closed", priority:"medium", created_at:"2025-09-17", created_by:4, assigned_to:null}
 ];
 let nextId = 107;
 
-const board = document.getElementById('board');
-const liveBanner = document.getElementById('liveBanner');
-const liveText = document.getElementById('liveText');
-const roleToggle = document.getElementById('roleToggle');
-const roleLabel = document.getElementById('roleLabel');
+/* chat histories per ticket — messages with is_read */
+let chatHistories = {
+  101: [
+    {message:"Initial report: Safari 17 refresh gives 401, same user works on Chrome", user_id:2, first_name:"Alice", last_name:"Smith", user_type:"user", timestamp:"2025-09-22T10:15:00", is_read:true},
+    {message:"Checked session cookie — missing Secure on http dev env", user_id:1, first_name:"You", last_name:"", user_type:"admin", timestamp:"2025-09-22T10:22:00", is_read:true}
+  ],
+  102: [
+    {message:"Stripe dashboard shows 12 retries in 5 min for evt_1Nxyz", user_id:2, first_name:"Alice", last_name:"Smith", user_type:"user", timestamp:"2025-09-21T09:30:00", is_read:true},
+    {message:"Reproduced locally with duplicate event replay", user_id:3, first_name:"Bob", last_name:"Johnson", user_type:"support", timestamp:"2025-09-21T11:02:00", is_read:false},
+    {message:"Ticket status updated from 'Open' to 'In Progress'", user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:"2025-09-21T11:02:30", is_read:false}
+  ],
+  103: [
+    {message:"Export with 15k rows — last row missing confirmed", user_id:1, first_name:"You", last_name:"", user_type:"admin", timestamp:"2025-09-20T14:05:00", is_read:true},
+    {message:"Will patch StreamingHttpResponse flush", user_id:1, first_name:"You", last_name:"", user_type:"admin", timestamp:"2025-09-20T14:10:00", is_read:true}
+  ],
+  104: [
+    {message:"Viewer role PATCH should be 403 but got 200 — security issue", user_id:4, first_name:"Sara", last_name:"Lee", user_type:"support", timestamp:"2025-09-19T08:40:00", is_read:true}
+  ],
+  105: [
+    {message:"Resolved but no email received", user_id:2, first_name:"Alice", last_name:"Smith", user_type:"user", timestamp:"2025-09-18T09:00:00", is_read:true},
+    {message:"Status update triggered signal? Check logs", user_id:3, first_name:"Bob", last_name:"Johnson", user_type:"support", timestamp:"2025-09-18T10:15:00", is_read:true},
+    {message:"Ticket status updated from 'In Progress' to 'Resolved'", user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:"2025-09-18T10:16:00", is_read:true}
+  ],
+  106: [
+    {message:"502 on ws/chat/ after Daphne restart", user_id:4, first_name:"Sara", last_name:"Lee", user_type:"support", timestamp:"2025-09-17T16:50:00", is_read:true},
+    {message:"Nginx error.log: upstream timed out (110)", user_id:1, first_name:"You", last_name:"", user_type:"admin", timestamp:"2025-09-17T17:05:00", is_read:true},
+    {message:"Ticket status updated from 'Resolved' to 'Closed'", user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:"2025-09-17T17:06:00", is_read:false}
+  ]
+};
 
-function avatarColor(name){
-  const map={ Alice:'#10b981', Bob:'#3b82f6', You:'#6366f1', Sara:'#8b5cf6' };
-  return map[name] || '#64748b';
+/* state */
+let role = "admin"; // user | support | admin
+let currentUser = users[0]; // You
+let statusFilter = "";
+let assignedFilter = "";
+let openTicketId = null;
+
+const el = {
+  tbody: document.getElementById("tbody"),
+  theadRow: document.getElementById("theadRow"),
+  statTotal: document.getElementById("statTotal"),
+  statOpen: document.getElementById("statOpen"),
+  statResolved: document.getElementById("statResolved"),
+  statUrgent: document.getElementById("statUrgent"),
+  tableMeta: document.getElementById("tableMeta"),
+  emptyState: document.getElementById("emptyState"),
+  filterBlock: document.getElementById("filterBlock"),
+  dashView: document.getElementById("dashboardView"),
+  detailView: document.getElementById("detailView"),
+  infoGrid: document.getElementById("infoGrid"),
+  descBox: document.getElementById("descBox"),
+  detailH2: document.getElementById("detailH2"),
+  detailTitleId: document.getElementById("detailTitleId"),
+  wsId: document.getElementById("wsId"),
+  wsGroup: document.getElementById("wsGroup"),
+  chatTicketId: document.getElementById("chatTicketId"),
+  chatRoom: document.getElementById("chatRoom"),
+  chatMessages: document.getElementById("chatMessages"),
+  chatInput: document.getElementById("chatInput"),
+  chatSend: document.getElementById("chatSend"),
+  statusSelect: document.getElementById("statusSelect"),
+  assignSelect: document.getElementById("assignSelect"),
+  assignBtn: document.getElementById("assignBtn"),
+  assignStatusText: document.getElementById("assignStatusText"),
+  assignRow: document.getElementById("assignRow"),
+  statusHelp: document.getElementById("statusHelp"),
+  assignHelp: document.getElementById("assignHelp"),
+  updateStatusBtn: document.getElementById("updateStatusBtn"),
+  navHello: document.getElementById("navHello"),
+  navRole: document.getElementById("navRole")
+};
+
+function fmtDate(s){
+  try{
+    const d = new Date(s);
+    return d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+  }catch(e){ return s }
 }
-function priorityLabel(p){ return p; }
-
-function render(){
-  board.innerHTML = cols.map(c=>{
-    const items = tickets.filter(t=>t.status===c.id);
-    return `
-      <section class="col" data-status="${c.id}" aria-label="${c.label} column">
-        <div class="col-head">
-          <h2 class="col-title" style="color:${c.color}">${c.label}</h2>
-          <span class="count" aria-label="${items.length} tickets">${items.length}</span>
-        </div>
-        <div class="col-body" data-drop="${c.id}">
-          ${items.length ? items.map(t=>ticketHtml(t)).join('') : `<div class="empty">No tickets — drag here or add new</div>`}
-        </div>
-      </section>
-    `;
-  }).join('');
-  attachDrag();
+function displayStatus(s){
+  const map={open:"Open", in_progress:"In Progress", resolved:"Resolved", closed:"Closed"};
+  return map[s]||s;
+}
+function displayPriority(p){
+  const map={low:"Low", medium:"Medium", high:"High", urgent:"Urgent"};
+  return map[p]||p;
+}
+function escapeHtml(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;") }
+function getRoleBase(){
+  if(role==="admin") return tickets.slice();
+  if(role==="support") return tickets.slice(); // spec: support can see all but only assigned can update
+  // user: only own
+  return tickets.filter(t=>t.created_by===currentUser.id);
+}
+function getFiltered(){
+  let base = getRoleBase();
+  // stats are from base (un-pill-filtered)
+  let filtered = base.slice();
+  if(statusFilter) filtered = filtered.filter(t=>t.status===statusFilter);
+  if(assignedFilter==="me") filtered = filtered.filter(t=>t.assigned_to===currentUser.id);
+  if(assignedFilter==="unassigned") filtered = filtered.filter(t=>t.assigned_to==null);
+  // sort -created_at
+  filtered.sort((a,b)=> new Date(b.created_at)-new Date(a.created_at));
+  return {base, filtered};
 }
 
-function ticketHtml(t){
-  const dotColor = t.status==='Open' ? 'var(--blue)' : t.status==='In Progress' ? 'var(--amber)' : 'var(--positive)';
-  return `
-    <article class="ticket ${isAgent?'':'viewer'}" draggable="${isAgent?'true':'false'}" data-id="${t.id}" tabindex="0" aria-label="Ticket ${t.id} ${t.title} priority ${t.priority} status ${t.status}">
-      <div class="t-top">
-        <span class="t-id">#${t.id}</span>
-        <span class="badge ${t.priority}">${t.priority}</span>
-      </div>
-      <h3 class="t-title">${escapeHtml(t.title)}</h3>
-      <div class="t-meta">
-        <span class="avatar" style="background:${avatarColor(t.assignee)}">${t.assignee[0]}</span>
-        <span>${t.assignee}</span>
-        <span style="width:1px; height:12px; background:var(--border)"></span>
-        <span class="status-dot" style="background:${dotColor}"></span>
-        <span>${t.status}</span>
-        <span>· ${t.updated}</span>
-      </div>
-      <div class="t-actions">
-        ${cols.filter(c=>c.id!==t.status).map(c=>`<button class="btn small" data-move="${t.id}:${c.id}" type="button">→ ${c.label}</button>`).join('')}
-      </div>
-    </article>
-  `;
-}
-function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
-
-function attachDrag(){
-  const ticketsEls = board.querySelectorAll('.ticket');
-  ticketsEls.forEach(el=>{
-    el.addEventListener('dragstart', e=>{
-      if(!isAgent){ e.preventDefault(); toast('permission_denied — Viewer cannot move tickets','error'); return; }
-      el.classList.add('dragging');
-      e.dataTransfer.effectAllowed='move';
-      e.dataTransfer.setData('text/plain', el.dataset.id);
+function renderStatsAndTable(){
+  const {base, filtered} = getFiltered();
+  // stats from base
+  el.statTotal.textContent = base.length;
+  el.statOpen.textContent = base.filter(t=>t.status==="open").length;
+  el.statResolved.textContent = base.filter(t=>t.status==="resolved").length;
+  el.statUrgent.textContent = base.filter(t=>t.priority==="urgent").length;
+  el.tableMeta.textContent = filtered.length + " tickets · role: " + role + (statusFilter ? " · status="+statusFilter : "") + (assignedFilter ? " · assigned="+assignedFilter : "");
+  // columns visibility: admin/support show Created By / Assigned To, user hide
+  const showSupportCols = (role==="support" || role==="admin");
+  document.querySelectorAll(".col-support").forEach(th=> th.style.display = showSupportCols ? "" : "none");
+  // render tbody
+  if(!filtered.length){
+    el.tbody.innerHTML = "";
+    el.emptyState.style.display = "block";
+    el.emptyState.textContent = "No tickets found." + (statusFilter||assignedFilter ? " Try changing your filter settings." : " Create your first ticket.");
+  } else {
+    el.emptyState.style.display = "none";
+    el.tbody.innerHTML = filtered.map(t=>{
+      const createdBy = userById(t.created_by);
+      const assignedTo = t.assigned_to ? userById(t.assigned_to) : null;
+      const statusCls = "badge-"+t.status;
+      const priCls = "badge-"+t.priority;
+      return `<tr class="clickable" data-id="${t.id}" tabindex="0" aria-label="View ticket ${t.id}">
+        <td class="id-link">#${t.id}</td>
+        <td style="max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(t.title)}</td>
+        <td><span class="badge ${statusCls}">${escapeHtml(displayStatus(t.status))}</span></td>
+        <td><span class="badge ${priCls}">${escapeHtml(displayPriority(t.priority))}</span></td>
+        <td style="white-space:nowrap">${escapeHtml(fmtDate(t.created_at))}</td>
+        ${showSupportCols ? `<td>${createdBy ? escapeHtml(nameOf(createdBy)) : "—"}</td>` : ""}
+        ${showSupportCols ? `<td>${assignedTo ? escapeHtml(nameOf(assignedTo)) : `<span class="unassigned">Unassigned</span>`}</td>` : ""}
+        <td><a href="#" class="action-link" data-view="${t.id}">View</a></td>
+      </tr>`;
+    }).join("");
+  }
+  // attach row clicks
+  el.tbody.querySelectorAll("tr.clickable").forEach(tr=>{
+    tr.addEventListener("click", e=>{
+      if(e.target.closest("a")){ e.preventDefault(); }
+      openDetail(parseInt(tr.dataset.id,10));
     });
-    el.addEventListener('dragend', ()=> el.classList.remove('dragging'));
-    el.addEventListener('click', e=>{
-      if(e.target.closest('button')) return;
-      // keyboard/ click focus — no move, just focus
-    });
-    // click to move buttons
-    el.querySelectorAll('[data-move]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        if(!isAgent){ toast('permission_denied — Viewer cannot move tickets','error'); return; }
-        const [id, status]=btn.dataset.move.split(':');
-        moveTicket(parseInt(id,10), status, true);
-      });
+    tr.addEventListener("keydown", e=>{
+      if(e.key==="Enter" || e.key===" "){ e.preventDefault(); openDetail(parseInt(tr.dataset.id,10)); }
     });
   });
-
-  board.querySelectorAll('.col-body').forEach(col=>{
-    col.addEventListener('dragover', e=>{
-      if(!isAgent) return;
-      e.preventDefault();
-      col.closest('.col').classList.add('drag-over');
-      e.dataTransfer.dropEffect='move';
-    });
-    col.addEventListener('dragleave', ()=> col.closest('.col').classList.remove('drag-over'));
-    col.addEventListener('drop', e=>{
-      e.preventDefault();
-      col.closest('.col').classList.remove('drag-over');
-      if(!isAgent){ toast('permission_denied — Viewer cannot move tickets','error'); return; }
-      const id = parseInt(e.dataTransfer.getData('text/plain'),10);
-      const status = col.dataset.drop;
-      if(id && status) moveTicket(id, status, true);
-    });
+  el.tbody.querySelectorAll("[data-view]").forEach(a=>{
+    a.addEventListener("click", e=>{ e.preventDefault(); e.stopPropagation(); openDetail(parseInt(a.dataset.view,10)); });
   });
 }
 
-function moveTicket(id, newStatus, showBanner){
-  const t = tickets.find(x=>x.id===id);
+function renderDetail(){
+  if(openTicketId==null) return;
+  const t = tickets.find(x=>x.id===openTicketId);
   if(!t) return;
-  if(t.status===newStatus) return;
-  const old = t.status;
-  t.status=newStatus;
-  t.updated='just now';
-  render();
-  if(showBanner){
-    liveText.textContent = `WebSocket: ticket #${id} moved by ${isAgent?'you':'analyst'} — ${old} → ${newStatus}`;
-    liveBanner.classList.add('show');
-    clearTimeout(liveBanner._tm);
-    liveBanner._tm=setTimeout(()=> liveBanner.classList.remove('show'), 4200);
-  }
+  const createdBy = userById(t.created_by);
+  const assignedTo = t.assigned_to ? userById(t.assigned_to) : null;
+  el.detailTitleId.textContent = "Ticket #"+t.id;
+  el.detailH2.textContent = t.title;
+  el.wsId.textContent = t.id;
+  el.wsGroup.textContent = "chat_"+t.id;
+  el.chatTicketId.textContent = t.id;
+  el.chatRoom.textContent = "chat_"+t.id;
+  el.descBox.textContent = t.description;
+  // 5 gray info boxes: Status, Priority, Created, Created By, Assigned To
+  const boxes = [
+    {lbl:"Status", val: displayStatus(t.status), cls:"status-"+t.status},
+    {lbl:"Priority", val: displayPriority(t.priority), cls:"priority-"+t.priority},
+    {lbl:"Created", val: fmtDate(t.created_at), cls:""},
+    {lbl:"Created By", val: createdBy ? nameOf(createdBy) : "—", cls:""},
+    {lbl:"Assigned To", val: assignedTo ? nameOf(assignedTo) : "Not assigned", cls:""}
+  ];
+  el.infoGrid.innerHTML = boxes.map(b=>`
+    <div class="info-box">
+      <div class="lbl">${b.lbl}</div>
+      <div class="val ${b.cls}">${escapeHtml(b.val)}</div>
+    </div>
+  `).join("");
+  // status select
+  el.statusSelect.value = t.status;
+  // assign select options
+  el.assignSelect.innerHTML = `<option value="">Unassigned</option>` + supportStaff.map(s=> `<option value="${s.id}" ${t.assigned_to===s.id ? "selected" : ""}>${escapeHtml(nameOf(s))} (${escapeHtml(s.email)})</option>`).join("");
+  // permission for status update: admin OR assigned_to == currentUser
+  const canUpdateStatus = (role==="admin" || t.assigned_to===currentUser.id);
+  el.statusSelect.disabled = !canUpdateStatus;
+  el.updateStatusBtn.disabled = !canUpdateStatus;
+  el.statusHelp.textContent = canUpdateStatus ? "channel_layer.group_send → system message" : "permission denied — only assignee or admin can update";
+  el.statusHelp.style.color = canUpdateStatus ? "#6b7280" : "#dc2626";
+  el.updateStatusBtn.style.opacity = canUpdateStatus ? "1" : "0.5";
+  // assign only admin
+  const canAssign = (role==="admin");
+  el.assignSelect.disabled = !canAssign;
+  el.assignBtn.disabled = !canAssign;
+  el.assignHelp.textContent = canAssign ? "admin only — POST /assign/" : "admin only — switch to Admin";
+  el.assignHelp.style.color = canAssign ? "#6b7280" : "#dc2626";
+  el.assignBtn.style.opacity = canAssign ? "1" : "0.5";
+  el.assignStatusText.textContent = assignedTo ? `Currently assigned to: ${nameOf(assignedTo)}` : "This ticket is not assigned to anyone.";
+  // chat
+  renderChat();
 }
 
-document.getElementById('addTicket').addEventListener('click', ()=>{
-  const title=document.getElementById('newTitle').value.trim();
-  if(!title){ toast('Enter a title','error'); return; }
-  const priority=document.getElementById('newPriority').value;
-  const assignee=document.getElementById('newAssignee').value;
-  tickets.unshift({id: nextId++, title, priority, status:'Open', assignee, updated:'just now'});
-  document.getElementById('newTitle').value='';
-  render();
-  toast('Ticket #'+(nextId-1)+' added to Open');
-});
-
-roleToggle.addEventListener('click', ()=>{
-  isAgent=!isAgent;
-  roleToggle.classList.toggle('on', isAgent);
-  roleToggle.setAttribute('aria-checked', String(isAgent));
-  roleLabel.textContent = isAgent ? 'Agent' : 'Viewer';
-  render();
-  toast(isAgent ? 'Role: Agent — drag enabled' : 'Role: Viewer — move blocked (permission_denied on attempt)');
-});
-
-document.getElementById('simulateWs').addEventListener('click', ()=>{
-  const movable = tickets.filter(t=>t.status!=='Resolved');
-  const pick = movable[Math.floor(Math.random()*movable.length)] || tickets[0];
-  const targets = cols.map(c=>c.id).filter(s=>s!==pick.status);
-  const next = targets[Math.floor(Math.random()*targets.length)];
-  liveText.textContent = `WebSocket: ticket #${pick.id} moved by analyst — ${pick.status} → ${next}`;
-  liveBanner.classList.add('show');
-  clearTimeout(liveBanner._tm);
-  liveBanner._tm=setTimeout(()=> liveBanner.classList.remove('show'), 4200);
-  // also actually move after 800ms to show real-time
-  setTimeout(()=> moveTicket(pick.id, next, false), 800);
-});
-document.getElementById('dismissBanner').addEventListener('click', ()=> liveBanner.classList.remove('show'));
-
-// initial render
-render();
-// auto WS demo after 3.5s
-setTimeout(()=>{
-  const t=tickets.find(x=>x.id===102);
-  if(t && t.status==='Open'){
-    liveText.textContent='WebSocket: ticket #102 moved by analyst → In Progress';
-    liveBanner.classList.add('show');
-    setTimeout(()=> moveTicket(102,'In Progress', false), 900);
-    setTimeout(()=> liveBanner.classList.remove('show'), 5000);
+function renderChat(){
+  if(openTicketId==null) return;
+  const msgs = chatHistories[openTicketId] || [];
+  if(!msgs.length){
+    el.chatMessages.innerHTML = `<div class="chat-empty">No messages yet. Start the conversation!</div>`;
+    return;
   }
-},3500);
-
-function toast(msg, type){
-  const el=document.getElementById('toast');
-  el.textContent=msg;
-  el.className='toast show' + (type==='error'?' error':'');
-  clearTimeout(el._tm);
-  el._tm=setTimeout(()=> el.classList.remove('show'), 2600);
-}
-
-// keyboard moving via arrow
-board.addEventListener('keydown', e=>{
-  const ticket = e.target.closest('.ticket');
-  if(!ticket) return;
-  if(e.key==='Enter' || e.key===' '){
-    e.preventDefault();
-    const id=parseInt(ticket.dataset.id,10);
-    const cur=tickets.find(t=>t.id===id)?.status;
-    const next = cols.find(c=>c.id!==cur)?.id;
-    if(next){
-      if(!isAgent) toast('permission_denied — Viewer cannot move tickets','error');
-      else moveTicket(id, next, true);
+  el.chatMessages.innerHTML = msgs.map(m=>{
+    const isSystem = m.user_type==="system";
+    const isMe = m.user_id===currentUser.id;
+    const when = new Date(m.timestamp).toLocaleTimeString([], {hour:"2-digit", minute:"2-digit"});
+    const isRead = m.is_read ? `<span class="is-read">✓ read</span>` : `<span style="color:#9ca3af">✓ sent</span>`;
+    if(isSystem){
+      return `<div class="msg system">
+        <div class="bubble">
+          <div style="display:flex;align-items:center;gap:0.3rem;font-weight:700;color:#4f46e5;font-size:0.72rem"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg> System Notification</div>
+          <div>${escapeHtml(m.message)}</div>
+          <div class="msg-meta" style="justify-content:center"><span>${when}</span></div>
+        </div>
+      </div>`;
     }
+    const badge = m.user_type==="support" ? `<span class="badge-support">Support</span>` : m.user_type==="admin" ? `<span class="badge-admin">Admin</span>` : "";
+    if(isMe){
+      return `<div class="msg me">
+        <div class="bubble">${escapeHtml(m.message)}</div>
+        <div class="msg-meta"><span>${when}</span>${isRead}</div>
+      </div>`;
+    } else {
+      return `<div class="msg other">
+        <div style="font-size:0.78rem;font-weight:700;color:#4f46e5;display:flex;gap:0.4rem;align-items:center">${escapeHtml(m.first_name)} ${escapeHtml(m.last_name)} ${badge}</div>
+        <div class="bubble">${escapeHtml(m.message)}</div>
+        <div class="msg-meta"><span>${when}</span>${isRead}</div>
+      </div>`;
+    }
+  }).join("");
+  el.chatMessages.scrollTop = el.chatMessages.scrollHeight;
+}
+
+function openDetail(id){
+  const t = tickets.find(x=>x.id===id);
+  if(!t){
+    toast("Ticket #"+id+" not found — static dataset only 101–106","error");
+    return;
+  }
+  // permission check for viewing: mirrors ticket_detail_view
+  // admin can view all, support only assigned, user only own
+  // but for preview we allow navigation but show toast if blocked? spec says support only assigned can update status but viewing maybe allowed? In real view support only assigned can view ticket_detail — but our spec says support can see all tickets but only assigned can update status. We'll allow view for preview but note.
+  // We'll enforce viewing permission as in real ticket_detail_view for fidelity, but with hint:
+  // if role===support and assigned_to !== currentUser.id && roleSupportViewRestricted? For preview, we will allow but show toast.
+  if(role==="support" && t.assigned_to!==currentUser.id){
+    // in real app would redirect to dashboard, but mock allows view with disabled edit
+    // toast won't block, just info
+  }
+  if(role==="user" && t.created_by!==currentUser.id){
+    toast("permission denied — user can only view own tickets (showing anyway in mock)","error");
+  }
+  openTicketId = id;
+  el.dashView.style.display="none";
+  el.detailView.style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+  renderDetail();
+  // mark messages as read after opening? simulate is_read true for current user view
+  // not auto mark, keep as is
+}
+function closeDetail(){
+  openTicketId = null;
+  el.detailView.style.display="none";
+  el.dashView.style.display="block";
+  renderStatsAndTable();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* Role toggle */
+document.querySelectorAll(".role-btn").forEach(btn=>{
+  btn.addEventListener("click", ()=>{
+    document.querySelectorAll(".role-btn").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");
+    role = btn.dataset.role;
+    // set currentUser based on role for realistic filtering
+    if(role==="user"){ currentUser = users.find(u=>u.id===1); } // You as regular user? For demo keep You id1 but treat as user type
+    else if(role==="support"){ currentUser = users.find(u=>u.id===3); } // Bob support
+    else { currentUser = users.find(u=>u.id===1); } // admin You
+    // update nav
+    el.navHello.textContent = nameOf(currentUser);
+    el.navRole.textContent = role.toUpperCase();
+    const hints = {
+      user:"User sees only own tickets (created_by=You) — no Created By/Assigned To columns, cannot update status, chat read-only unless creator",
+      support:"Support sees all tickets — only assigned rows can update status (try #102 assigned to you vs #104 assigned to Sara)",
+      admin:"Admin sees all · can update any status & assign"
+    };
+    document.getElementById("rbacHint").textContent = hints[role];
+    document.getElementById("roleHintLong").innerHTML = `Current: <strong>${escapeHtml(nameOf(currentUser))} (${role})</strong> — ${hints[role]}.`;
+    // reset filters when switching role? Keep but Assigned filters only relevant for support/admin
+    // hide filter assignment pills for user view? Keep visible but disable?
+    if(role==="user"){
+      el.filterBlock.style.opacity="0.6";
+      // disable assigned pills visually? We'll keep but note
+    } else {
+      el.filterBlock.style.opacity="1";
+    }
+    // if detail open, re-render permissions
+    if(openTicketId!=null) renderDetail();
+    renderStatsAndTable();
+    toast("Role: "+role+" — "+hints[role]);
+  });
+});
+
+/* Filter pills */
+document.querySelectorAll(".pill").forEach(pill=>{
+  pill.addEventListener("click", ()=>{
+    const status = pill.dataset.status;
+    const assigned = pill.dataset.assigned;
+    if(status!==undefined){
+      // status pill
+      if(statusFilter===status){
+        // toggling off? Actually "All Tickets" has status=""
+        // if already active, keep
+      }
+      statusFilter = status || "";
+      // update active state: clear all status pills including assigned pills? Keep separation
+      document.querySelectorAll(".pill[data-status]").forEach(p=> p.classList.toggle("active", p.dataset.status===statusFilter));
+      // when All selected, clear assigned? No
+      if(statusFilter!=="") assignedFilter="";
+      // clear assigned active if status changed
+      document.querySelectorAll(".pill[data-assigned]").forEach(p=> p.classList.toggle("active", p.dataset.assigned===assignedFilter));
+    } else if(assigned!==undefined){
+      assignedFilter = assigned;
+      // clear status filter when assignment filter selected? In real they are separate query params but mock exclusive: choosing Assigned clears status to All? We'll allow combining? For simplicity make exclusive: assignment pills clear status, status pills clear assignment
+      statusFilter="";
+      document.querySelectorAll(".pill[data-status]").forEach(p=> p.classList.toggle("active", p.dataset.status===statusFilter));
+      document.querySelectorAll(".pill[data-assigned]").forEach(p=> p.classList.toggle("active", p.dataset.assigned===assignedFilter));
+    }
+    renderStatsAndTable();
+  });
+});
+
+/* Create ticket */
+const createModal = document.getElementById("createModal");
+document.getElementById("createBtn").addEventListener("click", ()=>{
+  createModal.classList.add("show");
+  document.getElementById("newTitle").focus();
+});
+document.getElementById("cancelCreate").addEventListener("click", ()=> createModal.classList.remove("show"));
+createModal.addEventListener("click", e=>{ if(e.target===createModal) createModal.classList.remove("show") });
+document.getElementById("doCreate").addEventListener("click", ()=>{
+  const title = document.getElementById("newTitle").value.trim();
+  const desc = document.getElementById("newDesc").value.trim();
+  const pri = document.getElementById("newPriority").value;
+  if(!title){ toast("Title required","error"); return; }
+  if(!desc){ toast("Description required","error"); return; }
+  const newTicket = {id: nextId++, title, description: desc, status:"open", priority:pri, created_at: new Date().toISOString().slice(0,10), created_by: currentUser.id, assigned_to: null};
+  tickets.unshift(newTicket);
+  chatHistories[newTicket.id]=[];
+  createModal.classList.remove("show");
+  document.getElementById("newTitle").value="";
+  document.getElementById("newDesc").value="";
+  statusFilter=""; assignedFilter="";
+  document.querySelectorAll(".pill").forEach(p=>{
+    const isAll = p.dataset.status==="";
+    p.classList.toggle("active", isAll);
+  });
+  document.querySelectorAll(".pill[data-assigned]").forEach(p=>p.classList.remove("active"));
+  renderStatsAndTable();
+  toast("Ticket #"+newTicket.id+" created — POST /create_ticket/ (mock)", "ok");
+});
+
+/* Detail actions */
+document.getElementById("backToDash").addEventListener("click", e=>{ e.preventDefault(); closeDetail(); });
+document.getElementById("updateStatusBtn").addEventListener("click", ()=>{
+  if(openTicketId==null) return;
+  const t = tickets.find(x=>x.id===openTicketId);
+  const newStatus = el.statusSelect.value;
+  if(t.status===newStatus){ toast("Status unchanged","error"); return; }
+  const canUpdate = (role==="admin" || t.assigned_to===currentUser.id);
+  if(!canUpdate){ toast("permission_denied — only assignee or admin can update status","error"); return; }
+  const old = t.status;
+  const oldDisplay = displayStatus(old);
+  const newDisplay = displayStatus(newStatus);
+  t.status = newStatus;
+  // add system message
+  if(!chatHistories[t.id]) chatHistories[t.id]=[];
+  chatHistories[t.id].push({message:`Ticket status updated from '${oldDisplay}' to '${newDisplay}'`, user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:new Date().toISOString(), is_read:false});
+  renderStatsAndTable();
+  renderDetail();
+  toast(`WebSocket broadcast → chat_${t.id}: "Ticket status updated from '${oldDisplay}' to '${newDisplay}'" (group_send)`, "ok");
+});
+
+document.getElementById("assignBtn").addEventListener("click", ()=>{
+  if(openTicketId==null) return;
+  if(role!=="admin"){ toast("permission_denied — only admin can assign","error"); return; }
+  const t = tickets.find(x=>x.id===openTicketId);
+  const val = el.assignSelect.value;
+  const oldAssignee = t.assigned_to ? nameOf(userById(t.assigned_to)) : "Unassigned";
+  let newAssigneeName = "Unassigned";
+  if(val===""){
+    t.assigned_to = null;
+  } else {
+    const uid = parseInt(val,10);
+    t.assigned_to = uid;
+    newAssigneeName = nameOf(userById(uid));
+  }
+  if(!chatHistories[t.id]) chatHistories[t.id]=[];
+  chatHistories[t.id].push({message:`Ticket assigned to ${newAssigneeName} (was ${oldAssignee})`, user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:new Date().toISOString(), is_read:false});
+  renderStatsAndTable();
+  renderDetail();
+  toast(`Assigned ticket #${t.id} to ${newAssigneeName} — POST /assign/ (mock)`, "ok");
+});
+
+/* Chat send */
+function sendChat(){
+  if(openTicketId==null) return;
+  const txt = el.chatInput.value.trim();
+  if(!txt) return;
+  // simulate WebSocket send: save_message → group_send
+  if(!chatHistories[openTicketId]) chatHistories[openTicketId]=[];
+  const msg = {message: txt, user_id: currentUser.id, first_name: currentUser.first_name, last_name: currentUser.last_name, user_type: (role==="admin" ? "admin" : role==="support" ? "support" : "user"), timestamp: new Date().toISOString(), is_read:false};
+  chatHistories[openTicketId].push(msg);
+  el.chatInput.value="";
+  renderChat();
+  // fake echo as broadcast — no extra
+  toast(`ws/chat/${openTicketId}/ — message sent to room_group chat_${openTicketId} (group_send)`, "ok");
+  // auto reply simulation after 900ms if not own
+  if(Math.random()>0.4){
+    setTimeout(()=>{
+      const replies = ["Thanks for the update — looking into it", "Got it, checking logs", "Will update status shortly"];
+      const replyUser = supportStaff[0] || users[2];
+      const reply = {message: replies[Math.floor(Math.random()*replies.length)], user_id: replyUser.id, first_name: replyUser.first_name, last_name: replyUser.last_name, user_type:"support", timestamp:new Date().toISOString(), is_read:false};
+      chatHistories[openTicketId].push(reply);
+      if(openTicketId) renderChat();
+    }, 900);
+  }
+}
+el.chatSend.addEventListener("click", sendChat);
+el.chatInput.addEventListener("keydown", e=>{
+  if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); sendChat(); }
+});
+
+/* Back to projects nav logout mock */
+document.getElementById("navDash").addEventListener("click", e=>{ e.preventDefault(); closeDetail(); window.scrollTo({top:0}); });
+document.getElementById("navLogout").addEventListener("click", e=>{ e.preventDefault(); toast("Logout — POST /logout/ (mock, no session)","ok"); });
+
+/* Escape handling */
+document.addEventListener("keydown", e=>{
+  if(e.key==="Escape"){
+    if(createModal.classList.contains("show")) createModal.classList.remove("show");
+    else if(openTicketId!=null) closeDetail();
   }
 });
+
+/* toast */
+function toast(msg, type){
+  const elToast = document.getElementById("toast");
+  elToast.textContent = msg;
+  elToast.className = "toast show" + (type==="error" ? " error" : type==="ok" ? " ok" : "");
+  clearTimeout(elToast._t);
+  elToast._t = setTimeout(()=> elToast.classList.remove("show"), 3000);
+}
+
+/* init */
+renderStatsAndTable();
+// show support chat system message demo? none
+
 </script>
 </body>
 </html>
