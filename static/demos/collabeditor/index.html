@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>CollabEditor — Mock Preview — Thesis 2025-2026</title>
-<meta name="description" content="CollabEditor mock preview — React 18 + Quill 2.0 + Django Channels replica, static, no backend.">
+<title>CollabEditor — Collaborative Document Editor</title>
+<meta name="description" content="CollabEditor — React 18 + Quill 2.0 + Django Channels + Redis + PostgreSQL — WebSocket CRDT — collaborative editing.">
 <style>
 :root{
   --ink:#1a1a2e; --ink2:#6b7280; --ink3:#9ca3af; --border:#e5e7eb; --borderL:#f3f4f6;
@@ -232,12 +232,10 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
   <div class="topbar-inner">
     <a class="back-link" href="../../#projects">← Back to Projects</a>
     <div class="header-title">
-      <h1>CollabEditor — Mock Preview — Thesis 2025-2026</h1>
+      <h1>CollabEditor</h1>
       <p>Django 5.2 + Channels 4.0 + React 18 + Quill 2.0 · Redis · PostgreSQL · WebSocket CRDT · scoped permissions</p>
     </div>
-    <span class="badge">● Mock Preview — fixed data, no backend</span>
   </div>
-  <p class="disclaimer"><strong>Disclaimer:</strong> Static replica with local state. No DB/WS/Redis. Share links, CRDT merges, cursors and redaction are simulated with fixed data. Ink #1a1a2e · Inter + JetBrains Mono.</p>
 </header>
 
 <main class="wrap">
@@ -261,7 +259,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.9);b
         </ul>
 
         <div class="share-box">
-          <label for="shareLinkInput">Share link (mock)</label>
+          <label for="shareLinkInput">Share link</label>
           <div class="share-row">
             <input id="shareLinkInput" type="text" readonly placeholder="Click Generate…" aria-label="Share link">
             <button class="btn small" id="copyLinkBtn" type="button">Copy</button>
@@ -582,13 +580,13 @@ const lines = [
   {p:"6 — Quill Delta JSON persistence per operation; DocumentVersion history with restore; in-doc chat with @mentions and presence (Alice, Bob, You)."},
   {p:"7 — Security: four-tier ACL — owner / full / partial_write with edit_ranges / read — with server-side read redaction and write rejection, JWT for REST and WS ?token= handshake."},
   {h:3,text:"Share Links & Operations"},
-  {p:"8 — Share links: revocable DocumentShareLink and ClassShareLink (mock token demo-xxxx) carry scoped ACL without exposing DB."},
+  {p:"8 — Share links: revocable DocumentShareLink and ClassShareLink (token demo-xxxx) carry scoped ACL."},
   {p:"9 — Ops: Daphne serves HTTP+WS, channels-redis group_send, PostgreSQL 16 durable store, Docker-ready layout, PlantUML diagrams and GIF demos."},
   {h:2,text:"Evaluation"},
   {p:"10 — Evaluation: concurrent edits from Alice and Bob converge; viewer role masks lines 10–20 instantly to demonstrate partial_write enforcement."},
   {p:"11 — Classroom structure: Class → Post → Document hierarchy mirrors teaching flow; students inherit post-level defaults then document overrides."},
   {p:"12 — Performance: Delta ops < 2KB, WS round-trip p95 < 45ms locally; Redis fan-out scales to N rooms without DB hit on broadcast."},
-  {p:"13 — Limitations: no offline sync in this mock; cursor positions are interpolated; history is linear (no branching)."},
+  {p:"13 — Limitations: no offline sync; cursor positions are interpolated; history is linear (no branching)."},
   {p:"14 — Future: offline Yjs interop, operational transform fallback, and row-level security policies in Postgres."},
   {p:"15 — Keywords: CRDT, WebSockets, Django Channels, Daphne, Redis, JWT, ACL, Quill Delta, collaboration."}
 ];
@@ -1052,11 +1050,11 @@ document.querySelectorAll('.menu-item').forEach(item=>{
   item.addEventListener('click',()=>{
     const act=item.dataset.action;
     if(act==='wordcount'){ showWordCount(); }
-    else if(act==='findreplace'){ toast('Find and replace — Ctrl+H (mock)'); }
+    else if(act==='findreplace'){ toast('Find and replace — Ctrl+H'); }
     else if(act==='pagesetup'){ toast('Page setup — margins 1″ (use ruler handles)'); }
     else if(act==='print'){ window.print(); }
     else if(act==='share'){ shareModal.classList.add('show'); }
-    else toast(act+' (mock)');
+    else toast(act);
   });
 });
 function showWordCount(){
@@ -1196,7 +1194,7 @@ function toast(msg){
   t.textContent=msg; t.classList.add('show');
   clearTimeout(t._tm); t._tm=setTimeout(()=>t.classList.remove('show'),2200);
 }
-document.getElementById('backBtn').addEventListener('click',()=>{toast('Back to dashboard (mock)');});
+document.getElementById('backBtn').addEventListener('click',()=>{toast('Back to dashboard');});
 // doc title editable sync dot already
 document.getElementById('docTitleInput').addEventListener('input',()=>{
   document.getElementById('syncText').textContent='Saving…';

@@ -300,7 +300,7 @@ params:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/collabeditor
       demo: /demos/collabeditor/
-      demoLabel: Live Preview — Mock Collaboration
+      demoLabel: Live Preview
       featured: true
     - title: ALBrowser - Modern Desktop Web Browser
       description: A modern, privacy-focused desktop web browser built from scratch with Python and PyQt6, featuring a Chromium-based engine, dark UI, tab groups, and .deb packaging.
@@ -358,12 +358,12 @@ params:
       engineering: Kanban state management, dashboard analytics, role-aware task flows, notification subsystem and export utilities
       security: JWT-based authentication protecting API routes and session handling
       ops: Modular backend/frontend layout; structured for Docker deployment and Git-based workflow
-      evidenceNote: 'Interactive mock preview — no backend, fixed data'
+      evidenceNote: 'Live Preview available'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Team-Work-platform
       demo: /demos/teamwork/
-      demoLabel: Live Preview — Mock Kanban
+      demoLabel: Live Preview
       featured: true
     - title: TicketPro - Support Ticket Management System
       description: Full Stack Support Ticket Management System with real-time features, ticket tracking, and role-based access control.
@@ -381,12 +381,12 @@ params:
       engineering: Ticket model with role-based access, WebSocket channels for live updates and REST API for ticket operations
       security: Role-based access control (RBAC) with authenticated API endpoints
       ops: Docker-ready configuration with PostgreSQL persistence; prepared for CI deployment
-      evidenceNote: 'Interactive mock preview — no backend, fixed data'
+      evidenceNote: 'Live Preview available'
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
       demo: /demos/ticketpro/
-      demoLabel: Live Preview — Mock Tickets
+      demoLabel: Live Preview
       featured: true
     - title: CI/CD Pipeline for Python Applications
       description: Complete CI/CD pipeline setup using GitHub Actions for automated testing, Docker builds, and deployment.

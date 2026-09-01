@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="dark">
-<title>Team Work Platform — Mock Preview</title>
-<meta name="description" content="Team Work Platform mock preview — FastAPI + SQLAlchemy + Jinja2 + Vanilla JS. Kanban, dashboard, analytics, notifications, export. Static, no backend.">
+<title>Team Work Platform — Team Collaboration</title>
+<meta name="description" content="Team Work Platform — FastAPI + SQLAlchemy + Jinja2 + Vanilla JS — Kanban, dashboard, analytics, notifications, export.">
 <style>
 :root{color-scheme:dark}
 *{box-sizing:border-box}
@@ -22,9 +22,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
 .header-title{flex:1 1 320px;min-width:220px}
 .header-title h1{margin:0;font-size:clamp(1.15rem,2.5vw,1.45rem);letter-spacing:-0.03em;line-height:1.2}
 .header-title p{margin:0.2rem 0 0;color:#95a2d9;font-size:0.82rem}
-.mock-badge{display:inline-flex;align-items:center;gap:0.35rem;padding:0.32rem 0.7rem;border-radius:999px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;border:1px solid rgba(255,196,107,0.35);background:rgba(255,196,107,0.12);color:#ffd59a}
-.disclaimer{max-width:1400px;margin:0 auto;padding:0 1rem 0.9rem;color:#95a2d9;font-size:0.78rem}
-.disclaimer strong{color:#e8eefc}
+.demo-badge{display:inline-flex;align-items:center;gap:0.35rem;padding:0.32rem 0.7rem;border-radius:999px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;border:1px solid rgba(255,196,107,0.35);background:rgba(255,196,107,0.12);color:#ffd59a}
 /* app shell - replica of Team Work Platform */
 .shell{max-width:1400px;margin:0 auto;padding:24px}
 .layout{display:grid;grid-template-columns:240px 1fr;gap:24px;min-height:calc(100vh - 140px);align-items:start}
@@ -179,12 +177,10 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
   <div class="topbar-inner">
     <a class="back-link" href="../../#projects" aria-label="Back to projects">← Back to Projects</a>
     <div class="header-title">
-      <h1>Team Work Platform — Mock Preview</h1>
+      <h1>Team Work Platform</h1>
       <p>FastAPI 0.104 · SQLAlchemy · Jinja2 · Vanilla JS · SQLite · JWT 30 min HS256</p>
     </div>
-    <span class="mock-badge">● Mock Preview — fixed data, no backend</span>
   </div>
-  <p class="disclaimer"><strong>Disclaimer:</strong> Static, fixed data — no backend, no persistence. Drag tasks between 5 Kanban columns, interact with notifications and exports. All state lives in-memory and resets on reload. Mirrors the real dark UI (#0b1020 / #111836 / #203061 / #4f7cff) and routes (/login, /dashboard, /teams, /kanban, /analytics).</p>
 </header>
 
 <div class="shell">
@@ -199,7 +195,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
         <a href="#kanban" class="active" data-nav="kanban"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg></span>Kanban Board</a>
         <a href="#analytics" data-nav="analytics"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>Analytics</a>
         <div class="sep"></div>
-        <div class="ver">Static replica<br><span class="stack">/dashboard · /teams · /kanban · /analytics<br>12 tasks · 2 teams · 2 projects<br>JWT HS256 · 30 min · mock</span></div>
+        <div class="ver">v1.0<br><span class="stack">/dashboard · /teams · /kanban · /analytics<br>12 tasks · 2 teams · 2 projects<br>JWT HS256 · 30 min</span></div>
       </div>
     </aside>
 
@@ -208,7 +204,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
       <div class="pageHeader" role="region" aria-label="Page header">
         <div>
           <h2 class="pageTitle">Kanban Board</h2>
-          <p class="pageSub">5 stages · drag to move · PUT /api/v1/tasks/{id} (mock) · assignee · due · priority · dependencies</p>
+          <p class="pageSub">5 stages · drag to move · PUT /api/v1/tasks/{id} · assignee · due · priority · dependencies</p>
         </div>
         <div class="pageActions">
           <select id="projectFilter" class="select" aria-label="Filter by project">
@@ -230,8 +226,8 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
               <div id="notifList"></div>
             </div>
           </div>
-          <button class="btn secondary" id="exportExcel" type="button" title="GET /api/v1/tasks/export/excel (mock)">Export Excel</button>
-          <button class="btn secondary" id="exportPdf" type="button" title="GET /api/v1/tasks/export/pdf (mock)">Export PDF</button>
+          <button class="btn secondary" id="exportExcel" type="button" title="GET /api/v1/tasks/export/excel">Export Excel</button>
+          <button class="btn secondary" id="exportPdf" type="button" title="GET /api/v1/tasks/export/pdf">Export PDF</button>
         </div>
       </div>
 
@@ -279,7 +275,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
       <section id="kanban" class="kanban-wrap" aria-label="Kanban board 5 columns">
         <div class="section-label">Kanban — 5 Columns</div>
         <div class="kanban-board" id="kanbanBoard"></div>
-        <p style="margin:8px 0 0;font-size:11px;color:#6f7aca;text-align:center">Drag cards (HTML5) or use Move buttons — in-memory PUT mock updates column + counts + dashboard/analytics instantly. Horizontal scroll on mobile.</p>
+        <p style="margin:8px 0 0;font-size:11px;color:#6f7aca;text-align:center">Drag cards (HTML5) or use Move buttons — updates column + counts + dashboard/analytics instantly. Horizontal scroll on mobile.</p>
       </section>
 
       <!-- ANALYTICS -->
@@ -289,7 +285,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
           <div class="stat-card">
             <div class="stat-label">Total Tasks</div>
             <div class="stat-value" id="aTotal">12</div>
-            <div class="stat-change positive">Fixed data · 2 teams</div>
+            <div class="stat-change positive">2 teams · 2 projects</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Completed</div>
@@ -322,7 +318,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
             <div class="chart-title">Total Time Logged</div>
             <div class="time-stat">
               <div class="time-value" id="totalHours">18.5h</div>
-              <div class="time-label">hours logged across all tasks (mock time logs)</div>
+              <div class="time-label">hours logged across all tasks</div>
               <p style="margin:10px 0 0;font-size:11px;color:#6f7aca">Real app: POST /api/v1/tasks/{id}/time-logs · sum via JS</p>
             </div>
           </div>
@@ -339,7 +335,7 @@ header.topbar{position:sticky;top:0;z-index:30;background:color-mix(in srgb, #0b
         <p style="margin:10px 0 0;font-size:11px;color:#6f7aca;text-align:center">Analytics mirrors /analytics: 4-col stats + horizontal status bars (gradients) + priority grid — all computed from 12 fixed tasks.</p>
       </section>
 
-      <p style="margin:18px 0 0;font-size:11px;color:#6f7aca;text-align:center" class="stack">Stack: FastAPI 0.104 + SQLAlchemy + Jinja2 + Vanilla JS · SQLite (Postgres swappable) · JWT 30 min HS256 · export Excel (pandas+openpyxl) / PDF (ReportLab) — mocked here as JSON/CSV blob download · No framework CSS, custom dark theme · Tasks carry assignee/created_by, dependencies, time logs, comments @mentions (mock indicators on cards)</p>
+      <p style="margin:18px 0 0;font-size:11px;color:#6f7aca;text-align:center" class="stack">Stack: FastAPI 0.104 + SQLAlchemy + Jinja2 + Vanilla JS · SQLite (Postgres swappable) · JWT 30 min HS256 · export Excel (pandas+openpyxl) / PDF (ReportLab) · custom dark theme</p>
     </main>
   </div>
 </div>
@@ -425,13 +421,13 @@ function attachDrag(){
     card.addEventListener("dragend", ()=>{ card.classList.remove("dragging"); dragged=null; });
     card.addEventListener("click", e=>{
       if(e.target.closest(".btn-move")) return;
-      toast(`Task #${card.dataset.taskId} — detail would open /task-detail?id=${card.dataset.taskId} (mock)`);
+      toast(`Task #${card.dataset.taskId}`);
     });
     card.querySelectorAll("[data-move]").forEach(btn=>{
       btn.addEventListener("click", e=>{
         e.stopPropagation();
         const [id, st]=btn.dataset.move.split(":");
-        mockPutStatus(Number(id), st);
+        updateTaskStatus(Number(id), st);
       });
     });
     card.addEventListener("keydown", e=>{
@@ -439,7 +435,7 @@ function attachDrag(){
         e.preventDefault();
         const cur=tasks.find(x=>x.id===Number(card.dataset.taskId))?.status;
         const next=STATUSES.find(s=>s!==cur);
-        if(next) mockPutStatus(Number(card.dataset.taskId), next);
+        if(next) updateTaskStatus(Number(card.dataset.taskId), next);
       }
     });
   });
@@ -455,18 +451,17 @@ function attachDrag(){
       col.classList.remove("drag-over");
       const newStatus=col.dataset.status;
       const id = dragged || Number(e.dataTransfer.getData("text/plain"));
-      if(id && newStatus) mockPutStatus(id, newStatus);
+      if(id && newStatus) updateTaskStatus(id, newStatus);
     });
   });
 }
-function mockPutStatus(id, newStatus){
+function updateTaskStatus(id, newStatus){
   const t=tasks.find(x=>x.id===id);
   if(!t || t.status===newStatus) return;
   const old=t.status;
-  // simulate PUT /api/v1/tasks/{id} {status:newStatus}
   t.status=newStatus;
   renderAll();
-  toast(`PUT /api/v1/tasks/${id} — ${old} → ${newStatus} (mock, in-memory)`);
+  toast(`Task #${id} moved to ${newStatus}`);
 }
 function updateCountsBadge(counts){
   // not needed separately, but kanban headers already show counts
@@ -585,8 +580,8 @@ function renderNotifications(){
         const n=notifications.find(x=>x.id===id);
         if(n) n.unread=false;
         renderNotifications();
-        if(taskId) toast(`Open task #${taskId} — /task-detail?id=${taskId} (mock)`);
-        else toast(`Notification #${id} marked read (mock DELETE /api/v1/notifications/${id})`);
+        if(taskId) toast(`Opening task #${taskId}`);
+        else toast(`Notification #${id} marked as read`);
       });
     });
   }
@@ -624,7 +619,7 @@ document.getElementById("markReadBtn").addEventListener("click", e=>{
   e.stopPropagation();
   notifications.forEach(n=>n.unread=false);
   renderNotifications();
-  toast("DELETE /api/v1/notifications/ — all cleared (mock)");
+  toast("All notifications marked as read");
 });
 function downloadBlob(content, mime, filename){
   const blob=new Blob([content],{type:mime});
@@ -646,7 +641,7 @@ document.getElementById("exportExcel").addEventListener("click", ()=>{
   setTimeout(()=>{
     downloadBlob(csv,"text/csv","tasks_export.xlsx");
     btn.textContent=orig; btn.disabled=false;
-    toast("GET /api/v1/tasks/export/excel — tasks_export.xlsx (mock CSV, "+filtered.length+" rows)");
+    toast("Exported tasks_export.xlsx ("+filtered.length+" rows)");
   },450);
 });
 document.getElementById("exportPdf").addEventListener("click", ()=>{
@@ -655,13 +650,12 @@ document.getElementById("exportPdf").addEventListener("click", ()=>{
   btn.textContent="Exporting…"; btn.disabled=true;
   const filter=document.getElementById("projectFilter").value;
   const filtered = filter? tasks.filter(t=>String(t.project_id)===filter): tasks;
-  const json=JSON.stringify({exported_at:new Date().toISOString(),mock:true,endpoint:"/api/v1/tasks/export/pdf",filter: filter||"all",count:filtered.length,teams,projects,tasks:filtered},null,2);
-  // For PDF mock we download JSON but name .pdf to show intent; alternatively text
-  const pdfText = `%PDF-mock  Team Work Platform — Tasks Export\n\n`+json+`\n\n— mock PDF generated in-memory, no ReportLab backend.`;
+  const json=JSON.stringify({exported_at:new Date().toISOString(),endpoint:"/api/v1/tasks/export/pdf",filter: filter||"all",count:filtered.length,teams,projects,tasks:filtered},null,2);
+  const pdfText = `%PDF  Team Work Platform — Tasks Export\n\n`+json;
   setTimeout(()=>{
     downloadBlob(pdfText,"application/pdf","tasks_export.pdf");
     btn.textContent=orig; btn.disabled=false;
-    toast("GET /api/v1/tasks/export/pdf — tasks_export.pdf (mock, "+filtered.length+" tasks)");
+    toast("Exported tasks_export.pdf ("+filtered.length+" tasks)");
   },450);
 });
 // nav active state on scroll

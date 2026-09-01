@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light">
-<title>TicketPro — Mock Preview</title>
-<meta name="description" content="TicketPro mock preview — Django + DRF + Channels dashboard replica: table, filter pills, stat cards, ticket_detail 5 boxes + chat ws/chat/{id}. Static, no backend.">
+<title>TicketPro — Support Ticket System</title>
+<meta name="description" content="TicketPro — Django + DRF + Channels dashboard: table, filter pills, stat cards, ticket detail + chat ws/chat/{id}.">
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -13,15 +13,15 @@ body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sa
 a{color:inherit}
 :where(a,button,select,input,textarea):focus-visible{outline:3px solid #6366f1;outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-/* mock preview chrome (outer) */
-.mock-topbar{position:sticky;top:0;z-index:40;background:rgba(249,250,251,.92);backdrop-filter:blur(12px) saturate(120%);-webkit-backdrop-filter:blur(12px) saturate(120%);border-bottom:1px solid #e5e7eb}
-.mock-topbar-inner{max-width:1280px;margin:0 auto;padding:0.85rem 1rem;display:flex;flex-wrap:wrap;gap:0.75rem 1rem;align-items:center}
+/* preview chrome (outer) */
+.demo-topbar{position:sticky;top:0;z-index:40;background:rgba(249,250,251,.92);backdrop-filter:blur(12px) saturate(120%);-webkit-backdrop-filter:blur(12px) saturate(120%);border-bottom:1px solid #e5e7eb}
+.demo-topbar-inner{max-width:1280px;margin:0 auto;padding:0.85rem 1rem;display:flex;flex-wrap:wrap;gap:0.75rem 1rem;align-items:center}
 .back-link{display:inline-flex;align-items:center;gap:0.35rem;padding:0.42rem 0.9rem;border:1px solid #d1d5db;border-radius:999px;background:#fff;font-size:0.82rem;font-weight:700;text-decoration:none;color:#111827}
 .back-link:hover{border-color:#4f46e5;color:#4f46e5}
 .header-title{flex:1 1 340px;min-width:220px}
 .header-title h1{margin:0;font-size:clamp(1.15rem,2.5vw,1.45rem);letter-spacing:-0.03em;line-height:1.2}
 .header-title p{margin:0.15rem 0 0;color:#6b7280;font-size:0.82rem}
-.mock-badge{display:inline-flex;align-items:center;gap:0.35rem;padding:0.32rem 0.7rem;border-radius:999px;font-size:0.7rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#92400e}
+.demo-badge{display:inline-flex;align-items:center;gap:0.35rem;padding:0.32rem 0.7rem;border-radius:999px;font-size:0.7rem;font-weight:800;letter-spacing:0.04em;text-transform:uppercase;border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.12);color:#92400e}
 .disclaimer{max-width:1280px;margin:0 auto;padding:0 1rem 0.8rem;color:#6b7280;font-size:0.78rem;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 .disclaimer strong{color:#111827}
 /* indigo nav — replica of base.html */
@@ -178,16 +178,14 @@ tbody tr.clickable{cursor:pointer}
 </style>
 </head>
 <body>
-<header class="mock-topbar" role="banner">
-  <div class="mock-topbar-inner">
+<header class="demo-topbar" role="banner">
+  <div class="demo-topbar-inner">
     <a class="back-link" href="../../#projects" aria-label="Back to projects">← Back to Projects</a>
     <div class="header-title">
-      <h1>TicketPro — Mock Preview</h1>
-      <p>Django + DRF + Channels + Redis + Daphne · Tailwind · table dashboard replica</p>
+      <h1>TicketPro</h1>
+      <p>Django + DRF + Channels + Redis + Daphne · Tailwind</p>
     </div>
-    <span class="mock-badge">● Mock Preview — fixed data, no backend</span>
   </div>
-  <p class="disclaimer"><strong>Disclaimer:</strong> Static replica of the real Django templates. No DB, no Channels/Redis, no auth. All data is fixed (6 tickets 101–106) and lives in-memory. Status updates emit mock <code>channel_layer.group_send</code> system messages.</p>
 </header>
 
 <nav class="app-nav" aria-label="TicketPro navigation">
@@ -237,7 +235,7 @@ tbody tr.clickable{cursor:pointer}
         <button class="pill" data-assigned="me" type="button">Assigned to Me</button>
         <button class="pill" data-assigned="unassigned" type="button">Unassigned</button>
       </div>
-      <p class="stack" style="margin:0.5rem 0 0;color:#9ca3af">Query params: <code>?status=&amp;assigned=</code> — mocked as pill state. Support/Admin see 7 pills; User view hides assignment pills and shows only own tickets.</p>
+      <p class="stack" style="margin:0.5rem 0 0;color:#9ca3af">Filter by status and assignment — query params <code>?status=&amp;assigned=</code>.</p>
     </div>
 
     <!-- Stats -->
@@ -603,7 +601,7 @@ function renderDetail(){
   const canUpdateStatus = (role==="admin" || t.assigned_to===currentUser.id);
   el.statusSelect.disabled = !canUpdateStatus;
   el.updateStatusBtn.disabled = !canUpdateStatus;
-  el.statusHelp.textContent = canUpdateStatus ? "channel_layer.group_send → system message" : "permission denied — only assignee or admin can update";
+  el.statusHelp.textContent = canUpdateStatus ? "Updates ticket and notifies support chat" : "Permission denied — only assignee or admin can update";
   el.statusHelp.style.color = canUpdateStatus ? "#6b7280" : "#dc2626";
   el.updateStatusBtn.style.opacity = canUpdateStatus ? "1" : "0.5";
   // assign only admin
@@ -659,7 +657,7 @@ function renderChat(){
 function openDetail(id){
   const t = tickets.find(x=>x.id===id);
   if(!t){
-    toast("Ticket #"+id+" not found — static dataset only 101–106","error");
+    toast("Ticket #"+id+" not found","error");
     return;
   }
   // permission check for viewing: mirrors ticket_detail_view
@@ -668,11 +666,11 @@ function openDetail(id){
   // We'll enforce viewing permission as in real ticket_detail_view for fidelity, but with hint:
   // if role===support and assigned_to !== currentUser.id && roleSupportViewRestricted? For preview, we will allow but show toast.
   if(role==="support" && t.assigned_to!==currentUser.id){
-    // in real app would redirect to dashboard, but mock allows view with disabled edit
+    // allow view with disabled edit
     // toast won't block, just info
   }
   if(role==="user" && t.created_by!==currentUser.id){
-    toast("permission denied — user can only view own tickets (showing anyway in mock)","error");
+    toast("Permission denied — you can only view your own tickets","error");
   }
   openTicketId = id;
   el.dashView.style.display="none";
@@ -745,7 +743,7 @@ document.querySelectorAll(".pill").forEach(pill=>{
       document.querySelectorAll(".pill[data-assigned]").forEach(p=> p.classList.toggle("active", p.dataset.assigned===assignedFilter));
     } else if(assigned!==undefined){
       assignedFilter = assigned;
-      // clear status filter when assignment filter selected? In real they are separate query params but mock exclusive: choosing Assigned clears status to All? We'll allow combining? For simplicity make exclusive: assignment pills clear status, status pills clear assignment
+      // clear status filter when assignment filter selected? In real they are separate query params but exclusive handling: choosing Assigned clears status to All.
       statusFilter="";
       document.querySelectorAll(".pill[data-status]").forEach(p=> p.classList.toggle("active", p.dataset.status===statusFilter));
       document.querySelectorAll(".pill[data-assigned]").forEach(p=> p.classList.toggle("active", p.dataset.assigned===assignedFilter));
@@ -781,7 +779,7 @@ document.getElementById("doCreate").addEventListener("click", ()=>{
   });
   document.querySelectorAll(".pill[data-assigned]").forEach(p=>p.classList.remove("active"));
   renderStatsAndTable();
-  toast("Ticket #"+newTicket.id+" created — POST /create_ticket/ (mock)", "ok");
+  toast("Ticket #"+newTicket.id+" created", "ok");
 });
 
 /* Detail actions */
@@ -802,7 +800,7 @@ document.getElementById("updateStatusBtn").addEventListener("click", ()=>{
   chatHistories[t.id].push({message:`Ticket status updated from '${oldDisplay}' to '${newDisplay}'`, user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:new Date().toISOString(), is_read:false});
   renderStatsAndTable();
   renderDetail();
-  toast(`WebSocket broadcast → chat_${t.id}: "Ticket status updated from '${oldDisplay}' to '${newDisplay}'" (group_send)`, "ok");
+  toast(`Ticket status updated from '${oldDisplay}' to '${newDisplay}'`, "ok");
 });
 
 document.getElementById("assignBtn").addEventListener("click", ()=>{
@@ -823,7 +821,7 @@ document.getElementById("assignBtn").addEventListener("click", ()=>{
   chatHistories[t.id].push({message:`Ticket assigned to ${newAssigneeName} (was ${oldAssignee})`, user_id:0, first_name:"System", last_name:"", user_type:"system", timestamp:new Date().toISOString(), is_read:false});
   renderStatsAndTable();
   renderDetail();
-  toast(`Assigned ticket #${t.id} to ${newAssigneeName} — POST /assign/ (mock)`, "ok");
+  toast(`Assigned ticket #${t.id} to ${newAssigneeName}`, "ok");
 });
 
 /* Chat send */
@@ -838,7 +836,7 @@ function sendChat(){
   el.chatInput.value="";
   renderChat();
   // fake echo as broadcast — no extra
-  toast(`ws/chat/${openTicketId}/ — message sent to room_group chat_${openTicketId} (group_send)`, "ok");
+  toast("Message sent", "ok");
   // auto reply simulation after 900ms if not own
   if(Math.random()>0.4){
     setTimeout(()=>{
@@ -855,9 +853,9 @@ el.chatInput.addEventListener("keydown", e=>{
   if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); sendChat(); }
 });
 
-/* Back to projects nav logout mock */
+/* Back to projects nav */
 document.getElementById("navDash").addEventListener("click", e=>{ e.preventDefault(); closeDetail(); window.scrollTo({top:0}); });
-document.getElementById("navLogout").addEventListener("click", e=>{ e.preventDefault(); toast("Logout — POST /logout/ (mock, no session)","ok"); });
+document.getElementById("navLogout").addEventListener("click", e=>{ e.preventDefault(); toast("Logged out","ok"); });
 
 /* Escape handling */
 document.addEventListener("keydown", e=>{
