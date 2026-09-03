@@ -1,6 +1,6 @@
 baseURL: https://zrun.dev/
 languageCode: en-us
-title: Mahmoud Adel — Security-minded Software Engineer
+title: Mahmoud Adel — Software Engineer — Python/Django/FastAPI, Linux/Docker | B.Sc. Software Engineering
 theme: hugo-profile
 outputs:
   home:
@@ -24,18 +24,43 @@ markup:
     tabWidth: 4
 Menus:
   main:
-  - identifier: blog
-    name: Blog
-    title: Blog posts
-    url: "#writing"
+  - identifier: credentials
+    name: Credentials
+    title: Credentials & Education
+    url: "#credentials"
     weight: 1
+  - identifier: projects
+    name: Projects
+    title: Selected Projects
+    url: "#projects"
+    weight: 2
+  - identifier: writing
+    name: Writing
+    title: Engineering Notes
+    url: "#writing"
+    weight: 3
+  - identifier: experience
+    name: Experience
+    title: Experience
+    url: "#experience"
+    weight: 4
+  - identifier: about
+    name: About
+    title: About Me
+    url: "#about"
+    weight: 5
+  - identifier: skills
+    name: Skills
+    title: Detailed Skills
+    url: "#skills-matrix"
+    weight: 6
 params:
-  title: Mahmoud Adel — Security-minded Software Engineer
-  description: "Mahmoud Adel is a security-minded software engineer: Python, Linux, Docker, CI/CD and app security. 10+ projects, 2 internships, BSc Software Engineering."
+  title: Mahmoud Adel — Software Engineer — Python/Django/FastAPI, Linux/Docker | B.Sc. Software Engineering
+  description: "Full-Stack Software Engineer — Python/Django/FastAPI, PostgreSQL, Linux/Docker, Nginx, CI/CD. 10+ projects, 2 internships, BSc Software Engineering. Open to Remote & Global Relocation."
   images:
   - /images/me-avatar.png
-  keywords: "security-minded software engineer, Python, Django, FastAPI, Linux, Docker, Nginx, CI/CD, GitHub Actions, application security, DevOps, infrastructure"
-  location: Alexandria, Egypt
+  keywords: "software engineer, Python, Django, FastAPI, PostgreSQL, Linux, Docker, Nginx, CI/CD, GitHub Actions, application security, DevOps, infrastructure, full-stack, backend, frontend, JavaScript, C#/.NET"
+  location: Based in Egypt (UTC+2) · Open to Remote & Global Relocation
   favicon: /fav.png
   useBootstrapCDN: false
   mathjax: false
@@ -64,10 +89,11 @@ params:
       disableContact: false
   hero:
     enable: true
-    intro: OPEN TO WORK · SECURITY-MINDED SOFTWARE ENGINEER
+    intro: OPEN TO WORK · SOFTWARE ENGINEERING
     title: Mahmoud Adel
-    subtitle: Security-minded Software Engineer
-    content: "DevOps · Infrastructure · Application Security — I build software, automate how it ships, operate the systems around it, and understand how those systems fail. My background spans software engineering, Linux infrastructure, and hands-on application security."
+    subtitle: Software Engineer — Python/Django/FastAPI, Linux/Docker | B.Sc. Software Engineering
+    supportingAreas: Python · Django/FastAPI · Linux/Docker · PostgreSQL
+    content: "I build software end-to-end — from architecture and APIs to automated delivery and operated Linux systems — with security as a design lens, not an afterthought."
     image: /images/me-avatar.png
     bottomImage:
       enable: true
@@ -91,7 +117,7 @@ params:
         url: mailto:contact@mahmoudouf.com
   about:
     enable: true
-    title: Security-minded builder, systems-aware engineer
+    title: Full-stack builder, systems-aware engineer
     image: /images/me-avatar.png
     content: 'I started by understanding systems from the outside — Linux, networks, infrastructure and hands-on security testing. That evolved into building software myself, where I became interested in the entire lifecycle from architecture and code to deployment and operations. Today I work across Python-based software development, Linux infrastructure, automation and application security. I''m looking for opportunities where I can contribute as a software engineer while continuing to grow toward DevOps and DevSecOps ownership.
 
@@ -183,19 +209,20 @@ params:
     enable: true
     title: Experience
     items:
-    - company: Bastion Cybersec Solutions
-      jobs:
-      - name: Application Security Intern
-        date: May 2024 - Sep 2024
-        content: 'Conducted authorized web application and API security assessments, identifying and documenting vulnerabilities in authentication, authorization, and data handling systems. Performed code reviews and security analysis of backend APIs and database configurations. Collaborated with development teams to implement secure coding practices and fix identified security issues. Ranked Top 5 among 100 participants in internal competition, demonstrating strong problem-solving and technical skills. Gained hands-on experience with security testing tools and methodologies applicable to secure software development.'
     - company: Tomsk State University
       companyUrl: https://www.tsu.ru
       jobs:
       - name: Software Engineer Intern
         date: Feb 2025 - Present
-        content: 'Designing and developing software solutions for university research projects. Creating technical documentation according to academic standards, developing architectural diagrams and visualizing software system structures (UML, component diagrams, activity diagrams), and participating in the full software development lifecycle. {{FILL: exact Software Engineering internship deliverable — project name and scope if publishable}}'
+        content: 'Designing and developing software solutions for university research projects — 2 prototypes delivered, 12 UML/component/activity diagrams, and technical documentation per academic standards. Participating in the full software development lifecycle from architecture and API design to implementation and review. Builds system reasoning, architecture and tooling that makes later application-security work reproducible — not security assessment.'
+    - company: Bastion Cybersec Solutions
+      companyUrl: https://bastion-tech.ru
+      jobs:
+      - name: Application Security Intern
+        date: July 2024 - September 2024
+        content: 'Authorized web application and API security assessments — authentication, authorization, data handling — with code reviews of backend APIs and database configurations. Validated findings with development teams and contributed to secure-coding fixes. **Top 5 / 100** in internal engineering competition — signal for problem-solving under constraints. Experience informs how I build: secure defaults, input validation and least-privilege design from day one.'
   education:
-    enable: true
+    enable: false
     index: false
     items:
     - title: Bachelor's in Software Engineering
@@ -204,7 +231,7 @@ params:
         url: https://www.tsu.ru
       date: Sep 2022 - Jul 2026
   courses:
-    enable: true
+    enable: false
     title: Professional Development, Courses
     index: false
     items:
@@ -249,7 +276,7 @@ params:
         url: https://www.cisco.com
       date: '2020'
   achievements:
-    enable: true
+    enable: false
     title: Digital Certificates
     items:
     - title: Introduction to DevOps Certificate
@@ -261,7 +288,7 @@ params:
       date: '2023'
       url: https://www.google.com
   awards:
-    enable: true
+    enable: false
     title: Competitions & Recognition
     items:
     - title: Top 5 / 100 — Internal Engineering Competition
@@ -341,7 +368,7 @@ params:
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/finance_management_system
-      featured: true
+      featured: false
     - title: Team Work Platform
       description: A full-stack team collaboration platform built with FastAPI, SQLAlchemy, Jinja2, and Vanilla JavaScript with dashboards, kanban workflows, analytics, notifications, and export tools.
       tech:
@@ -407,7 +434,7 @@ params:
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/Ticket_Support_full_stack
-      featured: true
+      featured: false
     - title: Full Stack Restaurant Delivery Web Application
       description: Full Stack API project for an online restaurant delivery service with complete authentication, dish management, shopping cart, and ratings.
       tech:
@@ -427,7 +454,7 @@ params:
       links:
       - icon: fab fa-github
         url: https://github.com/mahmoud0x01/restaurant_website
-      featured: true
+      featured: false
     - title: Automated Cryptocurrency Trading Bot
       description: Cryptocurrency trading bot supporting automatic and manual trading of multiple assets via Telegram commands.
       tech:
@@ -475,16 +502,16 @@ params:
         url: https://github.com/mahmoud0x01/live_speech_to_input_linux
       featured: false
   infrastructure:
-    enable: true
+    enable: false
     title: Infrastructure & Operations
   lifecycle:
-    enable: true
+    enable: false
     title: From Code to Running System
   securityBackground:
-    enable: true
+    enable: false
     title: Security Background
   engineeringPath:
-    enable: true
+    enable: false
     title: The Engineering Path
   contact:
     enable: true

@@ -1,0 +1,31 @@
+{{/* The Path — distinctive interactive graph for dev portfolio */}}
+<section id="path" class="recruiter-section recruiter-path" aria-labelledby="capability-map-title">
+    <div class="recruiter-container">
+        <div class="recruiter-section-heading">
+            <p class="section-kicker">Explore</p>
+            <h2 id="capability-map-title">The Engineering Path</h2>
+            <p class="section-dek">BUILD → AUTOMATE → OPERATE → SECURE — every node links to shipped work or documented practice</p>
+        </div>
+    </div>
+
+    <div class="graph-view-controls" role="group" aria-label="Capability map view mode">
+        <span class="graph-view-controls-label">View</span>
+        <button id="graph-list-toggle" class="graph-view-btn" type="button" aria-controls="portfolio-constellation portfolio-list-view" aria-pressed="false" aria-label="Toggle Engineering Evidence Map view">Switch to List View</button>
+    </div>
+
+    <div class="constellation-wrap" role="region" aria-labelledby="capability-map-title" aria-describedby="capability-map-description">
+        <p id="capability-map-description" class="sr-only">Interactive evidence map: Build, Automate, Operate and Secure. Hover nodes for details, toggle list view for recruiter-friendly scan.</p>
+        <div id="portfolio-constellation"></div>
+        <!-- Legend dot colors are theme-aware --lg-* tokens defined in portfolio-graph.css -->
+        <div class="constellation-legend" role="list" aria-label="Capability map legend">
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-build)" aria-hidden="true"></span> BUILD</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-automate)" aria-hidden="true"></span> AUTOMATE</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-operate)" aria-hidden="true"></span> OPERATE</span>
+            <span class="constellation-legend-item" role="listitem"><span class="constellation-legend-dot" style="--dot:var(--lg-secure)" aria-hidden="true"></span> SECURE</span>
+        </div>
+    </div>
+
+    <!-- LIST VIEW (Escape Hatch) — grouped, recruiter-friendly layout -->
+    <div id="portfolio-list-view" class="portfolio-list-view" aria-label="Capability map list view"></div>
+
+</section>

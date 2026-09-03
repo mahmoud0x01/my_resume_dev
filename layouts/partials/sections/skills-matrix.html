@@ -1,0 +1,26 @@
+{{/* Section 9 — Detailed Skills Matrix — dev evidence tiers */}}
+<section id="skills-matrix" class="recruiter-section recruiter-skills-matrix" aria-labelledby="skills-matrix-title">
+  <span id="skills" class="sr-anchor" aria-hidden="true"></span>
+  <div class="recruiter-container">
+    <div class="recruiter-section-heading">
+      <p class="section-kicker">Capabilities</p>
+      <h2 id="skills-matrix-title">Detailed Skills Matrix</h2>
+      <p class="section-dek">Evidence-tiered and honestly scoped — Core · Applied · Exposure — strongest to exposure, no percentage scores.</p>
+    </div>
+    {{ $tiers := .Site.Params.about.toolkitTiers | default .Site.Params.toolkitTiers }}
+    {{ with $tiers }}
+    <div class="skills-matrix-tiers">
+      {{ range . }}
+      <section class="toolkit-tier">
+        <h4>{{ .name }}</h4>
+        {{ with .description }}<p class="toolkit-tier-desc">{{ . }}</p>{{ end }}
+        <ul class="toolkit-tier-list">
+          {{ range .items }}<li>{{ . }}</li>{{ end }}
+        </ul>
+      </section>
+      {{ end }}
+    </div>
+    {{ end }}
+    <p class="skills-matrix-note">Tiers reflect hands-on evidence: Core = daily use in shipped projects & internships · Applied = production projects with documented practice · Exposure = hands-on exposure, not primary expertise.</p>
+  </div>
+</section>
