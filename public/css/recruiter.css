@@ -1002,14 +1002,30 @@ html {
 #profileHeader .nav-resume-link:focus-visible {
     box-shadow: 0 0 0 3px color-mix(in srgb, var(--recruiter-accent) 40%, transparent);
 }
-/* Toolkit tiers — accent border-left 3px, responsive */
+/* Toolkit tiers — copied from infosec glass system (full) */
 .toolkit-tiers-grid {
     display: grid;
     gap: 1rem;
 }
+.about-toolkit { margin:1.5rem 0 1.2rem; }
+.toolkit-legend { margin:0.35rem 0 1rem; color:var(--recruiter-muted); font-size:0.78rem; }
 .toolkit-tier {
-    border-left: 3px solid var(--recruiter-accent) !important;
+    margin-bottom:1.2rem;
+    padding:1rem;
+    border:1px solid var(--recruiter-border);
+    border-radius:0.85rem;
+    background:color-mix(in srgb, var(--recruiter-surface) 72%, transparent);
+    border-left:3px solid var(--recruiter-accent);
 }
+.toolkit-tier h4 { margin:0; color:var(--recruiter-ink) !important; font-size:0.86rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
+.toolkit-tier-desc { margin:0.25rem 0 0.7rem; color:var(--recruiter-muted); font-size:0.76rem; }
+.toolkit-tier-list { display:flex; flex-wrap:wrap; gap:0.4rem; margin:0; padding:0; list-style:none; min-width:0; max-width:100%; }
+.toolkit-tier-list li { padding:0.32rem 0.6rem; border:1px solid var(--recruiter-border); border-radius:0.5rem; color:var(--recruiter-muted); font-size:0.78rem; font-weight:600; }
+.toolkit-tier:nth-child(2) { border-left:3px solid var(--recruiter-ink); }
+.toolkit-tier:nth-child(3) { border-left:3px solid var(--recruiter-accent); }
+.toolkit-tier:nth-child(4) { border-left:3px solid var(--recruiter-positive); }
+.toolkit-tier:nth-child(5) { border-left:3px solid var(--recruiter-blue); }
+.skills-list--legacy { opacity:0.72; }
 @media (max-width: 767px) {
     .toolkit-tier .skills-list {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
@@ -2443,3 +2459,71 @@ a.hero-proof-card:focus-visible {
 .recruiter-path .recruiter-section-heading {
   max-width: 680px;
 }
+
+/* ==== COPIED FROM INFOSEC: BBO glass system + about-philosophy (2026-09-04 sync) ==== */
+#break-build-operate.recruiter-bbo,
+#build-operate-secure.recruiter-bbo { background: var(--recruiter-surface) !important; }
+.sr-anchor { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+.bbo-lifecycle { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:0.45rem 0.6rem; margin:0 auto 0.4rem; padding:0.7rem 1rem; border:1px solid var(--recruiter-border); border-radius:999px; background:color-mix(in srgb, var(--recruiter-bg) 72%, transparent); width:fit-content; max-width:100%; box-sizing:border-box; }
+.bbo-lifecycle-step { padding:0.28rem 0.65rem; border:1px solid var(--recruiter-border); border-radius:999px; background:var(--recruiter-surface); color:var(--recruiter-muted); font-family:var(--cg-mono, monospace); font-size:0.66rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; line-height:1.2; }
+.bbo-lifecycle-step--accent { background:color-mix(in srgb, var(--recruiter-positive) 14%, var(--recruiter-surface)); border-color:color-mix(in srgb, var(--recruiter-positive) 28%, var(--recruiter-border)); color:var(--recruiter-ink); }
+.bbo-lifecycle-arrow { color:var(--recruiter-muted); font-size:0.85rem; font-weight:700; opacity:0.7; }
+.bbo-lifecycle-caption { margin:0 0 1.25rem; color:var(--recruiter-muted); font-size:0.78rem; line-height:1.5; text-align:center; }
+.bbo-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:1rem; }
+.bbo-grid--4 { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.bbo-card { min-width:0; padding:1.25rem; border:1px solid var(--recruiter-border); border-radius:var(--recruiter-radius); background:color-mix(in srgb, var(--recruiter-bg) 72%, transparent); box-shadow:0 6px 20px rgba(15,23,42,0.045); display:flex; flex-direction:column; transition:border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+.bbo-card:hover { border-color:color-mix(in srgb, var(--recruiter-accent) 20%, var(--recruiter-border)); box-shadow:var(--recruiter-shadow); transform:translateY(-1px); }
+.bbo-card h3 { margin:0.7rem 0 0.6rem; font-size:1.02rem; font-weight:700; color:var(--recruiter-ink) !important; letter-spacing:-0.02em; line-height:1.25; }
+.bbo-card > i, .bbo-card > svg { color:var(--recruiter-accent); font-size:1.1rem; }
+.bbo-card ul { margin:0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:0.4rem; }
+.bbo-card li { padding:0.25rem 0.5rem; border:1px solid var(--recruiter-border); border-radius:0.4rem; color:var(--recruiter-muted); font-size:0.72rem; font-weight:600; }
+.bbo-card--secure { border-color:color-mix(in srgb, var(--recruiter-positive) 18%, var(--recruiter-border)); background:color-mix(in srgb, var(--recruiter-positive) 5%, var(--recruiter-bg)); }
+.bbo-card--secure > i, .bbo-card--secure > svg { color:var(--recruiter-positive); }
+.bbo-card-note { margin:0.85rem 0 0; color:var(--recruiter-muted); font-size:0.76rem; line-height:1.5; font-style:italic; }
+.bbo-advantage-quote { margin:1.5rem 0 0; padding:1rem 1.2rem; border-left:3px solid var(--recruiter-positive); border-radius:0 0.6rem 0.6rem 0; background:color-mix(in srgb, var(--recruiter-positive) 6%, transparent); }
+.bbo-advantage-quote p { margin:0; color:var(--recruiter-ink) !important; font-size:0.92rem; font-weight:600; line-height:1.6; font-style:italic; }
+.bbo-advantage-quote cite { display:block; margin-top:0.35rem; color:var(--recruiter-muted); font-size:0.74rem; font-style:normal; }
+
+/* About philosophy — How I Build wrapper (infosec parity) */
+#about.recruiter-about { scroll-margin-top: calc(56px + env(safe-area-inset-top, 0px)); }
+.about-philosophy { margin: 2.4rem 0 1.2rem; }
+.about-philosophy .subsection-heading { margin: 0 0 1.2rem; }
+.about-philosophy .subsection-heading h3 { margin: 0; color: var(--recruiter-ink) !important; font-family: var(--cg-font, var(--font, Inter, sans-serif)) !important; font-size: 1.35rem !important; font-weight: 700 !important; letter-spacing: -0.02em; line-height: 1.25; }
+.about-philosophy .section-dek { max-width: 620px; color: var(--recruiter-muted) !important; font-size: 0.92rem !important; line-height: 1.6; }
+.about-philosophy .bbo-grid { margin-top: 0.4rem; }
+.about-philosophy .bbo-lifecycle-caption { text-align: center; }
+
+/* Responsive — PWA symmetry: match infosec 991/767 breakpoints for bbo */
+.bbo-grid, .about-philosophy .bbo-grid {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    align-items: stretch;
+}
+.bbo-card, .about-philosophy .bbo-card {
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: anywhere;
+}
+@media (max-width: 991px) {
+    .bbo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bbo-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767px) {
+    .bbo-grid, .bbo-grid--4 {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        width: 100%;
+        align-items: stretch;
+    }
+}
+@media (max-width: 480px) {
+    .bbo-card { padding: 1.1rem; }
+}
+
+/* Ensure toolkit tiers inside skills-matrix keep infosec glass with no extra margin */
+.recruiter-skills-matrix .toolkit-tier { margin-bottom: 0; }
+.skills-matrix-tiers { display: grid; gap: 1.2rem; margin-top: 1.2rem; min-width: 0; max-width: 100%; box-sizing: border-box; }
+
+/* Ensure bbo-grid participates in global PWA safeguards (parity with infosec) */
