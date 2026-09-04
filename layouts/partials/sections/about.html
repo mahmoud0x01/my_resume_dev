@@ -64,7 +64,7 @@
                 </div>
                 {{ end }}
 
-                {{/* How I Build — merged lifecycle + infrastructure + security-background */}}
+                {{/* How I Build — unified 4-card glass (infosec parity, dev-tailored) */}}
                 <div class="about-philosophy" aria-labelledby="approach-title">
                     <div class="subsection-heading">
                         <p class="section-kicker">Philosophy</p>
@@ -72,73 +72,44 @@
                         <p class="section-dek" style="margin-top:0.5rem;">BUILD · AUTOMATE · OPERATE · SECURE — Find the need, ship the system, run it, and think about how it could fail.</p>
                     </div>
 
-                    <div class="lifecycle-steps" role="list" style="margin-bottom:1.5rem;">
-                        <article class="lifecycle-step" role="listitem">
-                            <div class="lifecycle-step-icon" aria-hidden="true"><i class="fas fa-drafting-compass"></i></div>
-                            <h3>DESIGN</h3>
-                            <p>Architecture, schemas, API contracts, UML</p>
-                            <span class="lifecycle-evidence">Evidence: <a href="#experience">TSU — 12 diagrams</a></span>
-                        </article>
-                        <span class="lifecycle-arrow" aria-hidden="true">→</span>
-                        <article class="lifecycle-step" role="listitem">
-                            <div class="lifecycle-step-icon" aria-hidden="true"><i class="fas fa-code"></i></div>
-                            <h3>BUILD</h3>
-                            <p>Python, Django, FastAPI, C#/.NET, JS</p>
-                            <span class="lifecycle-evidence">Evidence: <a href="#projects">CollabEditor, TicketPro</a></span>
-                        </article>
-                        <span class="lifecycle-arrow" aria-hidden="true">→</span>
-                        <article class="lifecycle-step" role="listitem">
-                            <div class="lifecycle-step-icon" aria-hidden="true"><i class="fas fa-infinity"></i></div>
-                            <h3>AUTOMATE</h3>
-                            <p>Git, CI/CD, GitHub Actions, Docker</p>
-                            <span class="lifecycle-evidence">Evidence: <a href="#projects">Team Work Platform</a></span>
-                        </article>
-                        <span class="lifecycle-arrow" aria-hidden="true">→</span>
-                        <article class="lifecycle-step" role="listitem">
-                            <div class="lifecycle-step-icon" aria-hidden="true"><i class="fas fa-server"></i></div>
-                            <h3>OPERATE</h3>
-                            <p>Linux, Nginx, networking, Docker</p>
-                            <span class="lifecycle-evidence">Evidence: <a href="#projects">Hugo + Nginx · Linux VPS</a></span>
-                        </article>
-                        <span class="lifecycle-arrow" aria-hidden="true">→</span>
-                        <article class="lifecycle-step" role="listitem">
-                            <div class="lifecycle-step-icon" aria-hidden="true"><i class="fas fa-shield-halved"></i></div>
-                            <h3>SECURE</h3>
-                            <p>Auth, RBAC, hardening, secure defaults</p>
-                            <span class="lifecycle-evidence">Evidence: <a href="#experience">Bastion · secure fixes</a></span>
-                        </article>
-                    </div>
-
-                    <div class="bbo-grid">
+                    <div class="bbo-grid bbo-grid--4">
                         <article class="bbo-card">
-                            <i class="fas fa-code" aria-hidden="true"></i>
+                            <i class="fa-solid fa-code" aria-hidden="true"></i>
                             <h3>BUILD — Software & APIs</h3>
                             <ul>
                                 <li>Python · Django · FastAPI</li>
                                 <li>PostgreSQL · Redis · REST · WebSockets</li>
                                 <li>JavaScript · C#/.NET</li>
                             </ul>
-                            <p class="bbo-card-note">Design for clarity and scope — clean models, versioned APIs, testable services.</p>
+                            <p class="bbo-card-note">Design for clarity — clean models, versioned APIs, testable services. Evidence: <a href="#projects">CollabEditor</a>, <a href="#projects">TicketPro</a></p>
                         </article>
                         <article class="bbo-card">
-                            <i class="fas fa-server" aria-hidden="true"></i>
+                            <i class="fa-solid fa-gears" aria-hidden="true"></i>
+                            <h3>AUTOMATE — CI/CD & Tooling</h3>
+                            <ul>
+                                <li>Git · GitHub Actions · Docker</li>
+                                <li>CI/CD Pipelines · Reproducible Builds</li>
+                            </ul>
+                            <p class="bbo-card-note">Ship reproducibly — automation that fails fast and delivers cleanly. Evidence: <a href="#projects">Team Work Platform</a></p>
+                        </article>
+                        <article class="bbo-card">
+                            <i class="fa-solid fa-server" aria-hidden="true"></i>
                             <h3>OPERATE — Infrastructure</h3>
                             <ul>
                                 <li>Linux · Nginx · Networking</li>
-                                <li>Docker · GitHub Actions</li>
-                                <li>Hugo static → VPS</li>
+                                <li>Docker · Hugo static → VPS</li>
                             </ul>
-                            <p class="bbo-card-note">Ship reproducibly and run lean — containers, reverse proxy, CI that fails fast.</p>
+                            <p class="bbo-card-note">Run lean and observable — containers, reverse proxy, hardened VPS. Evidence: Hugo + Nginx</p>
                         </article>
                         <article class="bbo-card bbo-card--secure">
-                            <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
                             <h3>SECURE — Design Lens</h3>
                             <ul>
                                 <li>RBAC · JWT · CSRF · AuthZ</li>
                                 <li>Linux hardening · least privilege</li>
                                 <li>Secure defaults from day one</li>
                             </ul>
-                            <p class="bbo-card-note">Security informs how I build: validate input, scope access, and think about failure modes early.</p>
+                            <p class="bbo-card-note">Security informs how I build: validate input, scope access, and think about failure modes early. Evidence: <a href="#experience">Bastion · secure fixes</a></p>
                         </article>
                     </div>
                     <p class="bbo-lifecycle-caption" style="margin-top:1.2rem">Every stage inherits the earlier one — architecture shapes code, automation shapes delivery, operations shapes where flaws can live.</p>
