@@ -12,7 +12,7 @@
     <div class="skills-matrix-tiers">
       {{ range . }}
       <section class="toolkit-tier">
-        <h4>{{ .name }}</h4>
+        <h4>{{ .tier | default .name | default .title }}</h4>
         {{ with .description }}<p class="toolkit-tier-desc">{{ . }}</p>{{ end }}
         <ul class="toolkit-tier-list">
           {{ range .items }}<li>{{ . }}</li>{{ end }}
